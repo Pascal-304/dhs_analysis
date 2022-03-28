@@ -45,6 +45,32 @@ ghana %>%
 
 Table \@ref(tab:data) shows that 3,566 participated the survey, but there are 3 whom did not answer their employment status, etc. 
 
+# Results
+
+# Mother's education
+
+```{r motheredu, echo=FALSE, fig.cap="Mother's Education level"}
+mother_edu <-
+  ghana %>%
+  filter(character=="Mother\'s_education") %>%
+  mutate(
+    background = factor(background,
+                        levels = c('No_education',
+                                   'Primary',
+                                   'Middle',
+                                   'Secondary+')
+    )
+  )
+
+mother_edu %>%
+  ggplot(mapping=aes(x=background, y=number_of_employed_women, fill=background)) +
+  geom_bar(width = 1, stat = "identity", color = "white") +
+  geom_text(aes(label=paste(round(number_of_employed_women/sum(number_of_employed_women),4)*100, '%')), size=4, position=position_stack(vjust = 0.5)) +
+  theme_minimal() +
+  labs(x='education level',y='count') +
+  theme(legend.position='none')
+```
+
 \newpage
 
 # References
