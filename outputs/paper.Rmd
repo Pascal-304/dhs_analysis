@@ -1,0 +1,50 @@
+---
+title: "paper"
+author: 
+  - Pascal Lee Slew
+  - Yunkyung Park
+thanks: "Code and data are available at: https://github.com/Pascal-304/dhs_analysis."
+date: "`r format(Sys.time(), '%d %B %Y')`"
+abstract: "Four sentences"
+output:
+  bookdown::pdf_document2
+toc: FALSE
+bibliography: references.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r library, echo=FALSE, message=FALSE}
+# install.packages('bookdown')
+# install.packages("stringr")
+library(stringr) 
+library(dplyr)
+library(tidyverse) 
+library(janitor)
+library(ggplot2)
+library(knitr)
+library(kableExtra)
+library(bookdown)
+```
+
+```{r readdata, echo=FALSE}
+ghana<-read_csv('data/cleaned_data.csv', show_col_types = FALSE)
+```
+
+# Introduction
+
+# Data
+
+```{r data, echo=FALSE, fig.cap="Data"}
+ghana %>%
+  group_by(character) %>%
+  summarise(sum = sum(number_of_employed_women))
+```
+
+Table \@ref(tab:data) shows that 3,566 participated the survey, but there are 3 whom did not answer their employment status, etc. 
+
+\newpage
+
+# References
