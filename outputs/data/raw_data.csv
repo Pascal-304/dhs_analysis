@@ -1,4 +1,4 @@
-background,no_child_under_six,one_more_child_under_six,respondent,partner,other_relative,neighbor,hired,child_in_school,other_female_child,other_male_child,not_worked_since_birth,other,missing,total,number_of_employed_women
+background,no_child_under_six,one_more_child_under_six,caretaker_respondent,caretaker_partner,caretaker_other_relative,caretaker_neighbor,caretaker_hired,caretaker_child_in_school,caretaker_other_female_child,caretaker_other_male_child,caretaker_not_worked_since_birth,caretaker_other,caretaker_missing,total,number_of_employed_women
 Residence,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 Urban,58.3,41.7,42.7,2.4,21.5,1.7,0.5,23.8,3.3,0.8,2.6,0.1,0.7,100.0,"1,227"
 Rural,38.9,61.1,49.4,2.9,22.3,2.4,0.9,10.5,7.2,2.3,1.7,0.2,0.2,100.0,"2,338"

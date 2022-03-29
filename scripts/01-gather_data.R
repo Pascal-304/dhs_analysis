@@ -44,10 +44,12 @@ data <-
   mutate(all = str_replace(all, "([:alpha:]|_) ([:alpha:])", "\\1_\\2")) %>%
   separate(col = all,
            into = c("background", "no_child_under_six", "one_more_child_under_six", 
-                    "respondent", "partner", "other_relative", "neighbor", 
-                    "hired", "child_in_school", "other_female_child", 
-                    "other_male_child", "not_worked_since_birth", "other", 
-                    "missing", "total", "number_of_employed_women"),
+                    "caretaker_respondent", "caretaker_partner", 
+                    "caretaker_other_relative", "caretaker_neighbor", 
+                    "caretaker_hired", "caretaker_child_in_school", 
+                    "caretaker_other_female_child", "caretaker_other_male_child", 
+                    "caretaker_not_worked_since_birth", "caretaker_other", 
+                    "caretaker_missing", "total", "number_of_employed_women"),
            sep = " ", # Works fine because the tables are nicely laid out
            remove = TRUE,
            fill = "right",
