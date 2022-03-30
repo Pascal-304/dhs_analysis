@@ -15,53 +15,20 @@ library(tidyverse)
 #### Simulate data ####
 set.seed(304)
 
-items<-c("no_child_under_six", "one_more_child_under_six", 
-         "respondent", "partner", "other_relative", "neighbor", 
-         "hired", "child_in_school", "other_female_child", 
-         "other_male_child", "not_worked_since_birth", "other", 
-         "missing")
-
-num_of_items <- length(items)
-
-simulated_dhs <-
+simulated_data <-
   tibble(
-    background = 
-      c(
-        rep("Urban", num_of_items),
-        rep("Rural", num_of_items),
-        rep("Western", num_of_items),
-        rep("Central", num_of_items),
-        rep("Greater_Accra", num_of_items),
-        rep("Volta", num_of_items),
-        rep("Eastern", num_of_items),
-        rep("Ashanti", num_of_items),
-        rep("Brong_Ahafo", num_of_items),
-        rep("Northern", num_of_items),
-        rep("Upper_West", num_of_items),
-        rep("Upper_East", num_of_items),
-        rep("No_education", num_of_items),
-        rep("Primary", num_of_items),
-        rep("Middle", num_of_items),
-        rep("Secondary+", num_of_items),
-        rep("For_family_member", num_of_items),
-        rep("For_someone_else", num_of_items),
-        rep("Self-employed", num_of_items),
-        rep("Agricultural", num_of_items),
-        rep("Nonagricultural", num_of_items),
-        rep("All_year_full_week", num_of_items),
-        rep("All_year_part_week", num_of_items),
-        rep("Seasonal", num_of_items),
-        rep("Occasional", num_of_items),
-        rep("Total", num_of_items)
+    # Use 1 through to 3565 to represent each region
+    'Index' = 1:3565,
+    # Randomly choose one of the two options, with replacement, 3565 times
+    'Region' = sample(
+      x = c(
+        'Urban',
+        'Rural'
       ),
-    item =
-      c(
-        rep(item, 26)
-      ),
-    proportion = 
-      runif(n = num_of_items * 26,
-            min = 0, 
-            max = 100)
-  )
+      size = 3565,
+      replace = TRUE
+    ))
 
-head(simulated_dhs)
+
+
+
