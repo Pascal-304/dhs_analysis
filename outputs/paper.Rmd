@@ -30,7 +30,7 @@ library(bookdown)
 ```
 
 ```{r readdata, echo=FALSE}
-ghana<-read_csv('data/cleaned_data.csv', show_col_types = FALSE)
+ghana <- read_csv('data/cleaned_data.csv', show_col_types = FALSE)
 ```
 
 # Introduction
@@ -41,7 +41,7 @@ ghana<-read_csv('data/cleaned_data.csv', show_col_types = FALSE)
 ghana %>%
   mutate(
     character = factor(character,
-                       levels=c("Residence",
+                       levels = c("Residence",
                                 "Region",
                                 "Mother\'s_education",
                                 "Work_status",
@@ -809,6 +809,81 @@ employment_status_tb %>%
 
 rm(employment_status_tb)
 ```
+
+
+```{r map, warning = FALSE, echo = FALSE}
+library(rnaturalearth)
+library(sf)
+#devtools::install_github("ropensci/rnaturalearthhires")
+# The st_centroid function takes the sf object and returns the center of 
+# the polygon, again as a sf object.
+map_ghana <- ne_states(country = 'Ghana', 
+                       returnclass = 'sf')  # grab provinces within Ghana
+
+map_ghana %>% 
+  ggplot() +
+  geom_sf( ) + 
+  geom_text(data = st_centroid(map_ghana), 
+            size = 3,
+             aes(x = longitude, 
+                 y = latitude,
+                 label= woe_name)) +
+  labs(title='Ghana Administrative Regions') +
+  theme_minimal()
+```
+
+
+
+```{r, echo=FALSE}
+# Urban vs Rural
+
+# Obtain subset of dataset for residence area
+residence <- ghana %>% 
+  filter(character == 'Residence')
+
+# look at survey respondents distribution in urban and rural areas
+residence %>% 
+  ggplot(aes(x = background, y = number_of_employed_women)) +
+  geom_bar(stat = 'identity', fill = "burlywood") +
+  labs(x = "Area",
+       y = "Number of employed women") +
+  theme_minimal()
+```
+
+
+```{r, echo=FALSE}
+# region subdataset
+region <- ghana %>% 
+  filter(character == "Region") %>% 
+  mutate(background = recode(background,
+                             'Western' = 'Western',
+                             'Central' = 'Central',
+                             'Greater_Accra' = 'Greater Accra',
+                             'Volta' = 'Volta',
+                             'Eastern' = 'Eastern',
+                             'Ashanti' = 'Ashanti',
+                             'Brong_Ahafo' = 'Brong Ahafo',
+                             'Northen' = 'Northern',
+                             'Upper_West' = 'Upper West',
+                             'Upper_East' = 'Upper East'))
+
+# number of survey respondents in the different administrative regions
+region %>% 
+  ggplot(aes(x = background,
+             y = number_of_employed_women)) +
+  geom_bar(stat = 'identity',
+           fill = 'burlywood') +
+  labs(x = "Administrative regions",
+       y = "Number of employed women") +
+  theme_minimal()
+```
+
+
+
+```{r}
+
+```
+
 
 # Discussions
 
