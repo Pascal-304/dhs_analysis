@@ -880,7 +880,41 @@ region %>%
 
 
 
+```{r, echo = FALSE}
+# make dataset in long format
+resid_long <- residence %>% 
+  select(-c(character)) %>% 
+  pivot_longer(!background, names_to = "variables", values_to = "percentage")
+
+# create label names list
+label_list <- list('no_child_under_six' = "No child under six", 
+                   'one_more_child_under_six' = "One or more child under six")
+
+labellers <- function(variable, value) {
+  return(label_list[value])
+}
+
+# plot bar graph
+resid_long %>% 
+  filter(variables == 'no_child_under_six' | variables == 'one_more_child_under_six') %>% 
+  ggplot(aes(x = background, 
+             y = percentage,
+             fill = background)) +
+  geom_bar(stat = 'identity',
+           fill = "lightblue") +
+  labs(x = "Area",
+       y = "Percentage of women") +
+  theme_minimal() +
+  facet_wrap(~variables, labeller = labellers) +
+  theme(strip.text = element_text(face = "bold", size = rel(1)),
+    strip.background = element_rect(fill = "lightblue", colour = "black", size = 0.5))
+```
+
+
 ```{r}
+# caretaker aspect
+
+
 
 ```
 
