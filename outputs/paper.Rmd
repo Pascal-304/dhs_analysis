@@ -899,24 +899,62 @@ resid_long %>%
   filter(variables == 'no_child_under_six' | variables == 'one_more_child_under_six') %>% 
   ggplot(aes(x = background, 
              y = percentage,
-             fill = background)) +
+             fill = variables)) +
   geom_bar(stat = 'identity',
-           fill = "lightblue") +
+           position = 'dodge') +
   labs(x = "Area",
-       y = "Percentage of women") +
+       y = "Percentage of women",
+       fill = "Children under six") +
   theme_minimal() +
-  facet_wrap(~variables, labeller = labellers) +
-  theme(strip.text = element_text(face = "bold", size = rel(1)),
-    strip.background = element_rect(fill = "lightblue", colour = "black", size = 0.5))
+  scale_fill_brewer() +
+  theme(legend.position = "bottom")
+
+# need to recode names
+# change legends name
 ```
 
 
 ```{r}
 # caretaker aspect
 
+# make dataset into long format
+# rename 
+caretaker <- residence %>% 
+  select(-c(character, no_child_under_six, one_more_child_under_six, total, number_of_employed_women)) %>% 
+  pivot_longer(!background, names_to = "caretakers", values_to = "percentage") %>% 
+  mutate(caretakers = recode(caretakers,
+                             'caretaker_respondent' = 'respondent',
+                             'caretaker_partner' = 'partner',
+                             'caretaker_other_relative' = 'other relative',
+                             'caretaker_other_male_child' = 'other male child',
+                             'caretaker_other_female_child' = 'other female child',
+                             'caretaker_other' = 'other',
+                             'caretaker_not_worked since_birth' = 'not worked since birth',
+                             'caretaker_neighbor' = 'neighbour',
+                             'caretaker_missing' = 'missing',
+                             'caretaker_hired' = 'hired',
+                             'caretaker_child_in_school' = 'child in school'))
 
+# plot bar graph
+caretaker %>% 
+  ggplot(aes(x = caretakers, 
+             y = percentage,
+             fill = background)) +
+  geom_bar(stat = 'identity',
+           position = "dodge") +
+  labs(x = "Caretaker",
+       y = "Percentage of women",
+       fill = "Area") +
+  theme_minimal() +
+  coord_flip() +
+  scale_fill_brewer(palette = "Set1") +
+  theme(legend.position = "bottom")
 
 ```
+
+## Also comparison among the different administrative regions
+
+
 
 
 # Discussions
