@@ -233,7 +233,7 @@ child %>%
 
 
 ```{r, echo = FALSE}
-# number of employed women selected in the admiistrative regions
+# number of employed women selected in the administrative regions
 child %>% 
   filter(x == "number of employed women") %>% 
   ggplot(aes(x = x,

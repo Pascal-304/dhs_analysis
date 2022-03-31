@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2022.3.8)  30 MAR 2022 23:33
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2022.3.8)  31 MAR 2022 09:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -582,155 +582,76 @@ LaTeX Warning: Reference `tab:total' on page 1 undefined on input line 159.
 
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <7> on input line 165.
-<paper_files/figure-latex/motheredu-1.pdf, id=49, 469.755pt x 325.215pt>
-File: paper_files/figure-latex/motheredu-1.pdf Graphic file (type pdf)
-<use paper_files/figure-latex/motheredu-1.pdf>
-Package pdftex.def Info: paper_files/figure-latex/motheredu-1.pdf  used on input line 191.
+<paper_files/figure-latex/unnamed-chunk-1-1.pdf, id=33, 469.755pt x 325.215pt>
+File: paper_files/figure-latex/unnamed-chunk-1-1.pdf Graphic file (type pdf)
+<use paper_files/figure-latex/unnamed-chunk-1-1.pdf>
+Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-1-1.pdf  used on input line 186.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [1
 
 {c:/Users/16132/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}pdfTeX warning (ext4): destination with the same identifier (name{table.1}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.193 \end{figure}
-                  ]
-<paper_files/figure-latex/mothereduchildcare-1.pdf, id=71, 469.755pt x 325.215pt>
-File: paper_files/figure-latex/mothereduchildcare-1.pdf Graphic file (type pdf)
-<use paper_files/figure-latex/mothereduchildcare-1.pdf>
-Package pdftex.def Info: paper_files/figure-latex/mothereduchildcare-1.pdf  used on input line 199.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<paper_files/figure-latex/workstatus-1.pdf, id=72, 469.755pt x 325.215pt>
-File: paper_files/figure-latex/workstatus-1.pdf Graphic file (type pdf)
-<use paper_files/figure-latex/workstatus-1.pdf>
-Package pdftex.def Info: paper_files/figure-latex/workstatus-1.pdf  used on input line 208.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<paper_files/figure-latex/workstatuschildcare-1.pdf, id=74, 469.755pt x 325.215pt>
-File: paper_files/figure-latex/workstatuschildcare-1.pdf Graphic file (type pdf)
-<use paper_files/figure-latex/workstatuschildcare-1.pdf>
-Package pdftex.def Info: paper_files/figure-latex/workstatuschildcare-1.pdf  used on input line 216.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<paper_files/figure-latex/occupation-1.pdf, id=75, 469.755pt x 325.215pt>
-File: paper_files/figure-latex/occupation-1.pdf Graphic file (type pdf)
-<use paper_files/figure-latex/occupation-1.pdf>
-Package pdftex.def Info: paper_files/figure-latex/occupation-1.pdf  used on input line 225.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<paper_files/figure-latex/occupationchildcare-1.pdf, id=77, 469.755pt x 325.215pt>
-File: paper_files/figure-latex/occupationchildcare-1.pdf Graphic file (type pdf)
-<use paper_files/figure-latex/occupationchildcare-1.pdf>
-Package pdftex.def Info: paper_files/figure-latex/occupationchildcare-1.pdf  used on input line 233.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<paper_files/figure-latex/employmentstatus-1.pdf, id=78, 469.755pt x 325.215pt>
-File: paper_files/figure-latex/employmentstatus-1.pdf Graphic file (type pdf)
-<use paper_files/figure-latex/employmentstatus-1.pdf>
-Package pdftex.def Info: paper_files/figure-latex/employmentstatus-1.pdf  used on input line 242.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<paper_files/figure-latex/employment_statuschildcare-1.pdf, id=80, 469.755pt x 325.215pt>
-File: paper_files/figure-latex/employment_statuschildcare-1.pdf Graphic file (type pdf)
-<use paper_files/figure-latex/employment_statuschildcare-1.pdf>
-Package pdftex.def Info: paper_files/figure-latex/employment_statuschildcare-1.pdf  used on input line 250.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<paper_files/figure-latex/map-1.pdf, id=81, 469.755pt x 325.215pt>
-File: paper_files/figure-latex/map-1.pdf Graphic file (type pdf)
-<use paper_files/figure-latex/map-1.pdf>
-Package pdftex.def Info: paper_files/figure-latex/map-1.pdf  used on input line 258.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[2pdfTeX warning (ext4): destination with the same identifier (name{figure.1}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.260 \includegraphics
-                      {paper_files/figure-latex/unnamed-chunk-1-1.pdf} <./paper_files/figure-latex/motheredu-1.pdf>] [3pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.260 \includegraphics
-                      {paper_files/figure-latex/unnamed-chunk-1-1.pdf} <./paper_files/figure-latex/mothereduchildcare-1.pdf>] [4pdfTeX warning (ext4): destination with the same identifier (name{figure.3}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.260 \includegraphics
-                      {paper_files/figure-latex/unnamed-chunk-1-1.pdf} <./paper_files/figure-latex/workstatus-1.pdf>] [5pdfTeX warning (ext4): destination with the same identifier (name{figure.4}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.260 \includegraphics
-                      {paper_files/figure-latex/unnamed-chunk-1-1.pdf} <./paper_files/figure-latex/workstatuschildcare-1.pdf>] [6pdfTeX warning (ext4): destination with the same identifier (name{figure.5}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.260 \includegraphics
-                      {paper_files/figure-latex/unnamed-chunk-1-1.pdf} <./paper_files/figure-latex/occupation-1.pdf>] [7pdfTeX warning (ext4): destination with the same identifier (name{figure.6}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.260 \includegraphics
-                      {paper_files/figure-latex/unnamed-chunk-1-1.pdf} <./paper_files/figure-latex/occupationchildcare-1.pdf>] [8pdfTeX warning (ext4): destination with the same identifier (name{figure.7}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.260 \includegraphics
-                      {paper_files/figure-latex/unnamed-chunk-1-1.pdf} <./paper_files/figure-latex/employmentstatus-1.pdf>] [9pdfTeX warning (ext4): destination with the same identifier (name{figure.8}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.260 \includegraphics
-                      {paper_files/figure-latex/unnamed-chunk-1-1.pdf} <./paper_files/figure-latex/employment_statuschildcare-1.pdf>]
-<paper_files/figure-latex/unnamed-chunk-1-1.pdf, id=168, 469.755pt x 325.215pt>
-File: paper_files/figure-latex/unnamed-chunk-1-1.pdf Graphic file (type pdf)
-<use paper_files/figure-latex/unnamed-chunk-1-1.pdf>
-Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-1-1.pdf  used on input line 260.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[10 <./paper_files/figure-latex/map-1.pdf>]
-<paper_files/figure-latex/unnamed-chunk-2-1.pdf, id=179, 469.755pt x 325.215pt>
+l.188 \includegraphics
+                      {paper_files/figure-latex/unnamed-chunk-2-1.pdf}]
+<paper_files/figure-latex/unnamed-chunk-2-1.pdf, id=54, 469.755pt x 325.215pt>
 File: paper_files/figure-latex/unnamed-chunk-2-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/unnamed-chunk-2-1.pdf>
-Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-2-1.pdf  used on input line 262.
+Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-2-1.pdf  used on input line 188.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[11 <./paper_files/figure-latex/unnamed-chunk-1-1.pdf>]
-<paper_files/figure-latex/unnamed-chunk-3-1.pdf, id=189, 469.755pt x 325.215pt>
+[2 <./paper_files/figure-latex/unnamed-chunk-1-1.pdf>]
+<paper_files/figure-latex/unnamed-chunk-3-1.pdf, id=64, 469.755pt x 325.215pt>
 File: paper_files/figure-latex/unnamed-chunk-3-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/unnamed-chunk-3-1.pdf>
-Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-3-1.pdf  used on input line 264.
+Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-3-1.pdf  used on input line 190.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[12 <./paper_files/figure-latex/unnamed-chunk-2-1.pdf>]
-LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 276.
+[3 <./paper_files/figure-latex/unnamed-chunk-2-1.pdf>]
+LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 202.
 (c:/Users/16132/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmtt.fd
 File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) [13 <./paper_files/figure-latex/unnamed-chunk-3-1.pdf>]
-<paper_files/figure-latex/unnamed-chunk-4-1.pdf, id=211, 469.755pt x 325.215pt>
+) [4 <./paper_files/figure-latex/unnamed-chunk-3-1.pdf>]
+<paper_files/figure-latex/unnamed-chunk-4-1.pdf, id=85, 469.755pt x 325.215pt>
 File: paper_files/figure-latex/unnamed-chunk-4-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/unnamed-chunk-4-1.pdf>
-Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-4-1.pdf  used on input line 305.
+Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-4-1.pdf  used on input line 231.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<paper_files/figure-latex/unnamed-chunk-5-1.pdf, id=212, 469.755pt x 325.215pt>
+<paper_files/figure-latex/unnamed-chunk-5-1.pdf, id=86, 469.755pt x 325.215pt>
 File: paper_files/figure-latex/unnamed-chunk-5-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/unnamed-chunk-5-1.pdf>
-Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-5-1.pdf  used on input line 310.
+Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-5-1.pdf  used on input line 236.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[14 <./paper_files/figure-latex/unnamed-chunk-4-1.pdf>]
-<paper_files/figure-latex/unnamed-chunk-6-1.pdf, id=223, 469.755pt x 325.215pt>
+[5 <./paper_files/figure-latex/unnamed-chunk-4-1.pdf>]
+<paper_files/figure-latex/unnamed-chunk-6-1.pdf, id=97, 469.755pt x 325.215pt>
 File: paper_files/figure-latex/unnamed-chunk-6-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/unnamed-chunk-6-1.pdf>
-Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-6-1.pdf  used on input line 330.
+Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-6-1.pdf  used on input line 238.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[15 <./paper_files/figure-latex/unnamed-chunk-5-1.pdf>]
-<paper_files/figure-latex/unnamed-chunk-7-1.pdf, id=233, 469.755pt x 325.215pt>
+[6 <./paper_files/figure-latex/unnamed-chunk-5-1.pdf>]
+<paper_files/figure-latex/unnamed-chunk-7-1.pdf, id=107, 469.755pt x 325.215pt>
 File: paper_files/figure-latex/unnamed-chunk-7-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/unnamed-chunk-7-1.pdf>
-Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-7-1.pdf  used on input line 351.
+Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-7-1.pdf  used on input line 240.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[16 <./paper_files/figure-latex/unnamed-chunk-6-1.pdf>] [17 <./paper_files/figure-latex/unnamed-chunk-7-1.pdf>] [18] (./paper.aux)
+[7 <./paper_files/figure-latex/unnamed-chunk-6-1.pdf>] [8 <./paper_files/figure-latex/unnamed-chunk-7-1.pdf>] [9] (./paper.aux)
 
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `paper.out' has not changed.
-(rerunfilecheck)             Checksum: C3351A643AF916B70EDC98BFFFE6E719;1507.
+(rerunfilecheck)             Checksum: F39471BD879454A09F01357B16F20690;988.
  ) 
 Here is how much of TeX's memory you used:
- 13382 strings out of 480236
- 215424 string characters out of 5894215
- 509136 words of memory out of 5000000
- 31008 multiletter control sequences out of 15000+600000
+ 13278 strings out of 480236
+ 211768 string characters out of 5894215
+ 508580 words of memory out of 5000000
+ 30938 multiletter control sequences out of 15000+600000
  532342 words of font info for 81 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  60i,9n,63p,410b,360s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/Users/16132/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{c:/Users/16132/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}<c:/Users/16132/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb><c:/Users/16132/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/16132/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx9.pfb><c:/Users/16132/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/16132/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/16132/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb><c:/Users/16132/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr6.pfb><c:/Users/16132/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/Users/16132/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr9.pfb><c:/Users/16132/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb><c:/Users/16132/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtti10.pfb>
-Output written on paper.pdf (18 pages, 363813 bytes).
+Output written on paper.pdf (9 pages, 288540 bytes).
 PDF statistics:
- 327 PDF objects out of 1000 (max. 8388607)
- 248 compressed objects within 3 object streams
- 50 named destinations out of 1000 (max. 500000)
- 169 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 196 PDF objects out of 1000 (max. 8388607)
+ 145 compressed objects within 2 object streams
+ 25 named destinations out of 1000 (max. 500000)
+ 92 words of extra memory for PDF output out of 10000 (max. 10000000)
 
