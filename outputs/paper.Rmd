@@ -57,412 +57,34 @@ ghana %>%
   summarise(sum = sum(number_of_employed_women))
 ```
 
-Table \@ref(tab:total) shows that 3,566 participated the survey, but there are 3 whom did not answer their employment status, etc. 
+Table \@ref(tab:total) shows that 3,566 participated the survey, but there are 3 whom did not answer their employment status, etc.
+
+## Key features
 
 ```{r data, echo=FALSE}
 ghana %>%
   select(background, no_child_under_six, one_more_child_under_six, caretaker_respondent, character) %>%
-  slice(1:10) %>%
+  slice(5:6, 13:20) %>%
   kable(caption='A subset of key features',
         col.names = c('Background', 'No child under six', '1+ child under six', 
-                      'Child\'s caretaker - respondent', 'Character'),
+                      'Child\'s caretaker- respondent', 'Category'),
         digits = 1,
         booktabs = FALSE,
-        linesep = "")
+        linesep = "") %>%
+  add_footnote("Numbers are in percentage (%).")
 ```
+
+The raw data contains the table created in 
+Some key features include background, no child under six, one or more child under six, and character. If the respondent answered to have one or more child under six, then they were further asked to indicate the caretaker of the child such as the respondent themselves, their partner, whether they hired a person for it, etc. The dataset is processed and analyzed using 'R' [@citeR] mainly with the 'tidyverse' [@citetidyverse] and 'dplyr' [@citedplyr] packages. The package 'janitor' [@citejanitor] is used to clean data, and the graphs and the tables are created in 'ggplot2' [@citeggplot2] and 'ggforce' [@citeggforce], and 'kableExtra' [@citekableExtra], respectively. The package 'stringr' [@citestringr] is used to manipulate the character string. The packages 'bookdown' [@citebookdown] and 'knitr' [@citeknitr] are used in generating the R Markdown report. Table \@ref(tab:data) created using 'kableExtra' [@citekableExtra] shows a subset of key features that will be discussed in this paper.
 
 # Results
 
-## Mother's education
-
-```{r motheredu, echo=FALSE, fig.cap="Mother's Education level"}
-# select mother edu
-mother_edu <-
-  ghana %>%
-  filter(character=="Mother\'s_education") %>%
-  mutate(
-    no_child_under_six = round(no_child_under_six/100 * number_of_employed_women, 0),
-    one_more_child_under_six = round(one_more_child_under_six/100 * number_of_employed_women, 0)
-  )
-
-# make dataset in long format
-edu_long <-
-  mother_edu %>%
-  select(-c(character, total)) %>%
-  pivot_longer(!background, names_to = "variable", values_to = "count") %>%
-  mutate(
-    background = factor(background,
-                        levels = c('No_education',
-                                   'Primary',
-                                   'Middle',
-                                   'Secondary+')
-    )
-  )
-
-edu_long %>%
-  filter(variable == 'no_child_under_six' | variable == 'one_more_child_under_six') %>%
-  ggplot(aes(x = background, y = count, fill = variable)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  labs(x = "Mother's education", y = "Number of employed women", fill = "Child under six") +
-  theme_minimal() +
-  scale_fill_discrete(labels = c("No child under six", 
-                                 "One or more child under six")) +
-  scale_x_discrete(labels = c("No_education" = "No education"))
-```
-
-Figure \@ref(fig:motheredu) shows that there are less women who studied more than secondary school, and only the secondary+ turned out to be more likely to have no child under six. 
-
-```{r mothereduchildcare, echo=FALSE, fig.cap="Distribution of child's caretaker by mother's education level"}
-# caretaker aspect
-edu_caretaker <-
-  edu_long %>%
-  filter(str_detect(variable, "^caretaker_")) %>%
-  mutate(variable = str_replace_all(variable, "caretaker_", "")) %>%
-  rename(caretaker = variable,
-         percentage = count) %>%
-  mutate(
-    caretaker = factor(caretaker, 
-                       levels = c('respondent',
-                                  'partner',
-                                  'other_relative',
-                                  'neighbor',
-                                  'hired',
-                                  'child_in_school',
-                                  'other_female_child',
-                                  'other_male_child',
-                                  'not_worked_since_birth',
-                                  'other',
-                                  'missing')
-    )
-  )
-
-# plot the bar graph
-edu_caretaker %>%
-  ggplot(mapping=aes(x=caretaker, y=percentage, fill=caretaker)) +
-  geom_bar(stat = "identity", position="dodge") + 
-  theme_minimal() +
-  labs(x='',
-       caption = 'Respondent is currently employed but has not worked since last birth.') +
-  theme(legend.position='none') +
-  coord_flip() + 
-  scale_x_discrete(
-    labels = 
-      c("respondent" = "respondent",
-        "partner" = "partner",
-        "other_relative" = "relative",
-        "neighbor" = "neighbor",
-        "hired" = "hired",
-        "child_in_school" = "schooling",
-        "other_female_child" = "female child",
-        "other_male_child" = "male child",
-        "not_worked_since_birth" = "not worked since birth",
-        "other" = "other",
-        "missing" = "missing")
-  ) +
-  facet_wrap(vars(background),
-             dir = "v",
-             scales = "free",
-             labeller = labeller(background = 
-                                   c("No_education" = "No education",
-                                     "Primary" = "Primary",
-                                     "Middle" = "Middle",
-                                     "Secondary+" = "Secondary+")
-                                 )
-  )
-```
-
-## Work status
-
-```{r workstatus, echo=FALSE, message=FALSE, fig.cap="Work status"}
-# select work status
-work_status <-
-  ghana %>%
-  filter(character=="Work_status") %>%
-  mutate(
-    no_child_under_six = round(no_child_under_six/100 * number_of_employed_women, 0),
-    one_more_child_under_six = round(one_more_child_under_six/100 * number_of_employed_women, 0)
-  )
-
-# make dataset in long format
-work_long <-
-  work_status %>%
-  select(-c(character, total)) %>%
-  pivot_longer(!background, names_to = "variable", values_to = "count") %>%
-  mutate(
-    background = factor(background,
-                        levels = c('For_family_member',
-                                   'For_someone_else',
-                                   'Self-employed')
-    )
-  )
-
-work_long %>%
-  filter(variable == 'no_child_under_six' | variable == 'one_more_child_under_six') %>%
-  ggplot(aes(x = background, y = count, fill = variable)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  labs(x = "Work status", y = "Number of employed women", fill = "Child under six") +
-  theme_minimal() +
-  labs(x='Work status', y='number of employed', fill='Child under six') +
-  scale_x_discrete(labels = c("For_family_member" = "For family member",
-                              "For_someone_else" = "For someone else")) + 
-  scale_fill_discrete(labels = c("No child under six", 
-                                 "One or more child under six"))
-```
-
-Figure \@ref(fig:workstatus) shows that
-
-```{r workstatuschildcare, echo=FALSE, fig.cap="Distribution of child's caretaker by work status"}
-# caretaker aspect
-work_caretaker <-
-  work_long %>%
-  filter(str_detect(variable, "^caretaker_")) %>%
-  mutate(variable = str_replace_all(variable, "caretaker_", "")) %>%
-  rename(caretaker = variable,
-         percentage = count) %>%
-  mutate(
-    caretaker = factor(caretaker, 
-                       levels = c('respondent',
-                                  'partner',
-                                  'other_relative',
-                                  'neighbor',
-                                  'hired',
-                                  'child_in_school',
-                                  'other_female_child',
-                                  'other_male_child',
-                                  'not_worked_since_birth',
-                                  'other',
-                                  'missing')
-    )
-  )
-
-# plot the bar graph
-work_caretaker %>%
-  ggplot(mapping=aes(x=caretaker, y=percentage, fill=caretaker)) +
-  geom_bar(stat = "identity", position="dodge") + 
-  theme_minimal() +
-  labs(x='',
-       caption = 'Respondent is currently employed but has not worked since last birth.') +
-  theme(legend.position='none') +
-  coord_flip() + 
-  scale_x_discrete(
-    labels = 
-      c("respondent" = "respondent",
-        "partner" = "partner",
-        "other_relative" = "relative",
-        "neighbor" = "neighbor",
-        "hired" = "hired",
-        "child_in_school" = "schooling",
-        "other_child" = "siblings",
-        "not_worked_since_birth" = "not worked since birth",
-        "other" = "other",
-        "missing" = "missing")
-  ) +
-  facet_wrap_paginate(vars(background),
-                      ncol=2,
-                      nrow=2,
-                      dir = "h",
-                      scales = "free",
-                      labeller = labeller(background = c("For_family_member" = "For family member",
-                                                         "For_someone_else" = "For someone else",
-                                                         "Self-employed" = "Self-employed")
-                      )
-  )
-
-
-```
-
-## Occupation
-
-```{r occupation, echo=FALSE, message=FALSE, fig.cap="Occupation"}
-# select occupation
-occupation <-
-  ghana %>%
-  filter(character=="Occupation") %>%
-  mutate(
-    no_child_under_six = round(no_child_under_six/100 * number_of_employed_women, 0),
-    one_more_child_under_six = round(one_more_child_under_six/100 * number_of_employed_women, 0)
-  )
-
-# make dataset in long format
-occup_long <-
-  occupation %>%
-  select(-c(character, total)) %>%
-  pivot_longer(!background, names_to = "variable", values_to = "count") %>%
-  mutate(
-    background = factor(background,
-                        levels = c('Agricultural',
-                                   'Nonagricultural')
-    )
-  )
-
-occup_long %>%
-  filter(variable == 'no_child_under_six' | variable == 'one_more_child_under_six') %>%
-  ggplot(aes(x = background, 
-             y = count,
-             fill = variable)) +
-  geom_bar(stat = "identity",
-           position = "dodge") +
-  labs(x = "Occupation",
-       y = "Number of employed women",
-       fill = "Child under six") +
-  theme_minimal() +
-  scale_fill_discrete(labels = c("No child under six", 
-                                 "One or more child under six"))
-```
-
-Figure \@ref(fig:occupation) shows that
-
-```{r occupationchildcare, echo=FALSE, fig.cap="Distribution of child's caretaker by work status"}
-# caretaker aspect
-occup_caretaker <-
-  occup_long %>%
-  filter(str_detect(variable, "^caretaker_")) %>%
-  mutate(variable = str_replace_all(variable, "caretaker_", "")) %>%
-  rename(caretaker = variable,
-         percentage = count) %>%
-  mutate(
-    caretaker = factor(caretaker, 
-                       levels = c('respondent',
-                                  'partner',
-                                  'other_relative',
-                                  'neighbor',
-                                  'hired',
-                                  'child_in_school',
-                                  'other_female_child',
-                                  'other_male_child',
-                                  'not_worked_since_birth',
-                                  'other',
-                                  'missing'))
-  )
-
-
-# plot bar graph
-occup_caretaker %>%
-  ggplot(aes(x=caretaker, y=percentage, fill=background)) +
-  geom_bar(stat = "identity", position="dodge") + 
-  labs(x="Caretaker", y="Percentage (in %)", fill="Occupation") +
-  theme_minimal() +
-  coord_flip() +
-  scale_x_discrete(
-    labels = 
-      c("respondent" = "respondent", 
-        "partner" = "partner",
-        "other_relative" = "relative",
-        "neighbor" = "neighbor",
-        "hired" = "hired",
-        "child_in_school" = "schooling",
-        "other_female_child" = "other female child",
-        "other_male_child" = "other male child",
-        "not_worked_since_birth" = "not worked since birth",
-        "other" = "other",
-        "missing" = "missing")
-  )
-```
-
-## Employment status
-
-```{r employmentstatus, echo=FALSE, message=FALSE, fig.cap="Employment status"}
-# select employment status
-employment_status <-
-  ghana %>%
-  filter(character=="Employment_status") %>%
-  mutate(
-    no_child_under_six = round(no_child_under_six/100 * number_of_employed_women, 0),
-    one_more_child_under_six = round(one_more_child_under_six/100 * number_of_employed_women, 0)
-  )
-
-# make dataset in long format
-emply_long <-
-  employment_status %>%
-  select(-c(character, total)) %>%
-  pivot_longer(!background, names_to = "variable", values_to = "count") %>%
-  mutate(
-    background = factor(background,
-                        levels = c('All_year_full_week',
-                                   'All_year_part_week',
-                                   'Seasonal',
-                                   'Occasional'))
-  )
-
-emply_long %>%
-  filter(variable == 'no_child_under_six' | variable == 'one_more_child_under_six') %>%
-  ggplot(aes(x = background, y = count, fill = variable)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  labs(x = "Employment status", y = "Number of employed women", fill = "Child under six") +
-  theme_minimal() +
-  scale_fill_discrete(labels = c("No child under six", 
-                                 "One or more child under six")) +
-  scale_x_discrete(labels = c("All_year_full_week" = "All year, full week",
-                              "All_year_part_week" = "All year, part week")) +
-  theme(axis.text.x = element_text(angle=15))
-```
-
-Figure \@ref(fig:employmentstatus) shows that
-
-```{r employment_statuschildcare, echo=FALSE, fig.cap="Distribution of child's caretaker by work status"}
-# caretaker aspect
-emply_caretaker <-
-  emply_long %>%
-  filter(str_detect(variable, "^caretaker_")) %>%
-  mutate(variable = str_replace_all(variable, "caretaker_", "")) %>%
-  rename(caretaker = variable,
-         percentage = count) %>%
-  mutate(
-    caretaker = factor(caretaker, 
-                       levels = c('respondent',
-                                  'partner',
-                                  'other_relative',
-                                  'neighbor',
-                                  'hired',
-                                  'child_in_school',
-                                  'other_female_child',
-                                  'other_male_child',
-                                  'not_worked_since_birth',
-                                  'other',
-                                  'missing')
-    )
-  )
-
-# plot the bar graph
-emply_caretaker %>%
-  ggplot(mapping=aes(x=caretaker, y=percentage, fill=caretaker)) +
-  geom_bar(stat = "identity", position="dodge") + 
-  theme_minimal() +
-  labs(x='',
-       caption = 'Respondent is currently employed but has not worked since last birth.') +
-  theme(legend.position='none') +
-  coord_flip() + 
-  scale_x_discrete(
-    labels = 
-      c("respondent" = "respondent",
-        "partner" = "partner",
-        "other_relative" = "relative",
-        "neighbor" = "neighbor",
-        "hired" = "hired",
-        "child_in_school" = "schooling",
-        "other_child" = "siblings",
-        "not_worked_since_birth" = "not worked since birth",
-        "other" = "other",
-        "missing" = "missing")
-  ) +
-  facet_wrap(vars(background),
-             dir = "v",
-             scales = "free",
-             labeller = labeller(background = c("All_year_full_week" = "All year, full week",
-                                                "All_year_part_week" = "All year, part week",
-                                                "Seasonal" = "Seasonal",
-                                                "Occasional" = "Occasional")
-                                 )
-  )
-
-```
-
 ## Region
 
-```{r map, warning = FALSE, echo = FALSE}
+```{r map, message=FALSE, echo = FALSE, warning=FALSE}
 # install.packages('rnaturalearth')
 # install.packages('sf')
-library(rnaturalearth)
+library(rnaturalearth) # we need to cite these packages as well
 library(sf)
 # devtools::install_github("ropensci/rnaturalearthhires")
 # The st_centroid function takes the sf object and returns the center of 
@@ -564,7 +186,7 @@ resid_long %>%
 ```
 
 
-```{r, echo=FALSE}
+```{r areachildcare, echo=FALSE}
 # caretaker aspect
 
 # make dataset into long format
@@ -605,13 +227,418 @@ caretaker %>%
 ## Also comparison among the different administrative regions
 
 
+## Mother's education
 
+```{r motheredu, echo=FALSE, fig.cap="Mother's Education level", fig.width=6, fig.height=4}
+# select mother edu
+mother_edu <-
+  ghana %>%
+  filter(character=="Mother\'s_education") %>%
+  mutate(
+    no_child_under_six = round(no_child_under_six/100 * number_of_employed_women, 0),
+    one_more_child_under_six = round(one_more_child_under_six/100 * number_of_employed_women, 0)
+  )
+
+# make dataset in long format
+edu_long <-
+  mother_edu %>%
+  select(-c(character, total)) %>%
+  pivot_longer(!background, names_to = "variable", values_to = "count") %>%
+  mutate(
+    background = factor(background,
+                        levels = c('No_education',
+                                   'Primary',
+                                   'Middle',
+                                   'Secondary+')
+    )
+  )
+
+edu_long %>%
+  filter(variable == 'no_child_under_six' | variable == 'one_more_child_under_six') %>%
+  ggplot(aes(x = background, y = count, fill = variable)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(x = "Mother's education", y = "Number of employed women", fill = "Child under six") +
+  theme_minimal() +
+  scale_fill_discrete(labels = c("No child under six", 
+                                 "One or more child under six")) +
+  scale_x_discrete(labels = c("No_education" = "No education")) +
+  theme(legend.position = 'bottom')
+```
+
+Figure \@ref(fig:motheredu) shows that there are significantly less employed women who studied at secondary school and beyond it. Also, it can be observed that the employed women who did not continue their education until the secondary school are more likely to have a child under six, whereas there are more employed women who studied beyond the secondary school and have no child under six. In addition, when we take a look at the number of employed women who did not get any education, we can see that there are a lot more women with a child under six than without, and the difference between them is notably big. However, as the level of mother's education gets higher, the gap between having a child under six and no child under six decreases, and it gets reversed when the women completed the secondary school.
+
+```{r mothereduchildcare, echo=FALSE, fig.cap="Distribution of child's caretaker by mother's education level"}
+# caretaker aspect
+edu_caretaker <-
+  edu_long %>%
+  filter(str_detect(variable, "^caretaker_")) %>%
+  mutate(variable = str_replace_all(variable, "caretaker_", "")) %>%
+  rename(caretaker = variable,
+         percentage = count) %>%
+  mutate(
+    caretaker = factor(caretaker, 
+                       levels = c('respondent',
+                                  'partner',
+                                  'other_relative',
+                                  'neighbor',
+                                  'hired',
+                                  'child_in_school',
+                                  'other_female_child',
+                                  'other_male_child',
+                                  'not_worked_since_birth',
+                                  'other',
+                                  'missing')
+    )
+  )
+
+# plot the bar graph
+edu_caretaker %>%
+  ggplot(mapping=aes(x=caretaker, y=percentage, fill=caretaker)) +
+  geom_bar(stat = "identity", position="dodge") + 
+  theme_minimal() +
+  labs(x='',
+       caption = 'Respondent is currently employed but has not worked since last birth.') +
+  theme(legend.position='none') +
+  coord_flip() + 
+  scale_x_discrete(
+    labels = 
+      c("respondent" = "respondent",
+        "partner" = "partner",
+        "other_relative" = "relative",
+        "neighbor" = "neighbor",
+        "hired" = "hired",
+        "child_in_school" = "schooling",
+        "other_female_child" = "female child",
+        "other_male_child" = "male child",
+        "not_worked_since_birth" = "not worked since birth",
+        "other" = "other",
+        "missing" = "missing")
+  ) +
+  facet_wrap(vars(background),
+             dir = "v",
+             scales = "free",
+             labeller = labeller(background = 
+                                   c("No_education" = "No education",
+                                     "Primary" = "Primary",
+                                     "Middle" = "Middle",
+                                     "Secondary+" = "Secondary+")
+                                 )
+  )
+```
+
+Figure \@ref(fig:mothereduchildcare) demonstrates that no matter what their education level is, it is mostly the employed women who take care of their children. When the level of the women's education is below high school, then it is followed by the relative. As the level of the women's education gets higher, then the percentage of schooling their children gets higher as well. Moreover, it is worthwhile to mention that the women who completed high school are more likely to stop working after having a birth compare to the women whose education level is lower than secondary school. 
+
+## Work status
+
+```{r workstatus, echo=FALSE, message=FALSE, fig.cap="Work status", fig.width=6, fig.height=4}
+# select work status
+work_status <-
+  ghana %>%
+  filter(character=="Work_status") %>%
+  mutate(
+    no_child_under_six = round(no_child_under_six/100 * number_of_employed_women, 0),
+    one_more_child_under_six = round(one_more_child_under_six/100 * number_of_employed_women, 0)
+  )
+
+# make dataset in long format
+work_long <-
+  work_status %>%
+  select(-c(character, total)) %>%
+  pivot_longer(!background, names_to = "variable", values_to = "count") %>%
+  mutate(
+    background = factor(background,
+                        levels = c('For_family_member',
+                                   'For_someone_else',
+                                   'Self-employed')
+    )
+  )
+
+work_long %>%
+  filter(variable == 'no_child_under_six' | variable == 'one_more_child_under_six') %>%
+  ggplot(aes(x = background, y = count, fill = variable)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(x = "Work status", y = "Number of employed women", fill = "Child under six") +
+  theme_minimal() +
+  scale_x_discrete(labels = c("For_family_member" = "For family member",
+                              "For_someone_else" = "For someone else")) + 
+  scale_fill_discrete(labels = c("No child under six", 
+                                 "One or more child under six")) +
+  theme(legend.position='bottom')
+```
+
+Figure \@ref(fig:workstatus) shows that most of the employed women are self-employed. If the women work for themselves or for their family, then it is more likely to have one or more than one child under six, whereas when they work for someone else, there are more women who do not have a child under six. It should be noted that no child under six does not mean that they have no child. 
+
+```{r workstatuschildcare, echo=FALSE, fig.cap="Distribution of child's caretaker by work status"}
+# caretaker aspect
+work_caretaker <-
+  work_long %>%
+  filter(str_detect(variable, "^caretaker_")) %>%
+  mutate(variable = str_replace_all(variable, "caretaker_", "")) %>%
+  rename(caretaker = variable,
+         percentage = count) %>%
+  mutate(
+    caretaker = factor(caretaker, 
+                       levels = c('respondent',
+                                  'partner',
+                                  'other_relative',
+                                  'neighbor',
+                                  'hired',
+                                  'child_in_school',
+                                  'other_female_child',
+                                  'other_male_child',
+                                  'not_worked_since_birth',
+                                  'other',
+                                  'missing')
+    )
+  )
+
+# plot the bar graph
+work_caretaker %>%
+  ggplot(mapping=aes(x=caretaker, y=percentage, fill=caretaker)) +
+  geom_bar(stat = "identity", position="dodge") + 
+  theme_minimal() +
+  labs(x='',
+       caption = 'Respondent is currently employed but has not worked since last birth.') +
+  theme(legend.position='none') +
+  coord_flip() + 
+  scale_x_discrete(
+    labels = 
+      c("respondent" = "respondent",
+        "partner" = "partner",
+        "other_relative" = "relative",
+        "neighbor" = "neighbor",
+        "hired" = "hired",
+        "child_in_school" = "schooling",
+        "other_child" = "siblings",
+        "not_worked_since_birth" = "not worked since birth",
+        "other" = "other",
+        "missing" = "missing")
+  ) +
+  facet_wrap_paginate(vars(background),
+                      ncol=2,
+                      nrow=2,
+                      dir = "h",
+                      scales = "free",
+                      labeller = labeller(background = c("For_family_member" = "For family member",
+                                                         "For_someone_else" = "For someone else",
+                                                         "Self-employed" = "Self-employed")
+                      )
+  )
+
+
+```
+
+It can be observed from Figure \@ref(fig:workstatuschildcare) that most of the employed women take care of their children by themselves regardless of whom they work for, and then it is their relatives who take care of their children. We can tell that if they are self-employed or work for the family, then it is more likely to have a family member taking care of their children under six, whereas the percentage of schooling their child under six is relatively higher when they work for someone else. 
+
+## Occupation
+
+```{r occupation, echo=FALSE, message=FALSE, fig.cap="Occupation", fig.width=6, fig.height=4}
+# select occupation
+occupation <-
+  ghana %>%
+  filter(character=="Occupation") %>%
+  mutate(
+    no_child_under_six = round(no_child_under_six/100 * number_of_employed_women, 0),
+    one_more_child_under_six = round(one_more_child_under_six/100 * number_of_employed_women, 0)
+  )
+
+# make dataset in long format
+occup_long <-
+  occupation %>%
+  select(-c(character, total)) %>%
+  pivot_longer(!background, names_to = "variable", values_to = "count") %>%
+  mutate(
+    background = factor(background,
+                        levels = c('Agricultural',
+                                   'Nonagricultural')
+    )
+  )
+
+occup_long %>%
+  filter(variable == 'no_child_under_six' | variable == 'one_more_child_under_six') %>%
+  ggplot(aes(x = background, 
+             y = count,
+             fill = variable)) +
+  geom_bar(stat = "identity",
+           position = "dodge") +
+  labs(x = "Occupation",
+       y = "Number of employed women",
+       fill = "Child under six") +
+  theme_minimal() +
+  scale_fill_discrete(labels = c("No child under six", 
+                                 "One or more child under six")) +
+  theme(legend.position = 'bottom')
+```
+
+Figure \@ref(fig:occupation) shows that there are more women working in the non-agricultural industry. When they work in the agricultural industry, the number of women who have a child under six is twice as many as the number of the ones who have no child under six. On the contrary, the number of women with no child under six is slightly higher than that of the ones with a child in the non-agricultural industry. 
+
+```{r occupationchildcare, echo=FALSE, fig.cap="Distribution of child's caretaker by Occupation"}
+# caretaker aspect
+occup_caretaker <-
+  occup_long %>%
+  filter(str_detect(variable, "^caretaker_")) %>%
+  mutate(variable = str_replace_all(variable, "caretaker_", "")) %>%
+  rename(caretaker = variable,
+         percentage = count) %>%
+  mutate(
+    caretaker = factor(caretaker, 
+                       levels = c('respondent',
+                                  'partner',
+                                  'other_relative',
+                                  'neighbor',
+                                  'hired',
+                                  'child_in_school',
+                                  'other_female_child',
+                                  'other_male_child',
+                                  'not_worked_since_birth',
+                                  'other',
+                                  'missing'))
+  )
+
+
+# plot bar graph
+occup_caretaker %>%
+  ggplot(aes(x=caretaker, y=percentage, fill=background)) +
+  geom_bar(stat = "identity", position="dodge") + 
+  labs(x="Caretaker", y="Percentage (in %)", fill="Occupation") +
+  theme_minimal() +
+  theme(legend.position='bottom') +
+  coord_flip() +
+  scale_x_discrete(
+    labels = 
+      c("respondent" = "respondent", 
+        "partner" = "partner",
+        "other_relative" = "relative",
+        "neighbor" = "neighbor",
+        "hired" = "hired",
+        "child_in_school" = "schooling",
+        "other_female_child" = "other female child",
+        "other_male_child" = "other male child",
+        "not_worked_since_birth" = "not worked since birth",
+        "other" = "other",
+        "missing" = "missing")
+  )
+```
+
+Figure \@ref(fig:occupationchildcare) illustrates that the percentage of the child's caretaker is highest in the respondent followed by the relative and schooling. This means that it is mostly the case that the employed women taking care of their children under six. In particular, more than a half of the employed women working in the agricultural industry are the primary caretaker of the child under six. Also, we can see that it is more likely for the female sibling to take care of the kids under six than the male sibling. 
+
+## Employment status
+
+```{r employmentstatus, echo=FALSE, message=FALSE, fig.cap="Employment status", fig.width=6, fig.height=4}
+# select employment status
+employment_status <-
+  ghana %>%
+  filter(character=="Employment_status") %>%
+  mutate(
+    no_child_under_six = round(no_child_under_six/100 * number_of_employed_women, 0),
+    one_more_child_under_six = round(one_more_child_under_six/100 * number_of_employed_women, 0)
+  )
+
+# make dataset in long format
+emply_long <-
+  employment_status %>%
+  select(-c(character, total)) %>%
+  pivot_longer(!background, names_to = "variable", values_to = "count") %>%
+  mutate(
+    background = factor(background,
+                        levels = c('All_year_full_week',
+                                   'All_year_part_week',
+                                   'Seasonal',
+                                   'Occasional'))
+  )
+
+emply_long %>%
+  filter(variable == 'no_child_under_six' | variable == 'one_more_child_under_six') %>%
+  ggplot(aes(x = background, y = count, fill = variable)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(x = "Employment status", y = "Number of employed women", fill = "Child under six") +
+  theme_minimal() +
+  scale_fill_discrete(labels = c("No child under six", 
+                                 "One or more child under six")) +
+  scale_x_discrete(labels = c("All_year_full_week" = "All year, full week",
+                              "All_year_part_week" = "All year, part week")) +
+  theme(axis.text.x = element_text(angle=15), legend.position = 'bottom')
+```
+
+Figure \@ref(fig:employmentstatus) illustrates that majority of the employed women work for the entire year. Specifically, majority of them work full week. There are few women who work occasionally. On top of that, regardless of what their employment status is, there are more women who have one or more child under six. 
+
+```{r employmentstatuschildcare, echo=FALSE, fig.cap="Distribution of child's caretaker by work status"}
+# caretaker aspect
+emply_caretaker <-
+  emply_long %>%
+  filter(str_detect(variable, "^caretaker_")) %>%
+  mutate(variable = str_replace_all(variable, "caretaker_", "")) %>%
+  rename(caretaker = variable,
+         percentage = count) %>%
+  mutate(
+    caretaker = factor(caretaker, 
+                       levels = c('respondent',
+                                  'partner',
+                                  'other_relative',
+                                  'neighbor',
+                                  'hired',
+                                  'child_in_school',
+                                  'other_female_child',
+                                  'other_male_child',
+                                  'not_worked_since_birth',
+                                  'other',
+                                  'missing')
+    )
+  )
+
+# plot the bar graph
+emply_caretaker %>%
+  ggplot(mapping=aes(x=caretaker, y=percentage, fill=caretaker)) +
+  geom_bar(stat = "identity", position="dodge") + 
+  theme_minimal() +
+  labs(x='',
+       caption = 'Respondent is currently employed but has not worked since last birth.') +
+  theme(legend.position='none') +
+  coord_flip() + 
+  scale_x_discrete(
+    labels = 
+      c("respondent" = "respondent",
+        "partner" = "partner",
+        "other_relative" = "relative",
+        "neighbor" = "neighbor",
+        "hired" = "hired",
+        "child_in_school" = "schooling",
+        "other_child" = "siblings",
+        "not_worked_since_birth" = "not worked since birth",
+        "other" = "other",
+        "missing" = "missing")
+  ) +
+  facet_wrap(vars(background),
+             dir = "v",
+             scales = "free",
+             labeller = labeller(background = c("All_year_full_week" = "All year, full week",
+                                                "All_year_part_week" = "All year, part week",
+                                                "Seasonal" = "Seasonal",
+                                                "Occasional" = "Occasional")
+                                 )
+  )
+
+```
+
+We can see from Figure \@ref(fig:employmentstatuschildcare) that the percentage of the respondent being the primary caretaker of the child under six is remarkably higher than the others in all four employment status. It exceeds 40% in all four cases, and in particular, it is close to 50% when they work all year, full week. Next, it is the relatives who mainly take care of the child under six. It should be noted that there are more women sending their kids under six to school when they work all year compare to the ones who do not work throughout the entire year. 
 
 # Discussions
+
+## Child's caretaker
+
+Every figure that demonstrates the distribution of the child's caretaker shows that it is most likely to be the mother primarily taking care of their child under six. In other words, no matter where they live, what their education level is, and what type of a job they have, majority of the employed women is the primary caregiver of a child under six. Therefore, we can deduce that in Ghana it was common that the mother is primarily responsible for the care and raising of a child back in 1988.
+
+Besides the mother being the primary caregiver of a child under six, it can be observed from Figure \@ref(fig:mothereduchildcare), Figure \@ref(fig:workstatuschildcare), Figure \@ref(fig:occupationchildcare), Figure \@ref(fig:employmentstatuschildcare) that the relatives are likely to be the primary caregiver. Also, there are some family where the older siblings take care of their kids under six. Thus, we can tell that if there is a child under six in the family, then it was usual for the family member to take care of them in Ghana, 1988. 
+
+In addition, we can observe that it is uncommon to hire a person to take care of the child under six. Instead of hiring a person, there are more cases reported that they sent the kids to school. Figure \@ref(fig:areachildcare) demonstrates that the percentage of the employed women sending their kids to school is higher in urban areas than in rural areas. Figure \@ref(fig:mothereduchildcare) shows that there are more women who send their kids to school as their education level gets higher. Figure \@ref(fig:workstatuschildcare) illustrates that it is more likely to have their kids in school when they work for someone else than when they work for the family member or when they are self-employed. Figure \@ref(fig:occupationchildcare) shows that the percentage of the employed women sending their kids to school is higher in non-agricultural sectors than in agricultural sectors. Lastly, we can see from Figure \@ref(fig:employmentstatuschildcare) that there are more women sending their kids to school when they work all year compare to the ones who work seasonally and occasionally. 
+
+Lastly, we can tell that it is rarely the case that the mother stop working after having a birth. However, it is worth noting that the percentage of the employed women stop working after the birth is higher in urban areas than in rural areas from Figure \@ref(fig:areachildcare). In addition, Figure \@ref(fig:mothereduchildcare) shows that the women who completed high school tend to stop working after having a birth more than the ones with a lower education level. Moreover, the fact that the women who work for someone else are more likely to stop work since the last birth than the ones working for themselves or their family can be observed in Figure \@ref(fig:workstatuschildcare). Furthermore, Figure \@ref(fig:employmentstatuschildcare) shows that the percentage of the employed women stop working after the birth is higher among the women working all year than the ones working few times of the year. 
 
 ## Limitation and weaknesses
 
 The number does not add up to 100. (round-off error)
+
+'Mother's education level' might not be the accurate terminology to be used as it might be the case that the employed women not having any child. 
 
 \newpage
 
