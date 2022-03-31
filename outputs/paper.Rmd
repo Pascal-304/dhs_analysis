@@ -19,6 +19,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r library, echo=FALSE, message=FALSE}
 # install.packages('bookdown')
 # install.packages("stringr")
+# install.packages("ggforce")
 library(stringr) 
 library(dplyr)
 library(tidyverse) 
@@ -27,6 +28,7 @@ library(ggplot2)
 library(knitr)
 library(kableExtra)
 library(bookdown)
+library(ggforce)
 ```
 
 ```{r readdata, echo=FALSE}
@@ -73,7 +75,8 @@ ghana %>%
 
 ## Mother's education
 
-```{r motheredu, echo=FALSE, message=FALSE, fig.cap="Mother's Education level"}
+```{r motheredu, echo=FALSE, fig.cap="Mother's Education level"}
+# select mother edu
 mother_edu <-
   ghana %>%
   filter(character=="Mother\'s_education") %>%
@@ -82,172 +85,76 @@ mother_edu <-
     one_more_child_under_six = round(one_more_child_under_six/100 * number_of_employed_women, 0)
   )
 
-mother_edu_tb<-
-  tibble(
-    background =
-      c(""),
-    child_under_six = 
-      c("")
-  )
-
-for (r in 1:nrow(mother_edu)){
-  level <- mother_edu$background[r]
-  edu <-
-    tibble(
-      background = 
-        c(
-          rep(level, mother_edu$number_of_employed_women[r])
-        ),
-      child_under_six = 
-        c(
-          rep("No_child_under_six", mother_edu$no_child_under_six[r]),
-          rep("One_more_child_under_six", mother_edu$one_more_child_under_six[r])
-        )
-      )
-  
-  mother_edu_tb <- bind_rows(mother_edu_tb, edu)
-  rm(level,
-     edu)
-}
-rm(r)
-mother_edu_tb <- mother_edu_tb[-c(1),]
-
-mother_edu_tb <-
-  mother_edu_tb %>%
+# make dataset in long format
+edu_long <-
+  mother_edu %>%
+  select(-c(character, total)) %>%
+  pivot_longer(!background, names_to = "variable", values_to = "count") %>%
   mutate(
     background = factor(background,
                         levels = c('No_education',
                                    'Primary',
                                    'Middle',
                                    'Secondary+')
-                        )
     )
+  )
 
-mother_edu_tb %>%
-  ggplot(mapping=aes(x=background, fill=child_under_six)) +
-  geom_bar(position='dodge') +
+edu_long %>%
+  filter(variable == 'no_child_under_six' | variable == 'one_more_child_under_six') %>%
+  ggplot(aes(x = background, y = count, fill = variable)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(x = "Mother's education", y = "Number of employed women", fill = "Child under six") +
   theme_minimal() +
-  labs(x='education level', y='number of employed', fill='Child under six') +
-  scale_x_discrete(labels = c("No_education" = "No education")) +
   scale_fill_discrete(labels = c("No child under six", 
-                                 "One or more child under six"))
-
-rm(mother_edu_tb)
+                                 "One or more child under six")) +
+  scale_x_discrete(labels = c("No_education" = "No education"))
 ```
 
 Figure \@ref(fig:motheredu) shows that there are less women who studied more than secondary school, and only the secondary+ turned out to be more likely to have no child under six. 
 
 ```{r mothereduchildcare, echo=FALSE, fig.cap="Distribution of child's caretaker by mother's education level"}
-mother_edu <-
-  mother_edu %>%
+# caretaker aspect
+edu_caretaker <-
+  edu_long %>%
+  filter(str_detect(variable, "^caretaker_")) %>%
+  mutate(variable = str_replace_all(variable, "caretaker_", "")) %>%
+  rename(caretaker = variable,
+         percentage = count) %>%
   mutate(
-    caretaker_respondent = round(caretaker_respondent/100 * one_more_child_under_six, 0),
-    caretaker_partner = round(caretaker_partner/100 * one_more_child_under_six, 0),
-    caretaker_other_relative = round(caretaker_other_relative/100 * one_more_child_under_six, 0),
-    caretaker_neighbor = round(caretaker_neighbor/100 * one_more_child_under_six, 0),
-    caretaker_hired = round(caretaker_hired/100 * one_more_child_under_six, 0),
-    caretaker_child_in_school = round(caretaker_child_in_school/100 * one_more_child_under_six, 0),
-    caretaker_other_female_child = round(caretaker_other_female_child/100 * one_more_child_under_six, 0),
-    caretaker_other_male_child = round(caretaker_other_male_child/100 * one_more_child_under_six, 0),
-    caretaker_not_worked_since_birth = round(caretaker_not_worked_since_birth/100 * one_more_child_under_six, 0),
-    caretaker_other = round(caretaker_other/100 * one_more_child_under_six, 0),
-    caretaker_missing = round(caretaker_missing/100 * one_more_child_under_six, 0)
-    ) %>%
-  mutate(
-    caretaker_other_female_child = caretaker_other_female_child + caretaker_other_male_child
-  ) %>%
-  select(-caretaker_other_male_child) %>%
-  rename(caretaker_other_child = caretaker_other_female_child)
-
-mother_edu_tb<-
-  tibble(
-    background =
-      c(""),
-    child_caretaker = 
-      c("")
+    caretaker = factor(caretaker, 
+                       levels = c('respondent',
+                                  'partner',
+                                  'other_relative',
+                                  'neighbor',
+                                  'hired',
+                                  'child_in_school',
+                                  'other_female_child',
+                                  'other_male_child',
+                                  'not_worked_since_birth',
+                                  'other',
+                                  'missing')
+    )
   )
 
-# clean_caretaker <- 
-#   mother_edu %>%
-#   select(starts_with("caretaker_")) %>%
-#   mutate(sum_caretaker = rowSums(.))
-# clean_caretaker$num <-
-#   mother_edu$one_more_child_under_six
-
-mother_edu[3, 13] <- 0
-mother_edu[3, 11] <- mother_edu[3, 11] - 1
-
-for (r in 1:nrow(mother_edu)){
-  level <- mother_edu$background[r]
-  edu <-
-    tibble(
-      background = 
-        c(
-          rep(level, mother_edu$one_more_child_under_six[r])
-        ),
-      child_caretaker = 
-        c(
-          rep("respondent", mother_edu$caretaker_respondent[r]),
-          rep("partner", mother_edu$caretaker_partner[r]),
-          rep("other_relative", mother_edu$caretaker_other_relative[r]),
-          rep("neighbor", mother_edu$caretaker_neighbor[r]),
-          rep("hired", mother_edu$caretaker_hired[r]),
-          rep("child_in_school", mother_edu$caretaker_child_in_school[r]),
-          rep("other_child", mother_edu$caretaker_other_child[r]),
-          rep("not_worked_since_birth", mother_edu$caretaker_not_worked_since_birth[r]),
-          rep("other", mother_edu$caretaker_other[r]),
-          rep("missing", mother_edu$caretaker_missing[r])
-        )
-      )
-  
-  mother_edu_tb <- bind_rows(mother_edu_tb, edu)
-  rm(level,
-     edu)
-}
-rm(r)
-mother_edu_tb <- mother_edu_tb[-c(1),]
-
-
-mother_edu_tb <-
-  mother_edu_tb %>%
-  mutate(
-    background = factor(background,
-                        levels = c('No_education',
-                                   'Primary',
-                                   'Middle',
-                                   'Secondary+')
-                        ),
-    child_caretaker = factor(child_caretaker,
-                             levels = c('respondent',
-                                        'partner',
-                                        'other_relative',
-                                        'neighbor',
-                                        'hired',
-                                        'child_in_school',
-                                        'other_child',
-                                        'not_worked_since_birth',
-                                        'other',
-                                        'missing')
-                             )
-    )
-
-mother_edu_tb %>%
-  ggplot(mapping=aes(x=child_caretaker, fill=child_caretaker)) +
-  geom_bar() +
+# plot the bar graph
+edu_caretaker %>%
+  ggplot(mapping=aes(x=caretaker, y=percentage, fill=caretaker)) +
+  geom_bar(stat = "identity", position="dodge") + 
   theme_minimal() +
   labs(x='',
-       y='number of employed',
        caption = 'Respondent is currently employed but has not worked since last birth.') +
-  theme(axis.text.x = element_text(angle=15), legend.position='none') +
+  theme(legend.position='none') +
+  coord_flip() + 
   scale_x_discrete(
     labels = 
-      c("respondent" = "respondent", 
+      c("respondent" = "respondent",
         "partner" = "partner",
         "other_relative" = "relative",
         "neighbor" = "neighbor",
         "hired" = "hired",
         "child_in_school" = "schooling",
-        "other_child" = "siblings",
+        "other_female_child" = "female child",
+        "other_male_child" = "male child",
         "not_worked_since_birth" = "not worked since birth",
         "other" = "other",
         "missing" = "missing")
@@ -262,13 +169,12 @@ mother_edu_tb %>%
                                      "Secondary+" = "Secondary+")
                                  )
   )
-
-rm(mother_edu_tb)
 ```
 
 ## Work status
 
 ```{r workstatus, echo=FALSE, message=FALSE, fig.cap="Work status"}
+# select work status
 work_status <-
   ghana %>%
   filter(character=="Work_status") %>%
@@ -277,157 +183,70 @@ work_status <-
     one_more_child_under_six = round(one_more_child_under_six/100 * number_of_employed_women, 0)
   )
 
-work_status_tb<-
-  tibble(
-    background =
-      c(""),
-    child_under_six = 
-      c("")
-  )
-
-for (r in 1:nrow(work_status)){
-  status <- work_status$background[r]
-  work <-
-    tibble(
-      background = 
-        c(
-          rep(status, work_status$number_of_employed_women[r])
-        ),
-      child_under_six = 
-        c(
-          rep("No_child_under_six", work_status$no_child_under_six[r]),
-          rep("One_more_child_under_six", work_status$one_more_child_under_six[r])
-        )
-      )
-  
-  work_status_tb <- bind_rows(work_status_tb, work)
-  rm(status,
-     work)
-}
-rm(r)
-work_status_tb <- work_status_tb[-c(1),]
-
-work_status_tb <-
-  work_status_tb %>%
+# make dataset in long format
+work_long <-
+  work_status %>%
+  select(-c(character, total)) %>%
+  pivot_longer(!background, names_to = "variable", values_to = "count") %>%
   mutate(
     background = factor(background,
                         levels = c('For_family_member',
                                    'For_someone_else',
                                    'Self-employed')
-                        )
     )
+  )
 
-work_status_tb %>%
-  ggplot(mapping=aes(x=background, fill=child_under_six)) +
-  geom_bar(position='dodge') +
+work_long %>%
+  filter(variable == 'no_child_under_six' | variable == 'one_more_child_under_six') %>%
+  ggplot(aes(x = background, y = count, fill = variable)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(x = "Work status", y = "Number of employed women", fill = "Child under six") +
   theme_minimal() +
   labs(x='Work status', y='number of employed', fill='Child under six') +
   scale_x_discrete(labels = c("For_family_member" = "For family member",
                               "For_someone_else" = "For someone else")) + 
   scale_fill_discrete(labels = c("No child under six", 
                                  "One or more child under six"))
-
-rm(work_status_tb)
 ```
 
-Figure \@ref(fig:workstatus) shows that 
+Figure \@ref(fig:workstatus) shows that
 
 ```{r workstatuschildcare, echo=FALSE, fig.cap="Distribution of child's caretaker by work status"}
-work_status <-
-  work_status %>%
+# caretaker aspect
+work_caretaker <-
+  work_long %>%
+  filter(str_detect(variable, "^caretaker_")) %>%
+  mutate(variable = str_replace_all(variable, "caretaker_", "")) %>%
+  rename(caretaker = variable,
+         percentage = count) %>%
   mutate(
-    caretaker_respondent = round(caretaker_respondent/100 * one_more_child_under_six, 0),
-    caretaker_partner = round(caretaker_partner/100 * one_more_child_under_six, 0),
-    caretaker_other_relative = round(caretaker_other_relative/100 * one_more_child_under_six, 0),
-    caretaker_neighbor = round(caretaker_neighbor/100 * one_more_child_under_six, 0),
-    caretaker_hired = round(caretaker_hired/100 * one_more_child_under_six, 0),
-    caretaker_child_in_school = round(caretaker_child_in_school/100 * one_more_child_under_six, 0),
-    caretaker_other_female_child = round(caretaker_other_female_child/100 * one_more_child_under_six, 0),
-    caretaker_other_male_child = round(caretaker_other_male_child/100 * one_more_child_under_six, 0),
-    caretaker_not_worked_since_birth = round(caretaker_not_worked_since_birth/100 * one_more_child_under_six, 0),
-    caretaker_other = round(caretaker_other/100 * one_more_child_under_six, 0),
-    caretaker_missing = round(caretaker_missing/100 * one_more_child_under_six, 0)
-    ) %>%
-  mutate(
-    caretaker_other_female_child = caretaker_other_female_child + caretaker_other_male_child
-  ) %>%
-  select(-caretaker_other_male_child) %>%
-  rename(caretaker_other_child = caretaker_other_female_child)
-
-work_status_tb<-
-  tibble(
-    background =
-      c(""),
-    child_caretaker = 
-      c("")
+    caretaker = factor(caretaker, 
+                       levels = c('respondent',
+                                  'partner',
+                                  'other_relative',
+                                  'neighbor',
+                                  'hired',
+                                  'child_in_school',
+                                  'other_female_child',
+                                  'other_male_child',
+                                  'not_worked_since_birth',
+                                  'other',
+                                  'missing')
+    )
   )
 
-work_status[1, 13] <- 0
-work_status[2, 13] <- 0
-work_status[3, 13] <- work_status[3, 13] + 1
-
-for (r in 1:nrow(work_status)){
-  status <- work_status$background[r]
-  work <-
-    tibble(
-      background = 
-        c(
-          rep(status, work_status$one_more_child_under_six[r])
-        ),
-      child_caretaker = 
-        c(
-          rep("respondent", work_status$caretaker_respondent[r]),
-          rep("partner", work_status$caretaker_partner[r]),
-          rep("other_relative", work_status$caretaker_other_relative[r]),
-          rep("neighbor", work_status$caretaker_neighbor[r]),
-          rep("hired", work_status$caretaker_hired[r]),
-          rep("child_in_school", work_status$caretaker_child_in_school[r]),
-          rep("other_child", work_status$caretaker_other_child[r]),
-          rep("not_worked_since_birth", work_status$caretaker_not_worked_since_birth[r]),
-          rep("other", work_status$caretaker_other[r]),
-          rep("missing", work_status$caretaker_missing[r])
-        )
-      )
-  
-  work_status_tb <- bind_rows(work_status_tb, work)
-  rm(status,
-     work)
-}
-rm(r)
-work_status_tb <- work_status_tb[-c(1),]
-
-work_status_tb <-
-  work_status_tb %>%
-  mutate(
-    background = factor(background,
-                        levels = c('For_family_member',
-                                   'For_someone_else',
-                                   'Self-employed')
-                        ),
-    child_caretaker = factor(child_caretaker,
-                             levels = c('respondent',
-                                        'partner',
-                                        'other_relative',
-                                        'neighbor',
-                                        'hired',
-                                        'child_in_school',
-                                        'other_child',
-                                        'not_worked_since_birth',
-                                        'other',
-                                        'missing')
-                             )
-    )
-
-work_status_tb %>%
-  ggplot(mapping=aes(x=child_caretaker, fill=child_caretaker)) +
-  geom_bar() +
+# plot the bar graph
+work_caretaker %>%
+  ggplot(mapping=aes(x=caretaker, y=percentage, fill=caretaker)) +
+  geom_bar(stat = "identity", position="dodge") + 
   theme_minimal() +
   labs(x='',
        caption = 'Respondent is currently employed but has not worked since last birth.') +
-  theme(axis.text.x = element_text(angle=15), legend.position='none') +
+  theme(legend.position='none') +
+  coord_flip() + 
   scale_x_discrete(
     labels = 
-      c("respondent" = "respondent", 
+      c("respondent" = "respondent",
         "partner" = "partner",
         "other_relative" = "relative",
         "neighbor" = "neighbor",
@@ -438,21 +257,24 @@ work_status_tb %>%
         "other" = "other",
         "missing" = "missing")
   ) +
-  facet_wrap(vars(background),
-             dir = "v",
-             scales = "free",
-             labeller = labeller(background = c("For_family_member" = "For family member",
-                                                "For_someone_else" = "For someone else",
-                                                "Self-employed" = "Self-employed")
-                                 )
+  facet_wrap_paginate(vars(background),
+                      ncol=2,
+                      nrow=2,
+                      dir = "h",
+                      scales = "free",
+                      labeller = labeller(background = c("For_family_member" = "For family member",
+                                                         "For_someone_else" = "For someone else",
+                                                         "Self-employed" = "Self-employed")
+                      )
   )
 
-rm(work_status_tb)
+
 ```
 
 ## Occupation
 
 ```{r occupation, echo=FALSE, message=FALSE, fig.cap="Occupation"}
+# select occupation
 occupation <-
   ghana %>%
   filter(character=="Occupation") %>%
@@ -461,148 +283,66 @@ occupation <-
     one_more_child_under_six = round(one_more_child_under_six/100 * number_of_employed_women, 0)
   )
 
-occupation_tb<-
-  tibble(
-    background =
-      c(""),
-    child_under_six = 
-      c("")
-  )
-
-for (r in 1:nrow(occupation)){
-  type <- occupation$background[r]
-  occup <-
-    tibble(
-      background = 
-        c(
-          rep(type, occupation$number_of_employed_women[r])
-        ),
-      child_under_six = 
-        c(
-          rep("No_child_under_six", occupation$no_child_under_six[r]),
-          rep("One_more_child_under_six", occupation$one_more_child_under_six[r])
-        )
-      )
-  
-  occupation_tb <- bind_rows(occupation_tb, occup)
-  rm(type,
-     occup)
-}
-rm(r)
-occupation_tb <- occupation_tb[-c(1),]
-
-occupation_tb <-
-  occupation_tb %>%
+# make dataset in long format
+occup_long <-
+  occupation %>%
+  select(-c(character, total)) %>%
+  pivot_longer(!background, names_to = "variable", values_to = "count") %>%
   mutate(
     background = factor(background,
                         levels = c('Agricultural',
                                    'Nonagricultural')
-                        )
     )
+  )
 
-occupation_tb %>%
-  ggplot(mapping=aes(x=background, fill=child_under_six)) +
-  geom_bar(position='dodge') +
+occup_long %>%
+  filter(variable == 'no_child_under_six' | variable == 'one_more_child_under_six') %>%
+  ggplot(aes(x = background, 
+             y = count,
+             fill = variable)) +
+  geom_bar(stat = "identity",
+           position = "dodge") +
+  labs(x = "Occupation",
+       y = "Number of employed women",
+       fill = "Child under six") +
   theme_minimal() +
-  labs(x='work status', y='number of employed', fill='Child under six') +
   scale_fill_discrete(labels = c("No child under six", 
                                  "One or more child under six"))
-
-rm(occupation_tb)
 ```
 
 Figure \@ref(fig:occupation) shows that
 
 ```{r occupationchildcare, echo=FALSE, fig.cap="Distribution of child's caretaker by work status"}
-occupation <-
-  occupation %>%
+# caretaker aspect
+occup_caretaker <-
+  occup_long %>%
+  filter(str_detect(variable, "^caretaker_")) %>%
+  mutate(variable = str_replace_all(variable, "caretaker_", "")) %>%
+  rename(caretaker = variable,
+         percentage = count) %>%
   mutate(
-    caretaker_respondent = round(caretaker_respondent/100 * one_more_child_under_six, 0),
-    caretaker_partner = round(caretaker_partner/100 * one_more_child_under_six, 0),
-    caretaker_other_relative = round(caretaker_other_relative/100 * one_more_child_under_six, 0),
-    caretaker_neighbor = round(caretaker_neighbor/100 * one_more_child_under_six, 0),
-    caretaker_hired = round(caretaker_hired/100 * one_more_child_under_six, 0),
-    caretaker_child_in_school = round(caretaker_child_in_school/100 * one_more_child_under_six, 0),
-    caretaker_other_female_child = round(caretaker_other_female_child/100 * one_more_child_under_six, 0),
-    caretaker_other_male_child = round(caretaker_other_male_child/100 * one_more_child_under_six, 0),
-    caretaker_not_worked_since_birth = round(caretaker_not_worked_since_birth/100 * one_more_child_under_six, 0),
-    caretaker_other = round(caretaker_other/100 * one_more_child_under_six, 0),
-    caretaker_missing = round(caretaker_missing/100 * one_more_child_under_six, 0)
-    ) %>%
-  mutate(
-    caretaker_other_female_child = caretaker_other_female_child + caretaker_other_male_child
-  ) %>%
-  select(-caretaker_other_male_child) %>%
-  rename(caretaker_other_child = caretaker_other_female_child)
-
-occupation_tb<-
-  tibble(
-    background =
-      c(""),
-    child_caretaker = 
-      c("")
+    caretaker = factor(caretaker, 
+                       levels = c('respondent',
+                                  'partner',
+                                  'other_relative',
+                                  'neighbor',
+                                  'hired',
+                                  'child_in_school',
+                                  'other_female_child',
+                                  'other_male_child',
+                                  'not_worked_since_birth',
+                                  'other',
+                                  'missing'))
   )
 
-occupation[2, 13] <- occupation[2, 13] + 1
 
-for (r in 1:nrow(occupation)){
-  type <- occupation$background[r]
-  occup <-
-    tibble(
-      background = 
-        c(
-          rep(type, occupation$one_more_child_under_six[r])
-        ),
-      child_caretaker = 
-        c(
-          rep("respondent", occupation$caretaker_respondent[r]),
-          rep("partner", occupation$caretaker_partner[r]),
-          rep("other_relative", occupation$caretaker_other_relative[r]),
-          rep("neighbor", occupation$caretaker_neighbor[r]),
-          rep("hired", occupation$caretaker_hired[r]),
-          rep("child_in_school", occupation$caretaker_child_in_school[r]),
-          rep("other_child", occupation$caretaker_other_child[r]),
-          rep("not_worked_since_birth", occupation$caretaker_not_worked_since_birth[r]),
-          rep("other", occupation$caretaker_other[r]),
-          rep("missing", occupation$caretaker_missing[r])
-        )
-      )
-  
-  occupation_tb <- bind_rows(occupation_tb, occup)
-  rm(type,
-     occup)
-}
-rm(r)
-occupation_tb <- occupation_tb[-c(1),]
-
-occupation_tb <-
-  occupation_tb %>%
-  mutate(
-    background = factor(background,
-                        levels = c('Agricultural',
-                                   'Nonagricultural')
-                        ),
-    child_caretaker = factor(child_caretaker,
-                             levels = c('respondent',
-                                        'partner',
-                                        'other_relative',
-                                        'neighbor',
-                                        'hired',
-                                        'child_in_school',
-                                        'other_child',
-                                        'not_worked_since_birth',
-                                        'other',
-                                        'missing')
-                             )
-    )
-
-occupation_tb %>%
-  ggplot(mapping=aes(x=child_caretaker, fill=child_caretaker)) +
-  geom_bar() +
+# plot bar graph
+occup_caretaker %>%
+  ggplot(aes(x=caretaker, y=percentage, fill=background)) +
+  geom_bar(stat = "identity", position="dodge") + 
+  labs(x="Caretaker", y="Percentage (in %)", fill="Occupation") +
   theme_minimal() +
-  labs(x='',
-       caption = 'Respondent is currently employed but has not worked since last birth.') +
-  theme(axis.text.x = element_text(angle=15), legend.position='none') + 
+  coord_flip() +
   scale_x_discrete(
     labels = 
       c("respondent" = "respondent", 
@@ -611,22 +351,18 @@ occupation_tb %>%
         "neighbor" = "neighbor",
         "hired" = "hired",
         "child_in_school" = "schooling",
-        "other_child" = "siblings",
+        "other_female_child" = "other female child",
+        "other_male_child" = "other male child",
         "not_worked_since_birth" = "not worked since birth",
         "other" = "other",
         "missing" = "missing")
-  ) +
-  facet_wrap(vars(background),
-             dir = "v",
-             scales = "free")
-
-rm(occupation_tb)
+  )
 ```
-
 
 ## Employment status
 
 ```{r employmentstatus, echo=FALSE, message=FALSE, fig.cap="Employment status"}
+# select employment status
 employment_status <-
   ghana %>%
   filter(character=="Employment_status") %>%
@@ -635,155 +371,67 @@ employment_status <-
     one_more_child_under_six = round(one_more_child_under_six/100 * number_of_employed_women, 0)
   )
 
-employment_status_tb<-
-  tibble(
-    background =
-      c(""),
-    child_under_six = 
-      c("")
-  )
-
-for (r in 1:nrow(employment_status)){
-  status <- employment_status$background[r]
-  employment <-
-    tibble(
-      background = 
-        c(
-          rep(status, employment_status$number_of_employed_women[r])
-        ),
-      child_under_six = 
-        c(
-          rep("No_child_under_six", employment_status$no_child_under_six[r]),
-          rep("One_more_child_under_six", employment_status$one_more_child_under_six[r])
-        )
-      )
-  
-  employment_status_tb <- bind_rows(employment_status_tb, employment)
-  rm(status,
-     employment)
-}
-rm(r)
-employment_status_tb <- employment_status_tb[-c(1),]
-
-employment_status_tb <-
-  employment_status_tb %>%
+# make dataset in long format
+emply_long <-
+  employment_status %>%
+  select(-c(character, total)) %>%
+  pivot_longer(!background, names_to = "variable", values_to = "count") %>%
   mutate(
     background = factor(background,
                         levels = c('All_year_full_week',
                                    'All_year_part_week',
                                    'Seasonal',
-                                   'Occasional')
-                        )
-    )
+                                   'Occasional'))
+  )
 
-employment_status_tb %>%
-  ggplot(mapping=aes(x=background, fill=child_under_six)) +
-  geom_bar(position='dodge') +
+emply_long %>%
+  filter(variable == 'no_child_under_six' | variable == 'one_more_child_under_six') %>%
+  ggplot(aes(x = background, y = count, fill = variable)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(x = "Employment status", y = "Number of employed women", fill = "Child under six") +
   theme_minimal() +
-  labs(x='Work status', y='number of employed', fill='Child under six') +
+  scale_fill_discrete(labels = c("No child under six", 
+                                 "One or more child under six")) +
   scale_x_discrete(labels = c("All_year_full_week" = "All year, full week",
                               "All_year_part_week" = "All year, part week")) +
-  theme(axis.text.x = element_text(angle=15)) +
-  scale_fill_discrete(labels = c("No child under six", 
-                                 "One or more child under six"))
-
-rm(employment_status_tb)
+  theme(axis.text.x = element_text(angle=15))
 ```
 
 Figure \@ref(fig:employmentstatus) shows that
 
 ```{r employment_statuschildcare, echo=FALSE, fig.cap="Distribution of child's caretaker by work status"}
-employment_status <-
-  employment_status %>%
+# caretaker aspect
+emply_caretaker <-
+  emply_long %>%
+  filter(str_detect(variable, "^caretaker_")) %>%
+  mutate(variable = str_replace_all(variable, "caretaker_", "")) %>%
+  rename(caretaker = variable,
+         percentage = count) %>%
   mutate(
-    caretaker_respondent = round(caretaker_respondent/100 * one_more_child_under_six, 0),
-    caretaker_partner = round(caretaker_partner/100 * one_more_child_under_six, 0),
-    caretaker_other_relative = round(caretaker_other_relative/100 * one_more_child_under_six, 0),
-    caretaker_neighbor = round(caretaker_neighbor/100 * one_more_child_under_six, 0),
-    caretaker_hired = round(caretaker_hired/100 * one_more_child_under_six, 0),
-    caretaker_child_in_school = round(caretaker_child_in_school/100 * one_more_child_under_six, 0),
-    caretaker_other_female_child = round(caretaker_other_female_child/100 * one_more_child_under_six, 0),
-    caretaker_other_male_child = round(caretaker_other_male_child/100 * one_more_child_under_six, 0),
-    caretaker_not_worked_since_birth = round(caretaker_not_worked_since_birth/100 * one_more_child_under_six, 0),
-    caretaker_other = round(caretaker_other/100 * one_more_child_under_six, 0),
-    caretaker_missing = round(caretaker_missing/100 * one_more_child_under_six, 0)
-    ) %>%
-  mutate(
-    caretaker_other_female_child = caretaker_other_female_child + caretaker_other_male_child
-  ) %>%
-  select(-caretaker_other_male_child) %>%
-  rename(caretaker_other_child = caretaker_other_female_child)
-
-employment_status_tb<-
-  tibble(
-    background =
-      c(""),
-    child_caretaker = 
-      c("")
+    caretaker = factor(caretaker, 
+                       levels = c('respondent',
+                                  'partner',
+                                  'other_relative',
+                                  'neighbor',
+                                  'hired',
+                                  'child_in_school',
+                                  'other_female_child',
+                                  'other_male_child',
+                                  'not_worked_since_birth',
+                                  'other',
+                                  'missing')
+    )
   )
 
-employment_status[3,13] <- employment_status[3,13] - 1
-
-for (r in 1:nrow(employment_status)){
-  status <- employment_status$background[r]
-  employment <-
-    tibble(
-      background = 
-        c(
-          rep(status, employment_status$one_more_child_under_six[r])
-        ),
-      child_caretaker = 
-        c(
-          rep("respondent", employment_status$caretaker_respondent[r]),
-          rep("partner", employment_status$caretaker_partner[r]),
-          rep("other_relative", employment_status$caretaker_other_relative[r]),
-          rep("neighbor", employment_status$caretaker_neighbor[r]),
-          rep("hired", employment_status$caretaker_hired[r]),
-          rep("child_in_school", employment_status$caretaker_child_in_school[r]),
-          rep("other_child", employment_status$caretaker_other_child[r]),
-          rep("not_worked_since_birth", employment_status$caretaker_not_worked_since_birth[r]),
-          rep("other", employment_status$caretaker_other[r]),
-          rep("missing", employment_status$caretaker_missing[r])
-        )
-      )
-  
-  employment_status_tb <- bind_rows(employment_status_tb, employment)
-  rm(status,
-     employment)
-}
-rm(r)
-employment_status_tb <- employment_status_tb[-c(1),]
-
-employment_status_tb <-
-  employment_status_tb %>%
-  mutate(
-    background = factor(background,
-                        levels = c('All_year_full_week',
-                                   'All_year_part_week',
-                                   'Seasonal',
-                                   'Occasional')
-                        ),
-    child_caretaker = factor(child_caretaker,
-                             levels = c('respondent',
-                                        'partner',
-                                        'other_relative',
-                                        'neighbor',
-                                        'hired',
-                                        'child_in_school',
-                                        'other_child',
-                                        'not_worked_since_birth',
-                                        'other',
-                                        'missing')
-                             )
-    )
-
-employment_status_tb %>%
-  ggplot(mapping=aes(x=child_caretaker, fill=child_caretaker)) +
-  geom_bar() +
+# plot the bar graph
+emply_caretaker %>%
+  ggplot(mapping=aes(x=caretaker, y=percentage, fill=caretaker)) +
+  geom_bar(stat = "identity", position="dodge") + 
   theme_minimal() +
   labs(x='',
        caption = 'Respondent is currently employed but has not worked since last birth.') +
-  theme(axis.text.x = element_text(angle=15), legend.position='none') +
+  theme(legend.position='none') +
+  coord_flip() + 
   scale_x_discrete(
     labels = 
       c("respondent" = "respondent",
@@ -807,14 +455,16 @@ employment_status_tb %>%
                                  )
   )
 
-rm(employment_status_tb)
 ```
 
+## Region
 
 ```{r map, warning = FALSE, echo = FALSE}
+# install.packages('rnaturalearth')
+# install.packages('sf')
 library(rnaturalearth)
 library(sf)
-#devtools::install_github("ropensci/rnaturalearthhires")
+# devtools::install_github("ropensci/rnaturalearthhires")
 # The st_centroid function takes the sf object and returns the center of 
 # the polygon, again as a sf object.
 map_ghana <- ne_states(country = 'Ghana', 
@@ -834,7 +484,7 @@ map_ghana %>%
 
 
 
-```{r, echo=FALSE}
+```{r residence, echo=FALSE}
 # Urban vs Rural
 
 # Obtain subset of dataset for residence area
@@ -851,7 +501,7 @@ residence %>%
 ```
 
 
-```{r, echo=FALSE}
+```{r region, echo=FALSE}
 # region subdataset
 region <- ghana %>% 
   filter(character == "Region") %>% 
@@ -914,7 +564,7 @@ resid_long %>%
 ```
 
 
-```{r}
+```{r, echo=FALSE}
 # caretaker aspect
 
 # make dataset into long format
@@ -970,7 +620,7 @@ child <- region %>%
 
 ## Limitation and weaknesses
 
-The number does not add up to 100. (truncation error)
+The number does not add up to 100. (round-off error)
 
 \newpage
 
