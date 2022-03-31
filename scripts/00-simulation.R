@@ -32,3 +32,4 @@ simulated_data <-
 
 
 
+a

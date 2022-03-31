@@ -929,7 +929,7 @@ caretaker <- residence %>%
                              'caretaker_other_male_child' = 'other male child',
                              'caretaker_other_female_child' = 'other female child',
                              'caretaker_other' = 'other',
-                             'caretaker_not_worked since_birth' = 'not worked since birth',
+                             'caretaker_not_worked_since_birth' = 'not worked since birth',
                              'caretaker_neighbor' = 'neighbour',
                              'caretaker_missing' = 'missing',
                              'caretaker_hired' = 'hired',
@@ -954,6 +954,15 @@ caretaker %>%
 
 ## Also comparison among the different administrative regions
 
+```{r}
+# region
+
+child <- region %>% 
+  select(-c(character, total)) %>% 
+  pivot_longer(!background, names_to = "x", values_to = "percentage")
+
+
+```
 
 
 
