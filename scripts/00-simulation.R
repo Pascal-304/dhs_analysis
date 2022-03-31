@@ -9,59 +9,108 @@
 
 #### Workspace set-up ####
 library(janitor)
-library(lubridate)
 library(tidyverse)
 
 #### Simulate data ####
 set.seed(304)
 
-items<-c("no_child_under_six", "one_more_child_under_six", 
-         "respondent", "partner", "other_relative", "neighbor", 
-         "hired", "child_in_school", "other_female_child", 
-         "other_male_child", "not_worked_since_birth", "other", 
-         "missing")
-
-num_of_items <- length(items)
-
 simulated_dhs <-
   tibble(
-    background = 
-      c(
-        rep("Urban", num_of_items),
-        rep("Rural", num_of_items),
-        rep("Western", num_of_items),
-        rep("Central", num_of_items),
-        rep("Greater_Accra", num_of_items),
-        rep("Volta", num_of_items),
-        rep("Eastern", num_of_items),
-        rep("Ashanti", num_of_items),
-        rep("Brong_Ahafo", num_of_items),
-        rep("Northern", num_of_items),
-        rep("Upper_West", num_of_items),
-        rep("Upper_East", num_of_items),
-        rep("No_education", num_of_items),
-        rep("Primary", num_of_items),
-        rep("Middle", num_of_items),
-        rep("Secondary+", num_of_items),
-        rep("For_family_member", num_of_items),
-        rep("For_someone_else", num_of_items),
-        rep("Self-employed", num_of_items),
-        rep("Agricultural", num_of_items),
-        rep("Nonagricultural", num_of_items),
-        rep("All_year_full_week", num_of_items),
-        rep("All_year_part_week", num_of_items),
-        rep("Seasonal", num_of_items),
-        rep("Occasional", num_of_items),
-        rep("Total", num_of_items)
+    # Unique identifier
+    'caseID' = 1:3565,
+    # Randomly choose one of the two options, with replacement, 3565 times
+    'Residence' = sample(
+      x = c(
+        'Urban',
+        'Rural'
       ),
-    item =
-      c(
-        rep(item, 26)
+      size = 3565,
+      replace = TRUE
+    ),
+    'Region' = sample(
+      x = c(
+        'Western',
+        'Central',
+        'Greater_Accra',
+        'Volta',
+        'Eastern',
+        'Ashanti',
+        'Brong_Ahafo',
+        'Northern',
+        'Upper_West',
+        'Upper_East'
       ),
-    proportion = 
-      runif(n = num_of_items * 26,
-            min = 0, 
-            max = 100)
-  )
+      size = 3565,
+      replace = TRUE
+    ),
+    "Mother's_education" = sample(
+      x = c(
+        'No_education',
+        'Primary',
+        'Middle',
+        'Secondary+'
+      ),
+      size = 3565,
+      replace = TRUE
+    ),
+    'Work_status' = sample(
+      x = c(
+        'For_family_member',
+        'For_someone_else',
+        'Self-employed'
+      ),
+      size = 3565,
+      replace = TRUE
+    ),
+    'Occupation' = sample(
+      x = c(
+        'Agricultural',
+        'Nonagricultural'
+      ),
+      size = 3565,
+      replace = TRUE
+    ),
+    'Employment_status' = sample(
+      x = c(
+        'All_year_full_week',
+        'All_year_part_week',
+        'Seasonal',
+        'Occasional'
+      ),
+      size = 3565,
+      replace = TRUE
+    ),
+    'Child_under_six' = sample(
+      x = c(
+        'No',
+        'Yes'
+      ),
+      size = 3565,
+      replace = TRUE
+    ),
+    'Caretaker' = sample(
+      x = c(
+        'Respondent',
+        'Partner',
+        'Other_relative',
+        'Neighbor',
+        'Hired',
+        'Child_in_school',
+        'Other_female_child',
+        'Other_male_child',
+        'Not_worked_since_birth',
+        'Other',
+        'Missing'
+        ),
+      size = 3565,
+      replace = TRUE
+    ),
+    )
 
-head(simulated_dhs)
+simulated_dhs <-
+  simulated_dhs %>%
+  mutate(Caretaker = 
+           case_when(
+             Child_under_six == 'No' ~ 'NA',
+             TRUE ~ Caretaker
+           ))
