@@ -19,7 +19,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r library, echo=FALSE, message=FALSE}
 # install.packages('bookdown')
 # install.packages("stringr")
-# install.packages("ggforce")
+#install.packages("ggforce")
 library(stringr) 
 library(dplyr)
 library(tidyverse) 
@@ -81,7 +81,7 @@ Some key features include background, no child under six, one or more child unde
 
 ## Region
 
-```{r map, message=FALSE, echo = FALSE, warning=FALSE}
+```{r map, message=FALSE, echo = FALSE, warning=FALSE, fig.cap="Ghana administrative regions"}
 # install.packages('rnaturalearth')
 # install.packages('sf')
 library(rnaturalearth) # we need to cite these packages as well
@@ -100,13 +100,12 @@ map_ghana %>%
              aes(x = longitude, 
                  y = latitude,
                  label= woe_name)) +
-  labs(title='Ghana Administrative Regions') +
   theme_minimal()
 ```
 
+Figure \@ref(fig:map) shows a map of Ghana and its administrative regions. Ghana has 10 administrative regions, namely, Upper West, Upper East, Northern, Brong Ahato, Western, Ashanti, Central, Eastern, Volta and Greater Accra. # Add details on largest provinces + population wise 
 
-
-```{r residence, echo=FALSE}
+```{r residence, echo=FALSE, fig.cap="Comparison of the number of working mothers between urban and rural areas"}
 # Urban vs Rural
 
 # Obtain subset of dataset for residence area
@@ -122,8 +121,11 @@ residence %>%
   theme_minimal()
 ```
 
+Figure \@ref(fig:residence) shows the number of employed mothers in urban and rural areas. There are 1127 women who were selected in Urban areas while 2338 mothers were selected in rural areas. This is not surprising since a larger population live in rural areas.
 
-```{r region, echo=FALSE}
+
+
+```{r region, echo=FALSE, fig.cap = "Comparison of the number of working mothers selected in the different administrative regions"}
 # region subdataset
 region <- ghana %>% 
   filter(character == "Region") %>% 
@@ -147,16 +149,32 @@ region %>%
            fill = 'burlywood') +
   labs(x = "Administrative regions",
        y = "Number of employed women") +
-  theme_minimal()
+  theme_minimal() +
+  coord_flip()
 ```
 
+Figure @\ref(fig:region) shows the number of employed mothers in the different administrative regions. There were more working mothers in Greater Accra and Ashanti while Upper West had the least number of working mothers. The reason might be because of the number of people living in the different administrative regions are different, therefore, the population sample differed from one region to another.
 
 
-```{r, echo = FALSE}
+```{r childstatus, echo = FALSE, fig.cap = "Comparing the percentage of mothers having no child under six to one or more in both Urban and Rural areas"}
 # make dataset in long format
 resid_long <- residence %>% 
   select(-c(character)) %>% 
-  pivot_longer(!background, names_to = "variables", values_to = "percentage")
+  pivot_longer(!background, names_to = "variables", values_to = "percentage") %>% 
+  mutate(variables = recode(variables,
+                            'no_child_under_six' = "No child under six", 
+                            'one_more_child_under_six' = "One or more child under six",
+                            'caretaker_respondent' = 'respondent',
+                             'caretaker_partner' = 'partner',
+                             'caretaker_other_relative' = 'other relative',
+                             'caretaker_other_male_child' = 'other male child',
+                             'caretaker_other_female_child' = 'other female child',
+                             'caretaker_other' = 'other',
+                             'caretaker_not_worked since_birth' = 'not worked since birth',
+                             'caretaker_neighbor' = 'neighbour',
+                             'caretaker_missing' = 'missing',
+                             'caretaker_hired' = 'hired',
+                             'caretaker_child_in_school' = 'child in school'))
 
 # create label names list
 label_list <- list('no_child_under_six' = "No child under six", 
@@ -168,31 +186,30 @@ labellers <- function(variable, value) {
 
 # plot bar graph
 resid_long %>% 
-  filter(variables == 'no_child_under_six' | variables == 'one_more_child_under_six') %>% 
+  filter(variables == 'No child under six' | variables == 'One or more child under six') %>% 
   ggplot(aes(x = background, 
              y = percentage,
              fill = variables)) +
   geom_bar(stat = 'identity',
            position = 'dodge') +
   labs(x = "Area",
-       y = "Percentage of women",
-       fill = "Children under six") +
+       y = "Percentage",
+       fill = "Child status") +
   theme_minimal() +
   scale_fill_brewer() +
   theme(legend.position = "bottom")
 
-# need to recode names
-# change legends name
 ```
 
+Figure \@ref(fig:childstatus) shows the child status of families in Urban and Rural areas. In rural areas, there is a larger percentage of working mothers having one or more child under six years old. The converse is true in Urban areas. Working mothers tend to have no child under six years old.
 
-```{r areachildcare, echo=FALSE}
+
+```{r areachildcare, echo=FALSE, fig.cap = "Comparing child caretaker preferences in Urban and Rural areas"}
 # caretaker aspect
-
 # make dataset into long format
 # rename 
 caretaker <- residence %>% 
-  select(-c(character, no_child_under_six, one_more_child_under_six, total, number_of_employed_women)) %>% 
+  select(-c(character, no_child_under_six, one_more_child_under_six, total, number_of_employed_women, caretaker_missing)) %>% 
   pivot_longer(!background, names_to = "caretakers", values_to = "percentage") %>% 
   mutate(caretakers = recode(caretakers,
                              'caretaker_respondent' = 'respondent',
@@ -201,7 +218,7 @@ caretaker <- residence %>%
                              'caretaker_other_male_child' = 'other male child',
                              'caretaker_other_female_child' = 'other female child',
                              'caretaker_other' = 'other',
-                             'caretaker_not_worked since_birth' = 'not worked since birth',
+                             'caretaker_not_worked_since_birth' = 'not worked since birth',
                              'caretaker_neighbor' = 'neighbour',
                              'caretaker_missing' = 'missing',
                              'caretaker_hired' = 'hired',
@@ -224,8 +241,74 @@ caretaker %>%
 
 ```
 
+Figure @\ref(fig:areachildcare) shows the Ghanese families'caretaking preferences in both urban and rural areas. The preferred caretaking method in both urban and rural areas is the working mothers looking after their children by themselves. The next preferred method for in both areas would be to let the children be looked after by relatives. Other notable observations would be that families living in urban areas tend to put their child in school and in rural areas, families let the older female child to care for the under six years old child much more than in urban areas.
+
+
 ## Also comparison among the different administrative regions
 
+```{r caretakingregions, echo = FALSE, fig.cap = "Caretaking behaviour in the different administrative regions"}
+# make dataset into long format
+# recode names
+child <- region %>% 
+  select(-c(character, total, caretaker_missing)) %>% 
+  pivot_longer(!background, names_to = "x", values_to = "percentage") %>% 
+  mutate(x = recode(x,
+                    'caretaker_respondent' = 'respondent',
+                    'caretaker_partner' = 'partner',
+                    'caretaker_other_relative' = 'other relative',
+                    'caretaker_other_male_child' = 'other male child',
+                    'caretaker_other_female_child' = 'other female child',
+                    'caretaker_other' = 'other',
+                    'caretaker_not_worked_since_birth' = 'not worked since birth',
+                    'caretaker_neighbor' = 'neighbour',
+                    'caretaker_missing' = 'missing',
+                    'caretaker_hired' = 'hired',
+                    'caretaker_child_in_school' = 'child in school',
+                    'no_child_under_six' = 'no child under six',
+                    'one_more_child_under_six' = 'one or more child under six',
+                    'number_of_employed_women' = 'number of employed women'))
+
+# plot bar graph for caretaker comparisons and administrative regions
+child %>% 
+  filter(x != 'number of employed women', x != 'no child under six', x!= 'one or more child under six') %>% 
+  ggplot(aes(x = x,
+             y = percentage,
+             fill = background)) +
+  geom_bar(stat = 'identity') + 
+  labs(x = "caretaking preference",
+       y = "percentage",
+       fill = "Administrative regions") +
+  theme_minimal() +
+  coord_flip() +
+  facet_wrap(~background) +
+  theme(legend.position = "bottom")
+
+```
+
+Figure \@ref(fig:caretakingregions) shows the caretaking preference of Ghanese families in the different administrative regions. Working mothers tend to look after their child themselves the most in all regions. In Greater Accra, families choose to put their child in school the most compared to other administrative regions. Another observation is that the proportions of families opting to put their child in school in Northern, Upper East and Upper West are the lowest, namely 1.3%, 2.7% and 2.0% respectively. The other popular caretaking options after by the mother herself are by a relative or by another older female child. 
+
+
+
+```{r chstatus, echo = FALSE, fig.cap = "Comparing the child status in different administrative regions"}
+# looking at the number of employed women selected in the different administrative regions
+# with the child under six
+child %>% 
+  filter(x == "no child under six" | x == "one or more child under six") %>% 
+  ggplot(aes(x = x,
+             y = percentage,
+             fill = background)) +
+  geom_bar(stat = 'identity') +
+  labs(x = "child status",
+       y = "percentage",
+       fill = "region") +
+  theme_minimal() +
+  theme(legend.position = "bottom") +
+  coord_flip() +
+  facet_wrap(~background)
+
+```
+
+Figure \@ref(fig:chstatus) shows the child status of Ghanese families in the different administrative regions. By child status, we mean the whether the families have children under six years old. Ghanese families tend to have one or more child under six years old more than no child under six with the exception of Greater Accra. The proportion of families with one or more child under six is slightly more pronounced in Northern, Upper West, Brong Ahafo and Upper East regions.
 
 ## Mother's education
 
