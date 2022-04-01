@@ -276,12 +276,11 @@ child %>%
              fill = background)) +
   geom_bar(stat = 'identity') + 
   labs(x = "caretaking preference",
-       y = "percentage",
-       fill = "Administrative regions") +
+       y = "percentage") +
   theme_minimal() +
   coord_flip() +
   facet_wrap(~background) +
-  theme(legend.position = "bottom")
+  theme(legend.position = "none")
 
 ```
 
@@ -294,17 +293,17 @@ Figure \@ref(fig:caretakingregions) shows the caretaking preference of Ghanese f
 # with the child under six
 child %>% 
   filter(x == "no child under six" | x == "one or more child under six") %>% 
-  ggplot(aes(x = x,
+  ggplot(aes(x = background,
              y = percentage,
-             fill = background)) +
-  geom_bar(stat = 'identity') +
+             fill = x)) +
+  geom_bar(stat = 'identity', position = "dodge", width = 0.8) +
   labs(x = "child status",
        y = "percentage",
-       fill = "region") +
+       fill = "child status") +
   theme_minimal() +
   theme(legend.position = "bottom") +
-  coord_flip() +
-  facet_wrap(~background)
+  coord_flip() 
+
 
 ```
 

@@ -115,26 +115,8 @@ simulated_dhs <-
              Child_under_six == 'No' ~ 'NA',
              TRUE ~ Caretaker
            ))
-=======
-simulated_data <-
-  tibble(
-    # Use 1 through to 3565 to represent each region
-    'Index' = 1:3565,
-    # Randomly choose one of the two options, with replacement, 3565 times
-    'Region' = sample(
-      x = c(
-        'Urban',
-        'Rural'
-      ),
-      size = 3565,
-      replace = TRUE
-    ))
 
 
 
 
-<<<<<<< HEAD
-a
-=======
->>>>>>> 8fcf61b5b72010f9cdca7652cc2d1aa309d04265
->>>>>>> 3145f6ddc9512cee5ab5f05e80768e5d6b0ec3fb
+
