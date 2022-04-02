@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2022.3.8)  2 APR 2022 14:15
+=======
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2022.3.9)  2 APR 2022 01:51
+>>>>>>> 22e49fabd740455529086e4930d3db60f0056f15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -563,6 +567,7 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <5> on input line 119.
 
+<<<<<<< HEAD
 LaTeX Warning: Reference `(' on page 1 undefined on input line 130.
 
 
@@ -679,8 +684,144 @@ l.274
 l.274 
        <./paper_files/figure-latex/chstatus-1.pdf>]
 <paper_files/figure-latex/mothereduchildcare-1.pdf, id=220, 469.755pt x 325.215pt>
+=======
+Overfull \hbox (61.3829pt too wide) in paragraph at lines 123--143
+ [][] 
+ []
+
+[1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+<paper_files/figure-latex/generalchildcare-1.pdf, id=30, 433.62pt x 289.08pt>
+File: paper_files/figure-latex/generalchildcare-1.pdf Graphic file (type pdf)
+<use paper_files/figure-latex/generalchildcare-1.pdf>
+Package pdftex.def Info: paper_files/figure-latex/generalchildcare-1.pdf  used 
+on input line 154.
+(pdftex.def)             Requested size: 433.63878pt x 289.09251pt.
+<paper_files/figure-latex/map-1.pdf, id=33, 469.755pt x 325.215pt>
+File: paper_files/figure-latex/map-1.pdf Graphic file (type pdf)
+<use paper_files/figure-latex/map-1.pdf>
+Package pdftex.def Info: paper_files/figure-latex/map-1.pdf  used on input line
+ 170.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<paper_files/figure-latex/residence-1.pdf, id=35, 469.755pt x 325.215pt>
+File: paper_files/figure-latex/residence-1.pdf Graphic file (type pdf)
+<use paper_files/figure-latex/residence-1.pdf>
+Package pdftex.def Info: paper_files/figure-latex/residence-1.pdf  used on inpu
+t line 178.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<paper_files/figure-latex/region-1.pdf, id=37, 469.755pt x 325.215pt>
+File: paper_files/figure-latex/region-1.pdf Graphic file (type pdf)
+<use paper_files/figure-latex/region-1.pdf>
+Package pdftex.def Info: paper_files/figure-latex/region-1.pdf  used on input l
+ine 186.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+
+LaTeX Warning: Reference `(' on page 2 undefined on input line 190.
+
+[2pdfTeX warning (ext4): destination with the same identifier (name{table.1}) h
+as been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.191 
+      ]
+<paper_files/figure-latex/childstatus-1.pdf, id=54, 469.755pt x 325.215pt>
+File: paper_files/figure-latex/childstatus-1.pdf Graphic file (type pdf)
+<use paper_files/figure-latex/childstatus-1.pdf>
+Package pdftex.def Info: paper_files/figure-latex/childstatus-1.pdf  used on in
+put line 194.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<paper_files/figure-latex/areachildcare-1.pdf, id=56, 469.755pt x 325.215pt>
+File: paper_files/figure-latex/areachildcare-1.pdf Graphic file (type pdf)
+<use paper_files/figure-latex/areachildcare-1.pdf>
+Package pdftex.def Info: paper_files/figure-latex/areachildcare-1.pdf  used on 
+input line 202.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+
+LaTeX Warning: Reference `(' on page 3 undefined on input line 206.
+
+<paper_files/figure-latex/caretakingregions-1.pdf, id=57, 505.89pt x 505.89pt>
+File: paper_files/figure-latex/caretakingregions-1.pdf Graphic file (type pdf)
+<use paper_files/figure-latex/caretakingregions-1.pdf>
+Package pdftex.def Info: paper_files/figure-latex/caretakingregions-1.pdf  used
+ on input line 213.
+(pdftex.def)             Requested size: 469.76265pt x 469.76265pt.
+<paper_files/figure-latex/chstatus-1.pdf, id=59, 469.755pt x 325.215pt>
+File: paper_files/figure-latex/chstatus-1.pdf Graphic file (type pdf)
+<use paper_files/figure-latex/chstatus-1.pdf>
+Package pdftex.def Info: paper_files/figure-latex/chstatus-1.pdf  used on input
+ line 221.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[3pdfTeX warning (ext4): destination with the same identifier (name{figure.1}) 
+has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.228 ...er's education}\label{mothers-education}}
+                                                   <./paper_files/figure-latex/
+generalchildcare-1.pdf>] [4pdfTeX warning (ext4): destination with the same ide
+ntifier (name{figure.2}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.228 ...er's education}\label{mothers-education}}
+                                                   <./paper_files/figure-latex/
+map-1.pdf>] [5pdfTeX warning (ext4): destination with the same identifier (name
+{figure.3}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.228 ...er's education}\label{mothers-education}}
+                                                   <./paper_files/figure-latex/
+residence-1.pdf>] [6pdfTeX warning (ext4): destination with the same identifier
+ (name{figure.4}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.228 ...er's education}\label{mothers-education}}
+                                                   <./paper_files/figure-latex/
+region-1.pdf>] [7pdfTeX warning (ext4): destination with the same identifier (n
+ame{figure.5}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.228 ...er's education}\label{mothers-education}}
+                                                   <./paper_files/figure-latex/
+childstatus-1.pdf>] [8pdfTeX warning (ext4): destination with the same identifi
+er (name{figure.6}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.228 ...er's education}\label{mothers-education}}
+                                                   <./paper_files/figure-latex/
+areachildcare-1.pdf>] [9pdfTeX warning (ext4): destination with the same identi
+fier (name{figure.7}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.228 ...er's education}\label{mothers-education}}
+                                                   <./paper_files/figure-latex/
+caretakingregions-1.pdf>] [10pdfTeX warning (ext4): destination with the same i
+dentifier (name{figure.8}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.228 ...er's education}\label{mothers-education}}
+                                                   <./paper_files/figure-latex/
+chstatus-1.pdf>]
+<paper_files/figure-latex/motheredu-1.pdf, id=143, 433.62pt x 289.08pt>
+File: paper_files/figure-latex/motheredu-1.pdf Graphic file (type pdf)
+<use paper_files/figure-latex/motheredu-1.pdf>
+Package pdftex.def Info: paper_files/figure-latex/motheredu-1.pdf  used on inpu
+t line 232.
+(pdftex.def)             Requested size: 433.63878pt x 289.09251pt.
+<paper_files/figure-latex/mothereduchildcare-1.pdf, id=145, 433.62pt x 289.08pt
+>
+>>>>>>> 22e49fabd740455529086e4930d3db60f0056f15
 File: paper_files/figure-latex/mothereduchildcare-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/mothereduchildcare-1.pdf>
+<<<<<<< HEAD
 Package pdftex.def Info: paper_files/figure-latex/mothereduchildcare-1.pdf  used on input line 277.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 <paper_files/figure-latex/workstatus-1.pdf, id=222, 433.62pt x 289.08pt>
@@ -747,6 +888,114 @@ l.363 \newpage
                                                   \__shipout_drop_firstpage_...
 l.363 \newpage
                <./paper_files/figure-latex/employmentstatuschildcare-1.pdf>] [20] (./paper.aux)
+=======
+Package pdftex.def Info: paper_files/figure-latex/mothereduchildcare-1.pdf  use
+d on input line 240.
+(pdftex.def)             Requested size: 433.63878pt x 289.09251pt.
+<paper_files/figure-latex/workstatus-1.pdf, id=147, 433.62pt x 289.08pt>
+File: paper_files/figure-latex/workstatus-1.pdf Graphic file (type pdf)
+<use paper_files/figure-latex/workstatus-1.pdf>
+Package pdftex.def Info: paper_files/figure-latex/workstatus-1.pdf  used on inp
+ut line 251.
+(pdftex.def)             Requested size: 433.63878pt x 289.09251pt.
+<paper_files/figure-latex/workstatuschildcare-1.pdf, id=149, 433.62pt x 289.08p
+t>
+File: paper_files/figure-latex/workstatuschildcare-1.pdf Graphic file (type pdf
+)
+<use paper_files/figure-latex/workstatuschildcare-1.pdf>
+Package pdftex.def Info: paper_files/figure-latex/workstatuschildcare-1.pdf  us
+ed on input line 259.
+(pdftex.def)             Requested size: 433.63878pt x 289.09251pt.
+[11pdfTeX warning (ext4): destination with the same identifier (name{figure.9})
+ has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.264 
+       <./paper_files/figure-latex/motheredu-1.pdf>] [12pdfTeX warning (ext4): 
+destination with the same identifier (name{figure.10}) has been already used, d
+uplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.264 
+      pdfTeX warning (ext4): destination with the same identifier (name{figure.
+11}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.264 
+       <./paper_files/figure-latex/mothereduchildcare-1.pdf> <./paper_files/fig
+ure-latex/workstatus-1.pdf>]
+<paper_files/figure-latex/occupation-1.pdf, id=181, 433.62pt x 289.08pt>
+File: paper_files/figure-latex/occupation-1.pdf Graphic file (type pdf)
+<use paper_files/figure-latex/occupation-1.pdf>
+Package pdftex.def Info: paper_files/figure-latex/occupation-1.pdf  used on inp
+ut line 270.
+(pdftex.def)             Requested size: 433.63878pt x 289.09251pt.
+<paper_files/figure-latex/occupationchildcare-1.pdf, id=183, 433.62pt x 289.08p
+t>
+File: paper_files/figure-latex/occupationchildcare-1.pdf Graphic file (type pdf
+)
+<use paper_files/figure-latex/occupationchildcare-1.pdf>
+Package pdftex.def Info: paper_files/figure-latex/occupationchildcare-1.pdf  us
+ed on input line 278.
+(pdftex.def)             Requested size: 433.63878pt x 289.09251pt.
+<paper_files/figure-latex/employmentstatus-1.pdf, id=185, 433.62pt x 289.08pt>
+File: paper_files/figure-latex/employmentstatus-1.pdf Graphic file (type pdf)
+<use paper_files/figure-latex/employmentstatus-1.pdf>
+Package pdftex.def Info: paper_files/figure-latex/employmentstatus-1.pdf  used 
+on input line 289.
+(pdftex.def)             Requested size: 433.63878pt x 289.09251pt.
+<paper_files/figure-latex/employmentstatuschildcare-1.pdf, id=187, 433.62pt x 2
+89.08pt>
+File: paper_files/figure-latex/employmentstatuschildcare-1.pdf Graphic file (ty
+pe pdf)
+<use paper_files/figure-latex/employmentstatuschildcare-1.pdf>
+Package pdftex.def Info: paper_files/figure-latex/employmentstatuschildcare-1.p
+df  used on input line 297.
+(pdftex.def)             Requested size: 433.63878pt x 289.09251pt.
+[13pdfTeX warning (ext4): destination with the same identifier (name{figure.12}
+) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.302 
+       <./paper_files/figure-latex/workstatuschildcare-1.pdf>] [14pdfTeX warnin
+g (ext4): destination with the same identifier (name{figure.13}) has been alrea
+dy used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.302 
+      pdfTeX warning (ext4): destination with the same identifier (name{figure.
+14}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.302 
+       <./paper_files/figure-latex/occupation-1.pdf> <./paper_files/figure-late
+x/occupationchildcare-1.pdf>] [15pdfTeX warning (ext4): destination with the sa
+me identifier (name{figure.15}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.302 
+      pdfTeX warning (ext4): destination with the same identifier (name{figure.
+16}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.302 
+       <./paper_files/figure-latex/employmentstatus-1.pdf> <./paper_files/figur
+e-latex/employmentstatuschildcare-1.pdf>] [16] [17]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 397.
+[18]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 397.
+(./paper.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 397.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 397.
+>>>>>>> 22e49fabd740455529086e4930d3db60f0056f15
 
 LaTeX Warning: There were undefined references.
 
@@ -754,6 +1003,7 @@ Package rerunfilecheck Info: File `paper.out' has not changed.
 (rerunfilecheck)             Checksum: EB7375449A5FD57D2610E4FD2B606D3F;2233.
  ) 
 Here is how much of TeX's memory you used:
+<<<<<<< HEAD
  12893 strings out of 480236
  207176 string characters out of 5894215
  497574 words of memory out of 5000000
@@ -768,4 +1018,28 @@ PDF statistics:
  360 compressed objects within 4 object streams
  88 named destinations out of 1000 (max. 500000)
  222 words of extra memory for PDF output out of 10000 (max. 10000000)
+=======
+ 14790 strings out of 483107
+ 217588 string characters out of 5964631
+ 509921 words of memory out of 5000000
+ 29310 multiletter control sequences out of 15000+600000
+ 609429 words of font info for 130 fonts, out of 8000000 for 9000
+ 59 hyphenation exceptions out of 8191
+ 41i,13n,42p,1181b,452s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dv
+ips/lm/lm-ts1.enc}</usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/shar
+e/texmf/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/l
+m/lmbx9.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf
+/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr17.
+pfb></usr/share/texmf/fonts/type1/public/lm/lmr6.pfb></usr/share/texmf/fonts/ty
+pe1/public/lm/lmr7.pfb></usr/share/texmf/fonts/type1/public/lm/lmr8.pfb></usr/s
+hare/texmf/fonts/type1/public/lm/lmr9.pfb></usr/share/texmf/fonts/type1/public/
+lm/lmri10.pfb>
+Output written on paper.pdf (18 pages, 371183 bytes).
+PDF statistics:
+ 440 PDF objects out of 1000 (max. 8388607)
+ 373 compressed objects within 4 object streams
+ 91 named destinations out of 1000 (max. 500000)
+ 16617 words of extra memory for PDF output out of 17280 (max. 10000000)
+>>>>>>> 22e49fabd740455529086e4930d3db60f0056f15
 
