@@ -41,7 +41,7 @@ ghana <- read_csv('data/cleaned_data.csv', show_col_types = FALSE)
 
 ## Data Source
 
-This paper uses the Childcare While Working Data [@ghana1998] obtained from the Ghana Demographic and Health Survey 1998. The dataset was collected by downloading the final report of the 1988 Ghana census published in the Demographic and Health Surveys (DHS) programme (Do we need to cite dhs program as well?). The library 'pdftools' [@citepdftools] is used to download and read the content into R by parsing the pdf. 
+This paper uses the Childcare While Working Data [@ghana1998] obtained from the Ghana Demographic and Health Survey 1998. The dataset was collected by downloading the final report of the 1988 Ghana census published in the Demographic and Health Surveys (DHS) programme (Do we need to cite dhs program as well?). The package 'pdftools' [@citepdftools] is used to download and read the content into R by parsing the pdf. 
 
 ## Methodology
 
@@ -55,20 +55,21 @@ The target sample size for the 1998 GDHS was 6,000 comprising 4,500 women of age
 
 ```{r data, echo=FALSE}
 ghana %>%
-  select(background, no_child_under_six, one_more_child_under_six, caretaker_respondent, character) %>%
-  slice(5:6, 13:20) %>%
+  select(background, no_child_under_six, one_more_child_under_six, caretaker_respondent, number_of_employed_women, character) %>%
+  slice(5:6, 13:20, 26) %>%
   kable(caption='A subset of key features',
         col.names = c('Background', 'No child under six', '1+ child under six', 
-                      'Child\'s caretaker- respondent', 'Category'),
+                      'Child\'s caretaker- respondent', 'Number of employed women', 'Category'),
         digits = 1,
         booktabs = FALSE,
         linesep = "") %>%
+  kable_styling(position = "center")
   add_footnote("Numbers are in percentage (%).")
 ```
 
-Some key features include background and a percent distribution of currently employed women by whether they have a child under six years of age at home according to selected background characteristics, Ghana 1998. If the respondent answered to have one or more child under six, then they were further asked to indicate the caretaker of the child such as the respondent themselves, their partner, or whether they hired a person for it, etc. The dataset is processed and analyzed using 'R' [@citeR] mainly with the 'tidyverse' [@citetidyverse] and 'dplyr' [@citedplyr] packages. The package 'janitor' [@citejanitor] is used to clean data, and the graphs are created in 'ggplot2' [@citeggplot2] and 'ggforce' [@citeggforce]. The package 'stringr' [@citestringr] is used to manipulate the character string. The packages 'bookdown' [@citebookdown] and 'knitr' [@citeknitr] are used in generating the R Markdown report. Table \@ref(tab:data) created using 'kableExtra' [@citekableExtra] shows a subset of key features that will be discussed in this paper.
+Some key features include background and a percent distribution of currently employed women by whether they have a child under six years of age at home according to selected background characteristics, Ghana 1998. If the respondent answered to have one or more child under six, then they were further asked to indicate the caretaker of the child such as the respondent themselves, their partner, or whether they hired a person for it, etc. The dataset is processed and analyzed using 'R' [@citeR] mainly with the 'tidyverse' [@citetidyverse] and 'dplyr' [@citedplyr] packages. The package 'stringi' [@citestringi] is used to clean and prepare the dataset. The package 'janitor' [@citejanitor] is used to clean data, and the graphs are created in 'ggplot2' [@citeggplot2] and 'ggforce' [@citeggforce]. The package 'stringr' [@citestringr] is used to manipulate the character string. The packages 'bookdown' [@citebookdown] and 'knitr' [@citeknitr] are used in generating the R Markdown report. Table \@ref(tab:data) created using 'kableExtra' [@citekableExtra] shows a subset of key features that will be discussed in this paper.
 
-## General 
+## General Overview
 
 ```{r general, echo=FALSE, fig.cap="Distribution of working mothers who have a child under six years"}
 totl <-
@@ -151,7 +152,7 @@ totl_caretaker %>%
   )
 ```
 
-Figure \@ref(fig:general) shows that over a half of working mothers have a child under six years. Figure \@ref(fig:generalchildcare) illustrates that 47.6% of these mothers look after their own children while they are at work, 22.1% have their relatives other than their husband/partner to look after the child, 14% send the child to school or other institutional care. On top of that, less than 3 percent of women have husbands/partners to look after the child while they are at work. 
+We can tell from Table \@ref(tab:data) that there are 3,564 working mothers, and Figure \@ref(fig:general) shows that over a half of them have a child under six years. Figure \@ref(fig:generalchildcare) illustrates that 47.6% of these mothers look after their own children while they are at work, 22.1% have their relatives other than their husband/partner to look after the child, 14% send the child to school or other institutional care. On top of that, less than 3 percent of women have husbands/partners to look after the child while they are at work. 
 
 It should be noted that 1.9% has not worked since the last birth, and this represents the respondents who were not working at the time of the survey but had been employed at some time during the last 12 months.
 
