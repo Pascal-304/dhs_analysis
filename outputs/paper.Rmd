@@ -1,5 +1,5 @@
 ---
-title: "paper"
+title: "Childcare while their mom is working"
 author: 
   - Pascal Lee Slew
   - Yunkyung Park
@@ -19,7 +19,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r library, echo=FALSE, message=FALSE}
 # install.packages('bookdown')
 # install.packages("stringr")
-#install.packages("ggforce")
+# install.packages("ggforce")
 library(stringr) 
 library(dplyr)
 library(tidyverse) 
@@ -39,25 +39,17 @@ ghana <- read_csv('data/cleaned_data.csv', show_col_types = FALSE)
 
 # Data
 
-```{r total, echo=FALSE, fig.cap="Data"}
-ghana %>%
-  mutate(
-    character = factor(character,
-                       levels = c("Residence",
-                                "Region",
-                                "Mother\'s_education",
-                                "Work_status",
-                                "Occupation",
-                                "Employment_status",
-                                "Total"
-                                )
-                       )
-           ) %>%
-  group_by(character) %>%
-  summarise(sum = sum(number_of_employed_women))
-```
+## Data Source
 
-Table \@ref(tab:total) shows that 3,566 participated the survey, but there are 3 whom did not answer their employment status, etc.
+This paper uses the Childcare While Working Data [@ghana1998] obtained from the Ghana Demographic and Health Survey 1998. The dataset was collected by downloading the final report of the 1988 Ghana census published in the Demographic and Health Surveys (DHS) programme (Do we need to cite dhs program as well?). The library 'pdftools' [@citepdftools] is used to download and read the content into R by parsing the pdf. 
+
+## Methodology
+
+The 1998 Ghana Demographic and Health Survey (GDHS) is a national-level survey carried out in Ghana. This was a part of the worldwide Demographic and Health Surveys (DHS) programme, and was conducted by the Ghana Statistical Service collaborated with the Macro International Inc. It is designed to collect data on fertility, family planning, and maternal and child health.
+
+The survey frame was created using the list of Enumeration Areas (EAs) with population and household information from the 1984 Population Census. The 1998 GDHS used a two-stage stratified sampling. At the first stage of sampling, 400 EAs were selected using systematic sampling with probability proportional to size where the selected EAs are comprised of 138 in the urban areas and 262 in the rural areas. A complete household listing operation was then carried out in all the selected EAs to provide a sampling frame for the second stage selection of households. At the second stage of sampling, a systematic sample of 20 households per EA was selected in the Northern, Upper West and Upper East Regions, and 15 households per EA was selected in the other regions. 
+
+The target sample size for the 1998 GDHS was 6,000 comprising 4,500 women of age 15-49 and men of age 15-59. A total of 4,843 women age 15-49 and 1,546 men age 15-59 completed the survey.
 
 ## Key features
 
@@ -74,8 +66,94 @@ ghana %>%
   add_footnote("Numbers are in percentage (%).")
 ```
 
-The raw data contains the table created in 
-Some key features include background, no child under six, one or more child under six, and character. If the respondent answered to have one or more child under six, then they were further asked to indicate the caretaker of the child such as the respondent themselves, their partner, whether they hired a person for it, etc. The dataset is processed and analyzed using 'R' [@citeR] mainly with the 'tidyverse' [@citetidyverse] and 'dplyr' [@citedplyr] packages. The package 'janitor' [@citejanitor] is used to clean data, and the graphs and the tables are created in 'ggplot2' [@citeggplot2] and 'ggforce' [@citeggforce], and 'kableExtra' [@citekableExtra], respectively. The package 'stringr' [@citestringr] is used to manipulate the character string. The packages 'bookdown' [@citebookdown] and 'knitr' [@citeknitr] are used in generating the R Markdown report. Table \@ref(tab:data) created using 'kableExtra' [@citekableExtra] shows a subset of key features that will be discussed in this paper.
+Some key features include background and a percent distribution of currently employed women by whether they have a child under six years of age at home according to selected background characteristics, Ghana 1998. If the respondent answered to have one or more child under six, then they were further asked to indicate the caretaker of the child such as the respondent themselves, their partner, or whether they hired a person for it, etc. The dataset is processed and analyzed using 'R' [@citeR] mainly with the 'tidyverse' [@citetidyverse] and 'dplyr' [@citedplyr] packages. The package 'janitor' [@citejanitor] is used to clean data, and the graphs are created in 'ggplot2' [@citeggplot2] and 'ggforce' [@citeggforce]. The package 'stringr' [@citestringr] is used to manipulate the character string. The packages 'bookdown' [@citebookdown] and 'knitr' [@citeknitr] are used in generating the R Markdown report. Table \@ref(tab:data) created using 'kableExtra' [@citekableExtra] shows a subset of key features that will be discussed in this paper.
+
+## General 
+
+```{r general, echo=FALSE, fig.cap="Distribution of working mothers who have a child under six years"}
+totl <-
+  ghana %>%
+  filter(character=="Total") %>%
+  mutate(
+    no_child_under_six = round(no_child_under_six/100 * number_of_employed_women, 0),
+    one_more_child_under_six = round(one_more_child_under_six/100 * number_of_employed_women, 0)
+  )
+
+# make dataset in long format
+totl_long <-
+  totl %>%
+  select(-c(character, total)) %>%
+  pivot_longer(!background, names_to = "variable", values_to = "count")
+
+totl_long %>%
+  filter(variable == 'no_child_under_six' | variable == 'one_more_child_under_six') %>%
+  ggplot(aes(x = background, y = count, fill = variable)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  geom_text(aes(label=paste(round(count/sum(count),4)*100, '%'), y=count-850),
+            size = 4.5,
+            position = position_dodge(width =.9)) +
+  labs(x = "", y = "Number of employed women", fill = "Child under six") +
+  theme_minimal() +
+  scale_fill_discrete(labels = c("No child under six", 
+                                 "One or more child under six")) +
+  scale_x_discrete(labels = c("No_education" = "No education")) +
+  theme(legend.position = 'bottom')
+```
+
+```{r generalchildcare, echo=FALSE, fig.cap="Distribution of the caretaker of the child when the mother is working", fig.height=4, fig.width=6}
+# caretaker aspect
+totl_caretaker <-
+  totl_long %>%
+  filter(str_detect(variable, "^caretaker_")) %>%
+  mutate(variable = str_replace_all(variable, "caretaker_", "")) %>%
+  rename(caretaker = variable,
+         percentage = count) %>%
+  mutate(
+    caretaker = factor(caretaker, 
+                       levels = c('respondent',
+                                  'partner',
+                                  'other_relative',
+                                  'neighbor',
+                                  'hired',
+                                  'child_in_school',
+                                  'other_female_child',
+                                  'other_male_child',
+                                  'not_worked_since_birth',
+                                  'other',
+                                  'missing')
+    )
+  )
+
+# plot the bar graph
+totl_caretaker %>%
+  ggplot(mapping=aes(x=caretaker, y=percentage, fill=caretaker)) +
+  geom_bar(stat = "identity", position="dodge") +
+  geom_text(aes(label=paste(percentage, '%'), y=percentage+2),
+            size = 3,
+            position = position_dodge(width=0.5)) +
+  theme_minimal() +
+  labs(x='') +
+  theme(legend.position='none') +
+  coord_flip() + 
+  scale_x_discrete(
+    labels = 
+      c("respondent" = "respondent",
+        "partner" = "partner",
+        "other_relative" = "relative",
+        "neighbor" = "neighbor",
+        "hired" = "hired",
+        "child_in_school" = "schooling",
+        "other_female_child" = "other female child",
+        "other_male_child" = "other male child",
+        "not_worked_since_birth" = "not worked since birth",
+        "other" = "other",
+        "missing" = "missing")
+  )
+```
+
+Figure \@ref(fig:general) shows that over a half of working mothers have a child under six years. Figure \@ref(fig:generalchildcare) illustrates that 47.6% of these mothers look after their own children while they are at work, 22.1% have their relatives other than their husband/partner to look after the child, 14% send the child to school or other institutional care. On top of that, less than 3 percent of women have husbands/partners to look after the child while they are at work. 
+
+It should be noted that 1.9% has not worked since the last birth, and this represents the respondents who were not working at the time of the survey but had been employed at some time during the last 12 months.
 
 # Results
 
@@ -121,9 +199,7 @@ residence %>%
   theme_minimal()
 ```
 
-Figure \@ref(fig:residence) shows the number of employed mothers in urban and rural areas. There are 1127 women who were selected in Urban areas while 2338 mothers were selected in rural areas. This is not surprising since a larger population live in rural areas.
-
-
+Figure \@ref(fig:residence) shows the number of employed mothers in urban and rural areas. There are 1127 women who were selected in Urban areas while 2338 mothers were selected in rural areas. There are less women living in urban who is currently working, and this is not surprising as a larger population live in rural areas. 
 
 ```{r region, echo=FALSE, fig.cap = "Comparison of the number of working mothers selected in the different administrative regions"}
 # region subdataset
@@ -242,7 +318,6 @@ caretaker %>%
 ```
 
 Figure @\ref(fig:areachildcare) shows the Ghanese families'caretaking preferences in both urban and rural areas. The preferred caretaking method in both urban and rural areas is the working mothers looking after their children by themselves. The next preferred method for in both areas would be to let the children be looked after by relatives. Other notable observations would be that families living in urban areas tend to put their child in school and in rural areas, families let the older female child to care for the under six years old child much more than in urban areas.
-
 
 ## Also comparison among the different administrative regions
 
@@ -408,7 +483,7 @@ edu_caretaker %>%
   )
 ```
 
-Figure \@ref(fig:mothereduchildcare) demonstrates that no matter what their education level is, it is mostly the employed women who take care of their children. When the level of the women's education is below high school, then it is followed by the relative. As the level of the women's education gets higher, then the percentage of schooling their children gets higher as well. Moreover, it is worthwhile to mention that the women who completed high school are more likely to stop working after having a birth compare to the women whose education level is lower than secondary school. 
+Figure \@ref(fig:mothereduchildcare) demonstrates that no matter what their education level is, it is mostly the employed women who take care of their children. On the other hand, when the level of education is lower, then it is more likely for the respondent to look after their own children under six years. Over 50% of the women with no education takes care of their own children whearas less than 40% of the women with secondary or higher levels of education. As the level of the education gets higher, then the percentage of schooling their children gets higher as well. Moreover, it is worthwhile to mention that the women who completed high school are more likely to stop working after having a birth compare to the women whose education level is lower than secondary school.
 
 ## Work status
 
@@ -543,7 +618,7 @@ occup_long %>%
              fill = variable)) +
   geom_bar(stat = "identity",
            position = "dodge") +
-  labs(x = "Occupation",
+  labs(x = "Sector",
        y = "Number of employed women",
        fill = "Child under six") +
   theme_minimal() +
@@ -552,7 +627,7 @@ occup_long %>%
   theme(legend.position = 'bottom')
 ```
 
-Figure \@ref(fig:occupation) shows that there are more women working in the non-agricultural industry. When they work in the agricultural industry, the number of women who have a child under six is twice as many as the number of the ones who have no child under six. On the contrary, the number of women with no child under six is slightly higher than that of the ones with a child in the non-agricultural industry. 
+Figure \@ref(fig:occupation) shows that there are more women working in the non-agricultural industry. When they work in the agricultural industry, the number of women who have a child under six is twice as many as the number of the ones who have no child under six. On the contrary, the number of women with no child under six is slightly higher than that of the ones with a child in the non-agricultural industry.
 
 ```{r occupationchildcare, echo=FALSE, fig.cap="Distribution of child's caretaker by Occupation"}
 # caretaker aspect
@@ -602,7 +677,7 @@ occup_caretaker %>%
   )
 ```
 
-Figure \@ref(fig:occupationchildcare) illustrates that the percentage of the child's caretaker is highest in the respondent followed by the relative and schooling. This means that it is mostly the case that the employed women taking care of their children under six. In particular, more than a half of the employed women working in the agricultural industry are the primary caretaker of the child under six. Also, we can see that it is more likely for the female sibling to take care of the kids under six than the male sibling. 
+Figure \@ref(fig:occupationchildcare) illustrates that the percentage of the child's caretaker is highest in the respondent followed by the relative and schooling. This means that it is mostly the case that the employed women taking care of their children under six. Meanwhile, women who work in the agricultural sector are more likely to care for a child themselves than women in non-agricultural occupations. In particular, more than a half of the employed women working in the agricultural industry are the caretaker of the child under six whereas around 45% of the women working in non-agricultural sector take care of a child themselves. Also, we can see that it is more likely for the female sibling to take care of the kids under six than the male sibling.
 
 ## Employment status
 
@@ -702,15 +777,15 @@ emply_caretaker %>%
 
 ```
 
-We can see from Figure \@ref(fig:employmentstatuschildcare) that the percentage of the respondent being the primary caretaker of the child under six is remarkably higher than the others in all four employment status. It exceeds 40% in all four cases, and in particular, it is close to 50% when they work all year, full week. Next, it is the relatives who mainly take care of the child under six. It should be noted that there are more women sending their kids under six to school when they work all year compare to the ones who do not work throughout the entire year. 
+We can see from Figure \@ref(fig:employmentstatuschildcare) that the percentage of the respondent being the primary caretaker of the child under six is remarkably higher than the others in all four employment status. It exceeds 40% in all four cases, and in particular, full time working mothers are more likely to look after their own children than other mothers are. Next, it is the relatives who mainly take care of the child under six. It should be noted that there are more women sending their kids under six to school when they work all year compare to the ones who do not work throughout the entire year. 
 
 # Discussions
 
 ## Child's caretaker
 
-Every figure that demonstrates the distribution of the child's caretaker shows that it is most likely to be the mother primarily taking care of their child under six. In other words, no matter where they live, what their education level is, and what type of a job they have, majority of the employed women is the primary caregiver of a child under six. Therefore, we can deduce that in Ghana it was common that the mother is primarily responsible for the care and raising of a child back in 1988.
+Every figure that demonstrates the distribution of the child's caretaker shows that it is most likely to be the mother primarily taking care of their child under six. In other words, no matter where they live, what their education level is, and what type of a job they have, majority of the employed women is the primary caregiver of a child under six. Therefore, we can deduce that in Ghana it was common that the mother is primarily responsible for the care and raising of a child back in 1998.
 
-Besides the mother being the primary caregiver of a child under six, it can be observed from Figure \@ref(fig:mothereduchildcare), Figure \@ref(fig:workstatuschildcare), Figure \@ref(fig:occupationchildcare), Figure \@ref(fig:employmentstatuschildcare) that the relatives are likely to be the primary caregiver. Also, there are some family where the older siblings take care of their kids under six. Thus, we can tell that if there is a child under six in the family, then it was usual for the family member to take care of them in Ghana, 1988. 
+Besides the mother being the primary caregiver of a child under six, it can be observed from Figure \@ref(fig:mothereduchildcare), Figure \@ref(fig:workstatuschildcare), Figure \@ref(fig:occupationchildcare), Figure \@ref(fig:employmentstatuschildcare) that the relatives are likely to be the primary caregiver. Also, there are some family where the older siblings take care of their kids under six. Thus, we can tell that if there is a child under six in the family, then it was usual for the family member to take care of them in Ghana, 1998. 
 
 In addition, we can observe that it is uncommon to hire a person to take care of the child under six. Instead of hiring a person, there are more cases reported that they sent the kids to school. Figure \@ref(fig:areachildcare) demonstrates that the percentage of the employed women sending their kids to school is higher in urban areas than in rural areas. Figure \@ref(fig:mothereduchildcare) shows that there are more women who send their kids to school as their education level gets higher. Figure \@ref(fig:workstatuschildcare) illustrates that it is more likely to have their kids in school when they work for someone else than when they work for the family member or when they are self-employed. Figure \@ref(fig:occupationchildcare) shows that the percentage of the employed women sending their kids to school is higher in non-agricultural sectors than in agricultural sectors. Lastly, we can see from Figure \@ref(fig:employmentstatuschildcare) that there are more women sending their kids to school when they work all year compare to the ones who work seasonally and occasionally. 
 
@@ -721,6 +796,8 @@ Lastly, we can tell that it is rarely the case that the mother stop working afte
 The number does not add up to 100. (round-off error)
 
 'Mother's education level' might not be the accurate terminology to be used as it might be the case that the employed women not having any child. 
+
+It does not mention whether 
 
 \newpage
 

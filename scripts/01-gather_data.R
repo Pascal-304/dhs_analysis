@@ -16,10 +16,10 @@ library(tidyverse)
 library(stringi)
 
 download.file("https://dhsprogram.com/pubs/pdf/FR106/FR106.pdf",
-              "outputs/literature/1988_Ghana_DHS.pdf",
+              "outputs/literature/1998_Ghana_DHS.pdf",
               mode="wb")
 
-report <- pdf_text("outputs/literature/1988_Ghana_DHS.pdf")
+report <- pdf_text("outputs/literature/1998_Ghana_DHS.pdf")
 
 page_45<-stri_split_lines(report[[45]])[[1]]
 page_45<-page_45[page_45 != ""]
