@@ -51,11 +51,25 @@ This paper uses the Childcare While Working Data [@ghana1998] obtained from the 
 
 ## Methodology
 
-The 1998 Ghana Demographic and Health Survey was a national-level survey carried out in Ghana. This was a part of the worldwide Demographic and Health Surveys (DHS) programme and was conducted by the Ghana Statistical Service collaborated with the Macro International Inc. It was designed to collect data on fertility, family planning, and maternal and child health.
+The 1998 Ghana Demographic and Health Survey was a national-level survey carried out in Ghana. This was a part of the worldwide Demographic and Health Surveys (DHS) programme and was conducted by the Ghana Statistical Service in collaboration with the Macro International Inc. It was designed to collect data on fertility, family planning, and maternal and child health. The 1998 GDHS was conducted from mid-November 1998 to mid-February 1999.
 
-The survey frame was created using the list of Enumeration Areas (EAs) with population and household information from the 1984 Population Census. The 1998 GDHS used a two-stage stratified sampling. At the first stage of sampling, 400 EAs were selected using systematic sampling with probability proportional to size where the selected EAs comprised 138 in the urban areas and 262 in the rural areas. A complete household listing operation was then carried out in all the selected EAs to provide a sampling frame for the second stage selection of households. At the second stage of sampling, a systematic sample of 20 households per EA was selected in the Northern, Upper West and Upper East Regions, and 15 households per EA was selected in the other regions. 
+The survey frame was created using the list of Enumeration Areas (EAs) with population and household information from the 1984 Population Census. The 1998 GDHS used a two-stage stratified sampling method. At the first stage of sampling, 400 EAs were selected using systematic sampling with probability proportional to size where the selected EAs comprised 138 in the urban areas and 262 in the rural areas. A complete household listing operation was then carried out in all the selected EAs to provide a sampling frame for the second stage selection of households. At the second stage of sampling, a systematic sample of 20 households per EA was selected in the Northern, Upper West and Upper East Regions, and 15 households per EA was selected in the other regions. 
 
-The target sample size for the 1998 GDHS was 6,000 consisted of 4,500 women of age 15-49 and men of age 15-59. A total of 4,843 women age 15-49 and 1,546 men age 15-59 completed the survey.
+The target sample size for the 1998 GDHS was 6,000 consisted of 4,500 women of age 15-49 and men of age 15-59. A total of 4,843 women age 15-49 and 1,546 men age 15-59 completed the survey. To account for non-response, 6375 households were selected for interview.
+
+The GDHS was composed of 3 parts: the Household's questionnaire, the Women's questionnaire and the Men's questionnaire. All the questionnaires were modified to account for the situation in Ghana. 
+
+The survey was conducted in person. The interview staff were first trained for a period of three weeks. It was conducted by a total of 14 teams, comprising a team supervisor, a field editor, three interviewers and a driver. The response rate was 97% for individual men and women selected. Non-response was mainly due to inability to find the selected interviewee at home. Repeated callbacks were made to try to reach the selected respondents.   
+
+## Strengths
+
+The questionnaires were made available into the five major local languages (Akan, Ga, Ewe, Hausa, and Dagbani), making the survey accessible to a larger population. After the household listing, sport checks were conducted to make sure the work has been done correctly. Before the actual survey, a test was conducted and adjustments were made to the questionnaires based on the feedback obtained from the test. The questionnaire questions were comprehensive and detailed
+
+
+
+## Weaknesses
+
+Since the questionnaires were only available in the five major local languages, if the selected household was from a minor ethnic group and know only their own language, then it would be difficult for the interviewee to understand and answer the survey. Visitors who stayed a night before in the selected household were eligible for the interview. The visitor may be from a different region, so the targeted sample size for each region may be skewed.
 
 ## Key features
 
