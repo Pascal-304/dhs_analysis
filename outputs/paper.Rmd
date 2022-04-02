@@ -5,7 +5,7 @@ author:
   - Yunkyung Park
 thanks: "Code and data are available at: https://github.com/Pascal-304/dhs_analysis."
 date: "`r format(Sys.time(), '%d %B %Y')`"
-abstract: "Four sentences"
+abstract: "Working mothers are often faced with the conflict of responsibility towards their children and the role they play at work. The Ghana Demographic and Health Survey (GDHS) forms part of a global initiative to collect data on family, fertility, and child health. In this paper, we used the 1998 GDHS and focused on the child care and working mothers aspect. Demographics and other aspects such as education tend to predict the child care preference. We found that families living in Greater Accra are more likely to send their child to school and the majority of working mothers look after their child by themselves. The analysis of the child care and working mothers data provides an insight on current trends and has significant implications for public policy and program decisions."
 output:
   bookdown::pdf_document2
 toc: FALSE
@@ -16,7 +16,7 @@ bibliography: references.bib
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r library, echo=FALSE, message=FALSE}
+```{r library, echo=FALSE, message=FALSE, warning = FALSE}
 # install.packages('bookdown')
 # install.packages("stringr")
 # install.packages("ggforce")
@@ -36,6 +36,12 @@ ghana <- read_csv('data/cleaned_data.csv', show_col_types = FALSE)
 ```
 
 # Introduction
+
+Child care matter to the development of a child. Previously, women were thought to fit the traditional role of a mother, being at home and looking after her children. This thought is being challenged with a growing presence of women in the workforce, contributing to economic activity. Women are often faced with the conflicting role they have at home and at work. However, sometimes, mothers have to work out of necessity to contribute to the financial situation of their families. Families have to find ways to raise their children. The quality of child care given tend to have positive effects on the development of the child [@care]. Having an idea of the current child care practices is important since it gives crucial information on the weaknesses of current policies and would give an insight on how to improve the situation around child care.
+
+In this paper, we examined child care decisions of working mothers across regions, the mothers' highest education level attained, their occupation, work and employment status in Ghana. We conducted a descriptive analysis of child status and childcare preferences. We first looked at the number of working mothers from the sample population, then examined child care practices based on employment status, education level among other factors. The differences in child care practices were noticeable in different regions. We found that most working mothers tend to look after their young child by themselves and those living in Greater Accra have a higher tendency to put their child in child care centres compared to other regions. Another observation was the highest level of education attained may have an influence on the number of children they have. The proportion of working mothers with at least secondary education with no child under six years old is lower than those with at least one or more child under six. 
+
+The rest of the paper is divided into 4 sections. Section \@ref(data) explains the data source, the survey methodology and some of its key features, strengths and weaknesses. Section \@ref(results) relays the findings through graphs. Section @\ref(discussions) discusses in more detail what was found and some limitations of what we did and Section \@ref(appendix) contains a datasheet for the dataset we used. 
 
 # Data
 
@@ -184,7 +190,7 @@ map_ghana %>%
   theme_minimal()
 ```
 
-Figure \@ref(fig:map) shows a map of Ghana and its administrative regions. Ghana has 10 administrative regions, namely, Upper West, Upper East, Northern, Brong Ahato, Western, Ashanti, Central, Eastern, Volta and Greater Accra. # Add details on largest provinces + population wise 
+Figure \@ref(fig:map) shows a map of Ghana and its administrative regions. Ghana has 10 administrative regions, namely, Upper West, Upper East, Northern, Brong Ahato, Western, Ashanti, Central, Eastern, Volta and Greater Accra. In 1998, about 57.6% of the Ghanese population were living in rural areas [@population].
 
 ```{r residence, echo=FALSE, fig.cap="Comparison of the number of working mothers between urban and rural areas"}
 # Urban vs Rural
