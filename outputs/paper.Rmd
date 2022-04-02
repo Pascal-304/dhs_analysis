@@ -56,15 +56,17 @@ The target sample size for the 1998 GDHS was 6,000 comprising 4,500 women of age
 ```{r data, echo=FALSE}
 ghana %>%
   select(background, no_child_under_six, one_more_child_under_six, caretaker_respondent, number_of_employed_women, character) %>%
+  relocate(no_child_under_six, .after = one_more_child_under_six) %>%
   slice(5:6, 13:20, 26) %>%
   kable(caption='A subset of key features',
-        col.names = c('Background', 'No child under six', '1+ child under six', 
-                      'Child\'s caretaker- respondent', 'Number of employed women', 'Category'),
+        col.names = c('Background', 'Yes', 'No', 'Respondent', 'Number of employed women', 'Category'),
         digits = 1,
-        booktabs = FALSE,
-        linesep = "") %>%
-  kable_styling(position = "center")
-  add_footnote("Numbers are in percentage (%).")
+        booktabs = TRUE,
+        linesep = "",
+        align = c('l', 'c', 'c', 'c', 'c', 'l'),) %>%
+  add_header_above(c(" " = 1, "Child under six" = 2, "Child's caretaker" = 1, " " = 2),
+                   escape=F) %>%
+  add_footnote("Decimals are in percentage (%).")
 ```
 
 Some key features include background and a percent distribution of currently employed women by whether they have a child under six years of age at home according to selected background characteristics, Ghana 1998. If the respondent answered to have one or more child under six, then they were further asked to indicate the caretaker of the child such as the respondent themselves, their partner, or whether they hired a person for it, etc. The dataset is processed and analyzed using 'R' [@citeR] mainly with the 'tidyverse' [@citetidyverse] and 'dplyr' [@citedplyr] packages. The package 'stringi' [@citestringi] is used to clean and prepare the dataset. The package 'janitor' [@citejanitor] is used to clean data, and the graphs are created in 'ggplot2' [@citeggplot2] and 'ggforce' [@citeggforce]. The package 'stringr' [@citestringr] is used to manipulate the character string. The packages 'bookdown' [@citebookdown] and 'knitr' [@citeknitr] are used in generating the R Markdown report. Table \@ref(tab:data) created using 'kableExtra' [@citekableExtra] shows a subset of key features that will be discussed in this paper.
