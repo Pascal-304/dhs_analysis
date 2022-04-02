@@ -41,7 +41,7 @@ Child care matter to the development of a child. Previously, women were thought 
 
 In this paper, we examined child care decisions of working mothers across regions, the mothers' highest education level attained, their occupation, work and employment status in Ghana. We conducted a descriptive analysis of child status and childcare preferences. We first looked at the number of working mothers from the sample population, then examined child care practices based on employment status, education level among other factors. The differences in child care practices were noticeable in different regions. We found that most working mothers tend to look after their young child by themselves and those living in Greater Accra have a higher tendency to put their child in child care centres compared to other regions. Another observation was the highest level of education attained may have an influence on the number of children they have. The proportion of working mothers with at least secondary education with no child under six years old is lower than those with at least one or more child under six. 
 
-The rest of the paper is divided into 4 sections. Section \@ref(data) explains the data source, the survey methodology and some of its key features, strengths and weaknesses. Section \@ref(results) relays the findings through graphs. Section @\ref(discussions) discusses in more detail what was found and some limitations of what we did and Section \@ref(appendix) contains a datasheet for the dataset we used. 
+The rest of the paper is divided into 4 sections. Section \@ref(data) explains the data source, the survey methodology and some of its key features, strengths and weaknesses. Section \@ref(results) relays the findings through graphs. Section @\ref(discussion) discusses in more detail what was found and some limitations of what we did and Section \@ref(appendix) contains a datasheet for the dataset we used. 
 
 # Data
 
@@ -57,9 +57,9 @@ The survey frame was created using the list of Enumeration Areas (EAs) with popu
 
 The target sample size for the 1998 GDHS was 6,000 consisted of 4,500 women of age 15-49 and men of age 15-59. A total of 4,843 women age 15-49 and 1,546 men age 15-59 completed the survey. To account for non-response, 6375 households were selected for interview.
 
-The GDHS was composed of 3 parts: the Household's questionnaire, the Women's questionnaire and the Men's questionnaire. All the questionnaires were modified to account for the situation in Ghana. 
+The GDHS was composed of 3 parts: the Household's questionnaire, the Woman's questionnaire and the Man's questionnaire. All the questionnaires were modified to account for the situation in Ghana. 
 
-The survey was conducted in person. The interview staff were first trained for a period of three weeks. It was conducted by a total of 14 teams, comprising a team supervisor, a field editor, three interviewers and a driver. The response rate was 97% for individual men and women selected. Non-response was mainly due to inability to find the selected interviewee at home. Repeated callbacks were made to try to reach the selected respondents.   
+The survey was conducted in person. The interview staff were first trained for a period of three weeks. It was conducted by a total of 14 teams, comprising a team supervisor, a field editor, three interviewers and a driver. The response rate was 97% for individual men and women selected. Non-response was mainly due to inability to find the selected interviewee at home. Repeated callbacks were made to try to reach the selected respondents. The results of the survey did not disclose any confidential information that might identify the respondents. The survey was a voluntary one but it is unclear if the purpose of the survey explained to the respondents for them to make an informed decision.
 
 ## Strengths
 
@@ -189,7 +189,7 @@ map_ghana %>%
   theme_minimal()
 ```
 
-Figure \@ref(fig:map) shows a map of Ghana and its administrative regions. Ghana has 10 administrative regions, namely, Upper West, Upper East, Northern, Brong Ahato, Western, Ashanti, Central, Eastern, Volta and Greater Accra. In 1998, about 57.6% of the Ghanese population were living in rural areas [@population].
+Figure \@ref(fig:map) shows a map of Ghana and its administrative regions. Ghana has 10 administrative regions, namely, Upper West, Upper East, Northern, Brong Ahato, Western, Ashanti, Central, Eastern, Volta and Greater Accra. In 1998, about 57.6% of the Ghanese population were living in rural areas [@population]. The Greater Accra is considered the most urbanized region of Ghana.
 
 ```{r residence, echo=FALSE, fig.cap="Comparison of the number of working mothers between urban and rural areas"}
 # Urban vs Rural
@@ -207,7 +207,7 @@ residence %>%
   theme_minimal()
 ```
 
-Figure \@ref(fig:residence) shows the number of employed mothers in urban and rural areas. There are 1127 women who were selected in Urban areas while 2338 mothers were selected in rural areas. There are less women living in urban who is currently working, and this is not surprising as a larger population live in rural areas. 
+Figure \@ref(fig:residence) shows the number of employed mothers in urban and rural areas. There are 1127 women who were selected in Urban areas while 2338 mothers were selected in rural areas. There are less women living in urban who are currently working, and this is not surprising as a larger population live in rural areas. 
 
 ```{r region, echo=FALSE, fig.cap = "Comparison of the number of working mothers selected in the different administrative regions"}
 # region subdataset
@@ -237,7 +237,7 @@ region %>%
   coord_flip()
 ```
 
-Figure @\ref(fig:region) shows the number of employed mothers in the different administrative regions. There were more working mothers in Greater Accra and Ashanti while Upper West had the least number of working mothers. The reason might be because of the number of people living in the different administrative regions are different, therefore, the population sample differed from one region to another.
+Figure @\ref(fig:region) shows the number of employed mothers in the different administrative regions. There were more working mothers in Greater Accra and Ashanti while Upper West had the least number of working mothers. The reason might be because of the number of people living in the different administrative regions are different, therefore, the sample size differed from one region to another. Greater Accra is the most urbanized region which implies more work opportunities and therefore, a larger population would be concentrated there.
 
 
 ```{r childstatus, echo = FALSE, fig.cap = "Comparing the percentage of mothers having no child under six to one or more in both Urban and Rural areas"}
@@ -277,7 +277,7 @@ resid_long %>%
   geom_bar(stat = 'identity',
            position = 'dodge') +
   labs(x = "Area",
-       y = "Percentage",
+       y = "Percent",
        fill = "Child status") +
   theme_minimal() +
   scale_fill_brewer() +
@@ -285,7 +285,7 @@ resid_long %>%
 
 ```
 
-Figure \@ref(fig:childstatus) shows the child status of families in Urban and Rural areas. In rural areas, there is a larger percentage of working mothers having one or more child under six years old. The converse is true in Urban areas. Working mothers tend to have no child under six years old.
+Figure \@ref(fig:childstatus) shows the child status of families in Urban and Rural areas. In rural areas, there is a larger percentage of working mothers having one or more child under six years old. The converse is true in Urban areas. Working mothers tend to have no child under six years old. 
 
 
 ```{r areachildcare, echo=FALSE, fig.cap = "Comparing child caretaker preferences in Urban and Rural areas"}
@@ -316,7 +316,7 @@ caretaker %>%
   geom_bar(stat = 'identity',
            position = "dodge") +
   labs(x = "Caretaker",
-       y = "Percentage of women",
+       y = "Percentage of working mothers",
        fill = "Area") +
   theme_minimal() +
   coord_flip() +
@@ -327,7 +327,7 @@ caretaker %>%
 
 Figure @\ref(fig:areachildcare) shows the Ghanese families'caretaking preferences in both urban and rural areas. The preferred caretaking method in both urban and rural areas is the working mothers looking after their children by themselves. The next preferred method for in both areas would be to let the children be looked after by relatives. Other notable observations would be that families living in urban areas tend to put their child in school and in rural areas, families let the older female child to care for the under six years old child much more than in urban areas.
 
-## Also comparison among the different administrative regions
+
 
 ```{r caretakingregions, echo = FALSE, fig.cap = "Caretaking behaviour in the different administrative regions", fig.width=7, fig.height=7}
 # make dataset into long format
@@ -359,7 +359,7 @@ child %>%
              fill = background)) +
   geom_bar(stat = 'identity') + 
   labs(x = "caretaking preference",
-       y = "percentage") +
+       y = "percent") +
   theme_minimal() +
   coord_flip() +
   facet_wrap(~background) +
@@ -490,7 +490,7 @@ edu_caretaker %>%
   )
 ```
 
-Figure \@ref(fig:mothereduchildcare) demonstrates that no matter what their education level is, it is mostly the employed women who take care of their children while working. When the level of education is lower, then it is more likely for the respondent to look after their own children under six years. Over 50% of the women with no education take care of their own children whearas less than 40% of the women with secondary or higher levels of education do. As the level of the education gets higher, then the percentage of schooling their children gets higher as well. Moreover, it is worthwhile to mention that the women who completed high school are more likely to stop working after having a birth compare to the women whose education level is lower than secondary school.
+Figure \@ref(fig:mothereduchildcare) demonstrates that no matter what their education level is, it is mostly the employed women who take care of their children while working. When the level of education is lower, then it is more likely for the respondent to look after their own children under six years. Over 50% of the women with no education take care of their own children whereas less than 40% of the women with secondary or higher levels of education do. As the level of the education gets higher, then the percentage of families choosing the option of schooling their children gets higher as well. Moreover, it is worthwhile to mention that the women who completed high school are more likely to stop working after having a birth compared to the women whose education level is lower than secondary school.
 
 ## Work status
 
@@ -530,7 +530,7 @@ work_long %>%
   theme(legend.position='bottom')
 ```
 
-Figure \@ref(fig:workstatus) shows that most of the employed women are self-employed. If the women work for themselves or for their family, then it is more likely to have one or more than one child under six, whereas when they work for someone else, there are more women who do not have a child under six. It should be noted that no child under six does not mean that they have no child. 
+Figure \@ref(fig:workstatus) shows that most employed mothers are self-employed. If the women work for themselves or for their family, then it is more likely to have one or more than one child under six years old, whereas when they work for someone else, there are more women who do not have a child under six years old. It should be noted that no child under six does not mean that they have no child. 
 
 ```{r workstatuschildcare, echo=FALSE, fig.cap="Distribution of child's caretaker by work status", fig.width=6, fig.height=4}
 # caretaker aspect
@@ -561,7 +561,7 @@ work_caretaker %>%
   ggplot(mapping=aes(x=caretaker, y=percentage, fill=caretaker)) +
   geom_bar(stat = "identity", position="dodge") + 
   theme_minimal() +
-  labs(x='Caretaker while at work', y="Percentage (in %)") +
+  labs(x='Caretaker while at work', y="Percent") +
   theme(legend.position='none') +
   coord_flip() + 
   scale_x_discrete(
@@ -592,7 +592,7 @@ work_caretaker %>%
 
 ```
 
-It can be observed from Figure \@ref(fig:workstatuschildcare) that most of the employed women take care of their children by themselves regardless of whom they work for, and then it is their relatives who take care of their children while they are at work. We can tell that if they are self-employed or work for the family, then it is more likely to have a family member taking care of their children under six, whereas the percentage of schooling their child under six is relatively higher when they work for someone else. 
+It can be observed from Figure \@ref(fig:workstatuschildcare) that most employed women take care of their children by themselves regardless of whom they work for. It is their relatives who take care of their children while they are at work. We can tell that if they are self-employed or work for the family, then it is more likely to have a family member taking care of their children under six years old, whereas the percentage of families opting for schooling option is relatively higher when they work for someone else. 
 
 ## Occupation
 
@@ -636,7 +636,7 @@ occup_long %>%
 
 Figure \@ref(fig:occupation) shows that there are more women working in non-agricultural occupations. When we compare the mothers working in the agricultural sector, the number of women with a child under six is twice as many as the number of the ones without. On the contrary, the number of women with no child under six is slightly higher than that of the ones with a child in non-agricultural occupations.
 
-```{r occupationchildcare, echo=FALSE, fig.cap="Distribution of child's caretaker by Occupation", fig.width=6, fig.height=4}
+```{r occupationchildcare, echo=FALSE, fig.cap="Distribution of child's caretaker by occupation", fig.width=6, fig.height=4}
 # caretaker aspect
 occup_caretaker <-
   occup_long %>%
@@ -664,7 +664,7 @@ occup_caretaker <-
 occup_caretaker %>%
   ggplot(aes(x=caretaker, y=percentage, fill=background)) +
   geom_bar(stat = "identity", position="dodge") + 
-  labs(x='Caretaker while at work', y="Percentage (in %)", fill="Occupation") +
+  labs(x='Caretaker while at work', y="Percent", fill="Occupation") +
   theme_minimal() +
   theme(legend.position='bottom') +
   coord_flip() +
@@ -684,7 +684,7 @@ occup_caretaker %>%
   )
 ```
 
-Figure \@ref(fig:occupationchildcare) illustrates that the percentage of the child's caretaker is highest in the respondent followed by the relative and schooling regardless of what type of jobs they have. This means that it is mostly the case that the employed women taking care of their children under six while they are working. Meanwhile, women who work in the agricultural sector are more likely to care for a child themselves than women in non-agricultural occupations. In particular, more than a half of the employed women working in the agricultural industry are the caretaker of the child under six whereas around 45% of the women working in non-agricultural sector take care of a child themselves while working. Furthermore, we can see that it is more likely for the female siblings to take care of the kids under six than the male siblings.
+Figure \@ref(fig:occupationchildcare) illustrates that the percentage of the respondent herself being the child's caretaker is highest,followed by relative and schooling regardless of the type of jobs they have. Women who work in the agricultural sector are more likely to care for a child themselves than women in non-agricultural occupations. In particular, more than a half of the employed women working in the agricultural industry take care of their child themselves whereas around 45% of the women working in non-agricultural sector take care of their child themselves. Another observation is that female siblings are more likely to look after their younger siblings compared to male siblings.
 
 ## Employment status
 
@@ -724,7 +724,7 @@ emply_long %>%
   theme(axis.text.x = element_text(angle=15), legend.position = 'bottom')
 ```
 
-Figure \@ref(fig:employmentstatus) illustrates that majority of the employed women work throughout the entire year. Specifically, majority of them work full week. There are few women who work occasionally. On top of that, regardless of what their employment status is, more working mothers tend to have one or more child under six. 
+Figure \@ref(fig:employmentstatus) illustrates that majority of employed women work throughout the entire year. Specifically, majority of them work full week. There are few women who work occasionally. On top of that, regardless of their employment status, more working mothers tend to have one or more child under six years old. 
 
 ```{r employmentstatuschildcare, echo=FALSE, fig.cap="Distribution of child's caretaker by work status", fig.width=6, fig.height=4}
 # caretaker aspect
@@ -783,17 +783,17 @@ emply_caretaker %>%
 
 ```
 
-We can see from Figure \@ref(fig:employmentstatuschildcare) that the percentage of the respondent being the primary caretaker of the child under six is remarkably higher than the others in all four employment status. It exceeds 40% in all four cases, and in particular, mothers working full time are more likely to look after their own children than the others. Next, it is the relatives who mainly take care of the child under six. It should be noted that there are more women sending their kids under six to school when they work all year compare to the ones who do not work throughout the entire year. 
+We can see from Figure \@ref(fig:employmentstatuschildcare) that the proportion of respondents being the primary caretaker is remarkably higher than the other caretaker options in all four employment status. It exceeds 40% in all four cases, and in particular, mothers working full time are more likely to look after their own children than the others. Next, it is the relatives who mainly take care of the child under six. It should be noted that there are more women sending their kids under six to school when they work all year compare to the ones who do not work throughout the entire year. 
 
-# Discussions
+# Discussion
 
 ## Employed Women
 
-We can tell from Table \@ref(tab:data) that 3,564 out of 4,843 women of age 15-49 who completed the survey are employed. In other word, around three in four women were employed during the 12 months before the survey. Figure \@ref(fig:residence) shows that the number of employed women is greater in rural area. It is worth mentioning that even though rural areas typically have low population density, rural women are somewhat more likely than urban women to be currently working. Next, Figure \@ref(fig:region) illustrates that women residing in the Upper West Region are least likely to be employed. Together with Figure \@ref(fig:map), we can tell that the women are more likely to be employed when they live in the southern part of Ghana. The northern part of Ghana including Upper West, Upper East, and Northern Region are the bottom 3 regions in Figure \@ref(fig:region) which demonstrates the distribution of the number of employed women whereas the southern part of Ghana including Greater Accra, Ashanti, and Eastern Region are the top 3. 
+We can tell from Table \@ref(tab:data) that 3,564 out of 4,843 women of age 15-49 who completed the survey are employed and have children. In other words, around three in four women were employed during the 12 months before the survey. Figure \@ref(fig:residence) shows that the number of employed women is greater in rural area. It is worth mentioning that even though rural areas typically have low population density, rural women are somewhat more likely than urban women to be currently working. Next, Figure \@ref(fig:region) illustrates that women residing in the Upper West Region are least likely to be employed. Together with Figure \@ref(fig:map), we can tell that the women are more likely to be employed when they live in the southern part of Ghana. The northern part of Ghana including Upper West, Upper East, and Northern Region are the bottom 3 regions in Figure \@ref(fig:region) which demonstrates the distribution of the number of employed women whereas the southern part of Ghana including Greater Accra, Ashanti, and Eastern Region are the top 3. 
 
 Additionally, it is surprising to see from Figure \@ref(fig:motheredu) that the number of employed women whose education level is secondary school or higher is remarkably lower than that of the other education levels. Meanwhile, Figure \@ref(fig:occupation) shows that women are approximately twice as likely to be employed in the non-agricultural sector than in the agricultural sector. Lastly, when women are working, then Figure \@ref(fig:workstatus) tells that they are most likely to be self-employed and Figure \@ref(fig:employmentstatus) shows that they are most likely to work full-time. 
 
-## Presence of Child Under Six
+## Presence of Child Under Six Years Old
 
 Table \@ref(tab:data) shows that more than a half of the employed women has a child under six years. Figure \@ref(fig:childstatus) demonstrates that working women in rural area are more likely to have at least one child under six years whereas working women in urban area tend to have no child under six years. Figure \@ref(fig:motheredu) shows that as the level of working mother’s education gets higher, it is more likely to not have any child under six.
 
