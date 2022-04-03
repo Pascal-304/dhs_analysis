@@ -159,6 +159,8 @@ We can tell from Table \@ref(tab:data) that there are 3,564 working mothers, and
 
 It should be noted that 1.9% have not worked since their last birth, and this indicates the percentage of the respondents who were not working at the time of the survey but had been employed at some time during the last 12 months.
 
+\newpage
+
 # Results
 
 ## Region
@@ -846,7 +848,9 @@ On top of that, the survey asked about the employment situation during the 12-mo
 
 \newpage
 
-# Appendix
+# (APPENDIX) Appendix {-} 
+
+# Datasheet
 
 \newpage
 
