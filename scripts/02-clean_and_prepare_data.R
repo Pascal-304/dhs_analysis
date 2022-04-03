@@ -1,5 +1,5 @@
 #### Preamble ####
-# Purpose: Clean and prepare the 1988 clean census data downloaded from the DHS Program
+# Purpose: Clean and prepare the 1988 clean Ghana Demographic and Health Survey data downloaded from the DHS Program
 # Author: Pascal Lee Slew, Yunkyung Park
 # Data: 3 April 2022
 # Contact: pascal.leeslew@mail.utoronto.ca, clara.park@mail.utoronto.ca

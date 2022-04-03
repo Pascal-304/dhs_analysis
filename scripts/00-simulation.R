@@ -1,5 +1,5 @@
 #### Preamble ####
-# Purpose: Simulate some data that could resemble the 1988 Ghana census dataset.
+# Purpose: Simulate some data that could resemble the 1988 Ghana Demographic and Health Survey dataset.
 # Author: Pascal Lee Slew, Yunkyung Park
 # Data: 3 April 2022
 # Contact: pascal.leeslew@mail.utoronto.ca, clara.park@mail.utoronto.ca
