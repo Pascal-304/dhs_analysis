@@ -93,7 +93,7 @@ The dataset is processed and analyzed using 'R' [@citeR] mainly with the 'tidyve
 
 ## General Overview
 
-```{r generalchildcare, echo=FALSE, fig.cap="Distribution of the child caretaker for working mothers", fig.width=6, fig.height=4}
+```{r generalchildcare, echo=FALSE, fig.cap="Distribution of the caretaker for working mothers", fig.width=6, fig.height=4}
 totl <-
   ghana %>%
   filter(character=="Total") %>%

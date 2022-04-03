@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2022.3.9)  3 APR 2022 15:04
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2022.3.9)  3 APR 2022 15:17
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -876,7 +876,7 @@ LaTeX Warning: There were undefined references.
 Here is how much of TeX's memory you used:
  14813 strings out of 483107
  217749 string characters out of 5964631
- 510220 words of memory out of 5000000
+ 510214 words of memory out of 5000000
  29314 multiletter control sequences out of 15000+600000
  609909 words of font info for 135 fonts, out of 8000000 for 9000
  59 hyphenation exceptions out of 8191
@@ -890,7 +890,7 @@ pfb></usr/share/texmf/fonts/type1/public/lm/lmr6.pfb></usr/share/texmf/fonts/ty
 pe1/public/lm/lmr7.pfb></usr/share/texmf/fonts/type1/public/lm/lmr8.pfb></usr/s
 hare/texmf/fonts/type1/public/lm/lmr9.pfb></usr/share/texmf/fonts/type1/public/
 lm/lmri10.pfb>
-Output written on paper.pdf (19 pages, 388617 bytes).
+Output written on paper.pdf (19 pages, 388602 bytes).
 PDF statistics:
  470 PDF objects out of 1000 (max. 8388607)
  401 compressed objects within 5 object streams
