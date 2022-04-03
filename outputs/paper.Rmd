@@ -59,7 +59,7 @@ The target sample size for the 1998 GDHS was 6,000 consisted of 4,500 women of a
 
 The GDHS was composed of 3 parts: the Household's questionnaire, the Woman's questionnaire and the Man's questionnaire. All the questionnaires were modified to account for the situation in Ghana. 
 
-The survey was conducted in person. The interview staff were first trained for a period of three weeks. It was conducted by a total of 14 teams, comprising a team supervisor, a field editor, three interviewers and a driver. The response rate was 97% for individual men and women selected. Non-response was mainly due to inability to find the selected interviewee at home. Repeated callbacks were made to try to reach the selected respondents. The results of the survey did not disclose any confidential information that might identify the respondents. The survey was a voluntary one but it is unclear if the purpose of the survey explained to the respondents for them to make an informed decision.
+The survey was conducted in person. The interview staff were first trained for a period of three weeks. It was conducted by a total of 14 teams, comprising a team supervisor, a field editor, three interviewers and a driver. The response rate was 97% for individual men and women selected. Non-response was mainly due to inability to find the selected interviewee at home. Repeated callbacks were made to try to reach the selected respondents. The results of the survey did not disclose any confidential information that might identify the respondents. The survey was a voluntary one and participants were informed first.
 
 The target sample size for the 1998 GDHS was 6,000 consisted of 4,500 women of age 15-49 and men of age 15-59. A total of 4,843 women age 15-49 and 1,546 men age 15-59 completed the survey. To account for non-response, 6375 households were selected for interview.
 
@@ -823,8 +823,14 @@ On top of that, the survey asked about the employment situation during the 12-mo
 
 \newpage
 
+<<<<<<< HEAD
 # Appendix 
 
 \newpage
+=======
+# Appendix
+
+
+>>>>>>> 862ac3f8e71c9fd0d0a1ace53766c0a864b3f473
 
 # References
