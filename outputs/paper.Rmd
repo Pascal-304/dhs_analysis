@@ -93,7 +93,7 @@ The dataset is processed and analyzed using 'R' [@citeR] mainly with the 'tidyve
 
 ## General Overview
 
-```{r generalchildcare, echo=FALSE, fig.cap="Distribution of the child caretaker for working mothers", fig.width=6, fig.height=4}
+```{r generalchildcare, echo=FALSE, fig.cap="Distribution of the caretaker for working mothers", fig.width=6, fig.height=4}
 totl <-
   ghana %>%
   filter(character=="Total") %>%
@@ -158,6 +158,8 @@ totl_caretaker %>%
 We can tell from Table \@ref(tab:data) that there are 3,564 working mothers, and over a half of them have a child under six years. Figure \@ref(fig:generalchildcare) illustrates that 47.6% of these mothers look after their own children while they are at work, 22.1% have their relatives other than their husband/partner to take care of the child, 14% send the child to school or other institutional care. On top of that, less than 3 percent of women have husbands/partners to look after the child while they are at work. 
 
 It should be noted that 1.9% have not worked since their last birth, and this indicates the percentage of the respondents who were not working at the time of the survey but had been employed at some time during the last 12 months.
+
+\newpage
 
 # Results
 
@@ -846,7 +848,9 @@ On top of that, the survey asked about the employment situation during the 12-mo
 
 \newpage
 
-# Appendix
+# (APPENDIX) Appendix {-} 
+
+# Datasheet
 
 ## Datasheet 
 
