@@ -99,7 +99,7 @@ The dataset is processed and analyzed using 'R' [@citeR] mainly with the 'tidyve
 
 ## General Overview
 
-```{r generalchildcare, echo=FALSE, fig.cap="Distribution of the caretaker of the child when the mother is working", fig.width=6, fig.height=4}
+```{r generalchildcare, echo=FALSE, fig.cap="Distribution of the caretaker of the child while mother is working", fig.width=6, fig.height=4}
 totl <-
   ghana %>%
   filter(character=="Total") %>%
@@ -110,7 +110,7 @@ totl <-
 # make dataset in long format
 totl_long <-
   totl %>%
-  select(-c(character, total)) %>%
+  select(-c(character, total, caretaker_missing)) %>%
   pivot_longer(!background, names_to = "variable", values_to = "count")
 
 # caretaker aspect
@@ -131,8 +131,7 @@ totl_caretaker <-
                                   'other_female_child',
                                   'other_male_child',
                                   'not_worked_since_birth',
-                                  'other',
-                                  'missing')
+                                  'other')
     )
   )
 
@@ -144,7 +143,7 @@ totl_caretaker %>%
             size = 3,
             position = position_dodge(width=0.5)) +
   theme_minimal() +
-  labs(x='') +
+  labs(x='Percentage', y='Caretaker while at work') +
   theme(legend.position='none') +
   coord_flip() + 
   scale_x_discrete(
@@ -158,8 +157,7 @@ totl_caretaker %>%
         "other_female_child" = "other female child",
         "other_male_child" = "other male child",
         "not_worked_since_birth" = "not worked since birth",
-        "other" = "other",
-        "missing" = "missing")
+        "other" = "other")
   )
 ```
 
@@ -195,7 +193,7 @@ map_ghana %>%
 
 Figure \@ref(fig:map) shows a map of Ghana and its administrative regions. Ghana has 10 administrative regions, namely, Upper West, Upper East, Northern, Brong Ahato, Western, Ashanti, Central, Eastern, Volta, and Greater Accra. In 1998, about 57.6% of the Ghanese population were living in rural areas [@population]. Greater Accra is considered the most urbanized region of Ghana.
 
-```{r residence, echo=FALSE, fig.cap="Comparison of the number of working mothers between urban and rural areas"}
+```{r residence, echo=FALSE, fig.cap="Comparison of the number of working mothers between urban and rural areas", fig.width=6, fig.height=4}
 # Urban vs Rural
 
 # Obtain subset of dataset for residence area
@@ -206,17 +204,33 @@ residence <- ghana %>%
 residence %>% 
   ggplot(aes(x = background, y = number_of_employed_women)) +
   geom_bar(stat = 'identity', fill = "burlywood") +
+  geom_text(aes(label=number_of_employed_women),
+            size = 4,
+            position=position_stack(vjust = 0.6)) +
   labs(x = "Area",
        y = "Number of employed women") +
   theme_minimal()
 ```
 
-Figure \@ref(fig:residence) shows the number of employed mothers in urban and rural areas. There are 1127 women who were selected in Urban areas while 2338 mothers were selected in rural areas. There are less women living in urban who are currently working, and this is not surprising as a larger population live in rural areas.
+Figure \@ref(fig:residence) shows the number of employed mothers in urban and rural areas. There are 1,227 women who were selected in Urban areas while 2,338 mothers were selected in rural areas. There are less women living in urban who are currently working, and this is not surprising as a larger population live in rural areas.
 
-```{r region, echo=FALSE, fig.cap = "Comparison of the number of working mothers selected in the different administrative regions"}
+```{r region, echo=FALSE, fig.cap = "Comparison of the number of working mothers selected in the different administrative regions", fig.height=5, fig.width=6}
 # region subdataset
 region <- ghana %>% 
   filter(character == "Region") %>% 
+  mutate(background = factor(background,
+                             levels = c('Western',
+                                        'Central',
+                                        'Greater_Accra',
+                                        'Volta',
+                                        'Eastern',
+                                        'Ashanti',
+                                        'Brong_Ahafo',
+                                        'Northern',
+                                        'Upper_West',
+                                        'Upper_East')
+  )
+  ) %>%
   mutate(background = recode(background,
                              'Western' = 'Western',
                              'Central' = 'Central',
@@ -243,7 +257,7 @@ region %>%
 
 Figure \@ref(fig:region) shows the number of employed mothers in the different administrative regions. There were more working mothers in Greater Accra and Ashanti while Upper West had the least number of working mothers. The reason might be because the number of people living in the different administrative regions is different, therefore, the sample size differed from one region to another. Greater Accra is the most urbanized region which implies more work opportunities and therefore, a larger population would be concentrated there.
 
-```{r childstatus, echo = FALSE, fig.cap = "Comparing the percentage of mothers having no child under six to one or more in both Urban and Rural areas"}
+```{r childstatus, echo = FALSE, fig.cap = "Comparing the percentage of mothers having no child under six to one or more in both Urban and Rural areas", fig.width=6, fig.height=4}
 # make dataset in long format
 resid_long <- residence %>% 
   select(-c(character)) %>% 
@@ -280,23 +294,36 @@ resid_long %>%
   geom_bar(stat = 'identity',
            position = 'dodge') +
   labs(x = "Area",
-       y = "Percent",
-       fill = "Child status") +
+       y = "Percentage",
+       fill = "Child under six") +
   theme_minimal() +
   scale_fill_brewer() +
   theme(legend.position = "bottom")
-
 ```
 
 Figure \@ref(fig:childstatus) shows the child status of families in Urban and Rural areas. In rural areas, there is a larger percentage of working mothers having one or more children under six years old. The converse is true in Urban areas. Working mothers tend to have no child under six years old. 
 
-```{r areachildcare, echo=FALSE, fig.cap = "Comparing child caretaker preferences in Urban and Rural areas"}
+```{r areachildcare, echo=FALSE, fig.cap = "Comparing child caretaker preferences in Urban and Rural areas", fig.width=6, fig.height=4}
 # caretaker aspect
 # make dataset into long format
 # rename 
 caretaker <- residence %>% 
   select(-c(character, no_child_under_six, one_more_child_under_six, total, number_of_employed_women, caretaker_missing)) %>% 
-  pivot_longer(!background, names_to = "caretakers", values_to = "percentage") %>% 
+  pivot_longer(!background, names_to = "caretakers", values_to = "percentage") %>%
+  mutate(
+    caretakers = factor(caretakers,
+                        levels = c('caretaker_respondent',
+                                   'caretaker_partner',
+                                   'caretaker_other_relative',
+                                   'caretaker_neighbor',
+                                   'caretaker_hired',
+                                   'caretaker_child_in_school',
+                                   'caretaker_other_female_child',
+                                   'caretaker_other_male_child',
+                                   'caretaker_not_worked_since_birth',
+                                   'caretaker_other')
+    )
+    ) %>%
   mutate(caretakers = recode(caretakers,
                              'caretaker_respondent' = 'respondent',
                              'caretaker_partner' = 'partner',
@@ -305,8 +332,7 @@ caretaker <- residence %>%
                              'caretaker_other_female_child' = 'other female child',
                              'caretaker_other' = 'other',
                              'caretaker_not_worked_since_birth' = 'not worked since birth',
-                             'caretaker_neighbor' = 'neighbour',
-                             'caretaker_missing' = 'missing',
+                             'caretaker_neighbor' = 'neighbor',
                              'caretaker_hired' = 'hired help',
                              'caretaker_child_in_school' = 'schooling'))
 
@@ -317,54 +343,65 @@ caretaker %>%
              fill = background)) +
   geom_bar(stat = 'identity',
            position = "dodge") +
-  labs(x = "Caretaker",
-       y = "Percentage of working mothers",
+  labs(x = "Caretaker while at work",
+       y = "Percentage",
        fill = "Area") +
   theme_minimal() +
   coord_flip() +
   scale_fill_brewer(palette = "Set1") +
   theme(legend.position = "bottom")
-
 ```
 
 Figure \@ref(fig:areachildcare) shows the Ghanese families' caretaking preferences in both urban and rural areas. The preferred caretaking method in both urban and rural areas is the working mothers looking after their children by themselves. The next preferred method in both areas would be to let the children be looked after by relatives. Other notable observations would be that families living in urban areas tend to put their children in school and in rural areas, families let the older female child care for the under six years old child much more than in urban areas.
 
-```{r caretakingregions, echo = FALSE, fig.cap = "Caretaking behaviour in the different administrative regions", fig.width=7, fig.height=7}
+```{r caretakingregions, echo = FALSE, fig.cap = "Caretaking behaviour in the different administrative regions", fig.width=8, fig.height=7}
 # make dataset into long format
 # recode names
 child <- region %>% 
   select(-c(character, total, caretaker_missing)) %>% 
-  pivot_longer(!background, names_to = "x", values_to = "percentage") %>% 
-  mutate(x = recode(x,
-                    'caretaker_respondent' = 'respondent',
-                    'caretaker_partner' = 'partner',
-                    'caretaker_other_relative' = 'other relative',
-                    'caretaker_other_male_child' = 'other male child',
-                    'caretaker_other_female_child' = 'other female child',
-                    'caretaker_other' = 'other',
-                    'caretaker_not_worked_since_birth' = 'not worked since birth',
-                    'caretaker_neighbor' = 'neighbour',
-                    'caretaker_missing' = 'missing',
-                    'caretaker_hired' = 'hired help',
-                    'caretaker_child_in_school' = 'schooling',
-                    'no_child_under_six' = 'no child under six',
-                    'one_more_child_under_six' = 'one or more child under six',
-                    'number_of_employed_women' = 'number of employed women'))
+  pivot_longer(!background, names_to = "variable", values_to = "percentage") %>% 
+  mutate(
+    variable = factor(variable, 
+                      levels = c('caretaker_respondent',
+                                 'caretaker_partner',
+                                 'caretaker_other_relative',
+                                 'caretaker_neighbor',
+                                 'caretaker_hired',
+                                 'caretaker_child_in_school',
+                                 'caretaker_other_female_child',
+                                 'caretaker_other_male_child',
+                                 'caretaker_not_worked_since_birth',
+                                 'caretaker_other')
+    )
+  ) %>%
+  mutate(variable = recode(variable,
+                           'caretaker_respondent' = 'respondent',
+                           'caretaker_partner' = 'partner',
+                           'caretaker_other_relative' = 'other relative',
+                           'caretaker_other_male_child' = 'other male child',
+                           'caretaker_other_female_child' = 'other female child',
+                           'caretaker_other' = 'other',
+                           'caretaker_not_worked_since_birth' = 'not worked since birth',
+                           'caretaker_neighbor' = 'neighbor',
+                           'caretaker_hired' = 'hired help',
+                           'caretaker_child_in_school' = 'schooling',
+                           'no_child_under_six' = 'no child under six',
+                           'one_more_child_under_six' = 'one or more child under six',
+                           'number_of_employed_women' = 'number of employed women'))
 
 # plot bar graph for caretaker comparisons and administrative regions
 child %>% 
-  filter(x != 'number of employed women', x != 'no child under six', x!= 'one or more child under six') %>% 
-  ggplot(aes(x = x,
+  filter(variable != 'number of employed women', variable != 'no child under six', variable != 'one or more child under six') %>% 
+  ggplot(aes(x = variable,
              y = percentage,
              fill = background)) +
   geom_bar(stat = 'identity') + 
-  labs(x = "caretaking preference",
-       y = "percent") +
+  labs(x = "Caretaker while at work",
+       y = "Percentage") +
   theme_minimal() +
   coord_flip() +
   facet_wrap(~background) +
   theme(legend.position = "none")
-
 ```
 
 Figure \@ref(fig:caretakingregions) shows the caretaking preference of Ghanese families in the different administrative regions. Working mothers tend to look after their children themselves the most in all regions. In Greater Accra, families choose to put their child in school the most compared to other administrative regions. Another observation is that the proportions of families opting to put their child in school in Northern, Upper East, and Upper West are the lowest, namely 1.3%, 2.7%, and 2.0% respectively. The other popular caretaking options after the mother herself are by a relative or by another older female child. 
@@ -373,19 +410,17 @@ Figure \@ref(fig:caretakingregions) shows the caretaking preference of Ghanese f
 # looking at the number of employed women selected in the different administrative regions
 # with the child under six
 child %>% 
-  filter(x == "no child under six" | x == "one or more child under six") %>% 
+  filter(variable == "no child under six" | variable == "one or more child under six") %>% 
   ggplot(aes(x = background,
              y = percentage,
-             fill = x)) +
+             fill = variable)) +
   geom_bar(stat = 'identity', position = "dodge", width = 0.8) +
-  labs(x = "child status",
-       y = "percentage",
-       fill = "child status") +
+  labs(x = "Administrative regions",
+       y = "Percentage",
+       fill = "Child under six") +
   theme_minimal() +
   theme(legend.position = "bottom") +
   coord_flip() 
-
-
 ```
 
 Figure \@ref(fig:chstatus) shows the child status of Ghanese families in the different administrative regions. By child status, we mean whether the families have children under six years old. Ghanese families tend to have one or more children under six years old rather than no child under six with the exception of Greater Accra. The proportion of families with one or more children under six is slightly more pronounced in Northern, Upper West, Brong Ahafo, and Upper East regions.
@@ -405,7 +440,7 @@ mother_edu <-
 # make dataset in long format
 edu_long <-
   mother_edu %>%
-  select(-c(character, total)) %>%
+  select(-c(character, total, caretaker_missing)) %>%
   pivot_longer(!background, names_to = "variable", values_to = "count") %>%
   mutate(
     background = factor(background,
@@ -449,8 +484,7 @@ edu_caretaker <-
                                   'other_female_child',
                                   'other_male_child',
                                   'not_worked_since_birth',
-                                  'other',
-                                  'missing')
+                                  'other')
     )
   )
 
@@ -459,7 +493,7 @@ edu_caretaker %>%
   ggplot(mapping=aes(x=caretaker, y=percentage, fill=caretaker)) +
   geom_bar(stat = "identity", position="dodge") + 
   theme_minimal() +
-  labs(x='Caretaker while at work', y="Percentage (in %)") +
+  labs(x='Caretaker while at work', y="Percentage") +
   theme(legend.position='none') +
   coord_flip() + 
   scale_x_discrete(
@@ -473,8 +507,7 @@ edu_caretaker %>%
         "other_female_child" = "other female child",
         "other_male_child" = "other male child",
         "not_worked_since_birth" = "not worked since birth",
-        "other" = "other",
-        "missing" = "missing")
+        "other" = "other")
   ) +
   facet_wrap(vars(background),
              dir = "v",
@@ -505,7 +538,7 @@ work_status <-
 # make dataset in long format
 work_long <-
   work_status %>%
-  select(-c(character, total)) %>%
+  select(-c(character, total, caretaker_missing)) %>%
   pivot_longer(!background, names_to = "variable", values_to = "count") %>%
   mutate(
     background = factor(background,
@@ -549,8 +582,7 @@ work_caretaker <-
                                   'other_female_child',
                                   'other_male_child',
                                   'not_worked_since_birth',
-                                  'other',
-                                  'missing')
+                                  'other')
     )
   )
 
@@ -559,7 +591,7 @@ work_caretaker %>%
   ggplot(mapping=aes(x=caretaker, y=percentage, fill=caretaker)) +
   geom_bar(stat = "identity", position="dodge") + 
   theme_minimal() +
-  labs(x='Caretaker while at work', y="Percent") +
+  labs(x='Caretaker while at work', y="Percentage") +
   theme(legend.position='none') +
   coord_flip() + 
   scale_x_discrete(
@@ -573,8 +605,7 @@ work_caretaker %>%
         "other_female_child" = "other female child",
         "other_male_child" = "other male child",
         "not_worked_since_birth" = "not worked since birth",
-        "other" = "other",
-        "missing" = "missing")
+        "other" = "other")
   ) +
   facet_wrap_paginate(vars(background),
                       ncol=2,
@@ -607,7 +638,7 @@ occupation <-
 # make dataset in long format
 occup_long <-
   occupation %>%
-  select(-c(character, total)) %>%
+  select(-c(character, total, caretaker_missing)) %>%
   pivot_longer(!background, names_to = "variable", values_to = "count") %>%
   mutate(
     background = factor(background,
@@ -653,8 +684,7 @@ occup_caretaker <-
                                   'other_female_child',
                                   'other_male_child',
                                   'not_worked_since_birth',
-                                  'other',
-                                  'missing'))
+                                  'other'))
   )
 
 
@@ -662,7 +692,7 @@ occup_caretaker <-
 occup_caretaker %>%
   ggplot(aes(x=caretaker, y=percentage, fill=background)) +
   geom_bar(stat = "identity", position="dodge") + 
-  labs(x='Caretaker while at work', y="Percent", fill="Occupation") +
+  labs(x='Caretaker while at work', y="Percentage", fill="Occupation") +
   theme_minimal() +
   theme(legend.position='bottom') +
   coord_flip() +
@@ -677,8 +707,7 @@ occup_caretaker %>%
         "other_female_child" = "other female child",
         "other_male_child" = "other male child",
         "not_worked_since_birth" = "not worked since birth",
-        "other" = "other",
-        "missing" = "missing")
+        "other" = "other")
   )
 ```
 
@@ -699,7 +728,7 @@ employment_status <-
 # make dataset in long format
 emply_long <-
   employment_status %>%
-  select(-c(character, total)) %>%
+  select(-c(character, total, caretaker_missing)) %>%
   pivot_longer(!background, names_to = "variable", values_to = "count") %>%
   mutate(
     background = factor(background,
@@ -743,8 +772,7 @@ emply_caretaker <-
                                   'other_female_child',
                                   'other_male_child',
                                   'not_worked_since_birth',
-                                  'other',
-                                  'missing')
+                                  'other')
     )
   )
 
@@ -753,7 +781,7 @@ emply_caretaker %>%
   ggplot(mapping=aes(x=caretaker, y=percentage, fill=caretaker)) +
   geom_bar(stat = "identity", position="dodge") + 
   theme_minimal() +
-  labs(x='Caretaker while at work', y="Percentage (in %)") +
+  labs(x='Caretaker while at work', y="Percentage") +
   theme(legend.position='none') +
   coord_flip() + 
   scale_x_discrete(
@@ -766,8 +794,7 @@ emply_caretaker %>%
         "child_in_school" = "schooling",
         "other_child" = "siblings",
         "not_worked_since_birth" = "not worked since birth",
-        "other" = "other",
-        "missing" = "missing")
+        "other" = "other")
   ) +
   facet_wrap(vars(background),
              dir = "v",
@@ -784,6 +811,22 @@ emply_caretaker %>%
 We can see from Figure \@ref(fig:employmentstatuschildcare) that the percentage of the respondent being the primary caretaker of a child under six is remarkably higher than the others in all four employment statuses. It exceeds 40% in all four cases, and in particular, mothers working full time are more likely to look after their own children than the others. Next, it is the relatives who mainly take care of the child under six. It should be noted that there are more women sending their kids under six to school when they work all year compared to the ones who do not work throughout the entire year.
 
 \newpage
+
+```{r}
+library(pointblank)
+
+agent <-
+  create_agent(tbl = column_names_as_contracts) %>%
+  col_is_character(columns = vars(chr_area, chr_group_gender)) %>%
+  col_is_factor(columns = vars(fctr_group_age)) %>%
+  col_is_integer(columns = vars(int_group_count)) %>%
+  col_vals_in_set(columns = chr_group_gender,
+                  set = c("male", "female", "total")) %>%
+  interrogate()
+
+agent
+
+```
 
 # Discussion
 
@@ -823,14 +866,8 @@ On top of that, the survey asked about the employment situation during the 12-mo
 
 \newpage
 
-<<<<<<< HEAD
-# Appendix 
-
-\newpage
-=======
 # Appendix
 
-
->>>>>>> 862ac3f8e71c9fd0d0a1ace53766c0a864b3f473
+\newpage
 
 # References

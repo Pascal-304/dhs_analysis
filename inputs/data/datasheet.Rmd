@@ -1,10 +1,5 @@
 ---
-<<<<<<< HEAD:inputs/data/datasheet_template.Rmd
-title: "Datasheet"
-=======
 title: "Datasheet for the child care of working mothers dataset"
-subtitle: ""
->>>>>>> 862ac3f8e71c9fd0d0a1ace53766c0a864b3f473:inputs/data/datasheet.Rmd
 author: 
   - Pascal Lee Slew
   - Yunkyung Park
@@ -143,9 +138,9 @@ The questions were extracted from @gebru2021datasheets
 **Maintenance**
 
 1. *Who will be supporting/hosting/maintaining the dataset?*
-	- Yunkyung Park and Pascal Lee Slew
+	- Pascal Lee Slew and Yunkyung Park
 2. *How can the owner/curator/manager of the dataset be contacted (for example, email address)?*
-	- If anyone want to reach out to us about the dataset, you can contact us at clara.park@mail.utoronto.ca or pascal.leeslew@mail.utoronto.ca
+	- If anyone want to reach out to us about the dataset, you can contact us at pascal.leeslew@mail.utoronto.ca or clara.park@mail.utoronto.ca
 3. *Is there an erratum? If so, please provide a link or other access point.*
 	- No
 4. *Will the dataset be updated (for example, to correct labeling errors, add new instances, delete instances)? If so, please describe how often, by whom, and how updates will be communicated to dataset consumers (for example, mailing list, GitHub)?*
