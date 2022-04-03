@@ -848,9 +848,8 @@ On top of that, the survey asked about the employment situation during the 12-mo
 
 \newpage
 
-# (APPENDIX) Appendix {-} 
+# Appendix
 
-# Datasheet
 
 ## Datasheet 
 
