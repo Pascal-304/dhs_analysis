@@ -10,6 +10,7 @@
 #### Workspace set-up ####
 library(janitor)
 library(tidyverse)
+library(ggplot2)
 
 #### Simulate data ####
 set.seed(304)
@@ -115,7 +116,11 @@ simulated_dhs <-
              TRUE ~ Caretaker
            ))
 
-
-
-
-
+simulated_dhs %>%
+  filter(Child_under_six=='Yes') %>%
+  ggplot(aes(x = Residence, fill=Residence)) +
+  geom_bar() +
+  labs(x = "Areas",
+       y = "Number of employed women") +
+  theme(legend.position='none') +
+  theme_minimal()
