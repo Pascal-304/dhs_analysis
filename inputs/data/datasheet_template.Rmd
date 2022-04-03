@@ -1,6 +1,5 @@
 ---
-title: "My title"
-subtitle: "My subtitle if needed"
+title: "Datasheet"
 author: 
   - Pascal Lee Slew
   - Yunkyung Park
@@ -154,7 +153,6 @@ Extract of the questions from @gebru2021datasheets
 	- TBD
 8. *Any other comments?*
 	- TBD
-
 
 \newpage
 

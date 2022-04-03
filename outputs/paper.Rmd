@@ -1,5 +1,5 @@
 ---
-title: "Childcare while their mom is working"
+title: "Child care situation of working mothers in Ghana 1998"
 author: 
   - Pascal Lee Slew
   - Yunkyung Park
@@ -41,7 +41,7 @@ Child care matters to the development of a child. Previously, women were thought
 
 In this paper, we examined child care decisions of working mothers across regions, the mothers' highest education level attained, their occupation, work and employment status in Ghana. We conducted a descriptive analysis of child status and childcare preferences. We first looked at the number of working mothers from the sample population, then examined child care practices based on employment status, education level among other factors. The differences in child care practices were noticeable in different regions. We found that most working mothers tend to look after their young child by themselves and those living in Greater Accra have a higher tendency to put their children in child care centres compared to other regions. Another observation was the highest level of education attained may have an influence on the number of children they have. The proportion of working mothers with at least secondary education with no child under six years old is lower than those with at least one or more children under six. 
 
-The rest of the paper is divided into 4 sections. Section \@ref(data) explains the data source, the survey methodology, and some of its key features, strengths, and weaknesses. Section \@ref(results) relays the findings through graphs. Section @\ref(discussion) discusses in more detail what was found and some limitations of what we did and Section \@ref(appendix) contains a datasheet for the dataset we used. 
+The rest of the paper is divided into 4 sections. Section \@ref(data) explains the data source, the survey methodology, and some of its key features, strengths, and weaknesses. Section \@ref(results) relays the findings through graphs. Section \@ref(discussion) discusses in more detail what was found and some limitations of what we did and Section \@ref(appendix) contains a datasheet for the dataset we used. 
 
 # Data
 
@@ -241,7 +241,7 @@ region %>%
   coord_flip()
 ```
 
-Figure @\ref(fig:region) shows the number of employed mothers in the different administrative regions. There were more working mothers in Greater Accra and Ashanti while Upper West had the least number of working mothers. The reason might be because the number of people living in the different administrative regions is different, therefore, the sample size differed from one region to another. Greater Accra is the most urbanized region which implies more work opportunities and therefore, a larger population would be concentrated there.
+Figure \@ref(fig:region) shows the number of employed mothers in the different administrative regions. There were more working mothers in Greater Accra and Ashanti while Upper West had the least number of working mothers. The reason might be because the number of people living in the different administrative regions is different, therefore, the sample size differed from one region to another. Greater Accra is the most urbanized region which implies more work opportunities and therefore, a larger population would be concentrated there.
 
 ```{r childstatus, echo = FALSE, fig.cap = "Comparing the percentage of mothers having no child under six to one or more in both Urban and Rural areas"}
 # make dataset in long format
@@ -327,7 +327,7 @@ caretaker %>%
 
 ```
 
-Figure @\ref(fig:areachildcare) shows the Ghanese families' caretaking preferences in both urban and rural areas. The preferred caretaking method in both urban and rural areas is the working mothers looking after their children by themselves. The next preferred method in both areas would be to let the children be looked after by relatives. Other notable observations would be that families living in urban areas tend to put their children in school and in rural areas, families let the older female child care for the under six years old child much more than in urban areas.
+Figure \@ref(fig:areachildcare) shows the Ghanese families' caretaking preferences in both urban and rural areas. The preferred caretaking method in both urban and rural areas is the working mothers looking after their children by themselves. The next preferred method in both areas would be to let the children be looked after by relatives. Other notable observations would be that families living in urban areas tend to put their children in school and in rural areas, families let the older female child care for the under six years old child much more than in urban areas.
 
 ```{r caretakingregions, echo = FALSE, fig.cap = "Caretaking behaviour in the different administrative regions", fig.width=7, fig.height=7}
 # make dataset into long format
@@ -820,6 +820,10 @@ Additionally, it would have been better if they were first asked for their marit
 Lastly, only the employed women who have a child under six were further asked to indicate who takes care of their children while they are at work. The dataset included the percentage of the missing values, and we purposely excluded them in plotting the graphs as they do not tell anything about the data itself and there were only a few missing values. However, when we add up the percentage of all possible items including the missing values, there are several background characteristics where the numbers did not add up to 100. As only the percentage is provided in the report, there might be a round-off error. Particularly, since the numbers were rounded to one decimal place, there is a high possibility that there was a rounding error. To make the dataset more precise, they could have rounded to two decimal places. 
 
 On top of that, the survey asked about the employment situation during the 12-month reference period preceding the survey. However, the respondents were allowed to answer using their previous experiences. In particular, this applies to the respondents who had a job before having birth but stopped working after the last birth. Since we do not know the age of the youngest child in their household, they might have answered the questionnaire based on their employment situation prior to the 12-month reference period. Therefore, the time period does not match among the questions. 
+
+\newpage
+
+# Appendix 
 
 \newpage
 
