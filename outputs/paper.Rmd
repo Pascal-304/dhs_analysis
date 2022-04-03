@@ -16,7 +16,7 @@ bibliography: references.bib
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r library, echo=FALSE, message=FALSE}
+```{r library, echo=FALSE, message=FALSE, warning = FALSE}
 # install.packages('bookdown')
 # install.packages("stringr")
 # install.packages("ggforce")
@@ -51,9 +51,15 @@ This paper uses the Childcare While Working Data [@ghana1998] obtained from the 
 
 ## Methodology
 
-The 1998 Ghana Demographic and Health Survey was a national-level survey carried out in Ghana. It was conducted by the Ghana Statistical Service collaborated with the Macro International Inc. It was designed to collect data on fertility, family planning, and maternal and child health.
+The 1998 Ghana Demographic and Health Survey was a national-level survey carried out in Ghana. It was conducted by the Ghana Statistical Service collaborated with the Macro International Inc. It was designed to collect data on fertility, family planning, and maternal and child health. The 1998 GDHS was conducted from mid-November 1998 to mid-February 1999.
 
-The survey frame was created using the list of Enumeration Areas (EAs) with population and household information from the 1984 Population Census. The 1998 GDHS used a two-stage stratified sampling. At the first stage of sampling, 400 EAs were selected using systematic sampling with probability proportional to size where the selected EAs comprised 138 in the urban areas and 262 in the rural areas. A complete household listing operation was then carried out in all the selected EAs to provide a sampling frame for the second stage selection of households. At the second stage of sampling, a systematic sample of 20 households per EA was selected in the Northern, Upper West and Upper East Regions, and 15 households per EA was selected in the other regions. 
+The survey frame was created using the list of Enumeration Areas (EAs) with population and household information from the 1984 Population Census. The 1998 GDHS used a two-stage stratified sampling method. At the first stage of sampling, 400 EAs were selected using systematic sampling with probability proportional to size where the selected EAs comprised 138 in the urban areas and 262 in the rural areas. A complete household listing operation was then carried out in all the selected EAs to provide a sampling frame for the second stage selection of households. At the second stage of sampling, a systematic sample of 20 households per EA was selected in the Northern, Upper West and Upper East Regions, and 15 households per EA was selected in the other regions. 
+
+The target sample size for the 1998 GDHS was 6,000 consisted of 4,500 women of age 15-49 and men of age 15-59. A total of 4,843 women age 15-49 and 1,546 men age 15-59 completed the survey. To account for non-response, 6375 households were selected for interview.
+
+The GDHS was composed of 3 parts: the Household's questionnaire, the Woman's questionnaire and the Man's questionnaire. All the questionnaires were modified to account for the situation in Ghana. 
+
+The survey was conducted in person. The interview staff were first trained for a period of three weeks. It was conducted by a total of 14 teams, comprising a team supervisor, a field editor, three interviewers and a driver. The response rate was 97% for individual men and women selected. Non-response was mainly due to inability to find the selected interviewee at home. Repeated callbacks were made to try to reach the selected respondents. The results of the survey did not disclose any confidential information that might identify the respondents. The survey was a voluntary one but it is unclear if the purpose of the survey explained to the respondents for them to make an informed decision.
 
 The target sample size for the 1998 GDHS was 6,000 consisted of 4,500 women of age 15-49 and men of age 15-59. A total of 4,843 women age 15-49 and 1,546 men age 15-59 completed the survey. To account for non-response, 6375 households were selected for interview.
 
@@ -274,7 +280,7 @@ resid_long %>%
   geom_bar(stat = 'identity',
            position = 'dodge') +
   labs(x = "Area",
-       y = "Percentage",
+       y = "Percent",
        fill = "Child status") +
   theme_minimal() +
   scale_fill_brewer() +
@@ -312,7 +318,7 @@ caretaker %>%
   geom_bar(stat = 'identity',
            position = "dodge") +
   labs(x = "Caretaker",
-       y = "Percentage of women",
+       y = "Percentage of working mothers",
        fill = "Area") +
   theme_minimal() +
   coord_flip() +
@@ -353,7 +359,7 @@ child %>%
              fill = background)) +
   geom_bar(stat = 'identity') + 
   labs(x = "caretaking preference",
-       y = "percentage") +
+       y = "percent") +
   theme_minimal() +
   coord_flip() +
   facet_wrap(~background) +
@@ -522,7 +528,7 @@ work_long %>%
   theme(legend.position='bottom')
 ```
 
-Figure \@ref(fig:workstatus) shows that most of the employed women are self-employed. If the women work for themselves or for their family, then it is more likely to have one or more than one child under six, whereas when they work for someone else, there are more women who do not have a child under six. It should be noted that no child under six does not mean that they have no child. 
+Figure \@ref(fig:workstatus) shows that most employed mothers are self-employed. If the women work for themselves or for their family, then it is more likely to have one or more than one child under six years old, whereas when they work for someone else, there are more women who do not have a child under six years old. It should be noted that no child under six does not mean that they have no child. 
 
 ```{r workstatuschildcare, echo=FALSE, fig.cap="Distribution of child's caretaker by work status", fig.width=6, fig.height=4}
 # caretaker aspect
@@ -553,7 +559,7 @@ work_caretaker %>%
   ggplot(mapping=aes(x=caretaker, y=percentage, fill=caretaker)) +
   geom_bar(stat = "identity", position="dodge") + 
   theme_minimal() +
-  labs(x='Caretaker while at work', y="Percentage (in %)") +
+  labs(x='Caretaker while at work', y="Percent") +
   theme(legend.position='none') +
   coord_flip() + 
   scale_x_discrete(
@@ -584,7 +590,7 @@ work_caretaker %>%
 
 ```
 
-It can be observed from Figure \@ref(fig:workstatuschildcare) that most of the employed women take care of their children by themselves regardless of whom they work for, and then it is their relatives who take care of their children while they are at work. We can tell that if they are self-employed or work for the family, then it is more likely to have a family member taking care of their children under six, whereas the percentage of schooling their child under six is relatively higher when they work for someone else. 
+It can be observed from Figure \@ref(fig:workstatuschildcare) that most employed women take care of their children by themselves regardless of whom they work for. It is their relatives who take care of their children while they are at work. We can tell that if they are self-employed or work for the family, then it is more likely to have a family member taking care of their children under six years old, whereas the percentage of families opting for schooling option is relatively higher when they work for someone else. 
 
 ## Occupation
 
@@ -628,7 +634,7 @@ occup_long %>%
 
 Figure \@ref(fig:occupation) shows that there are more women working in non-agricultural occupations. When we compare the mothers working in the agricultural sector, the number of women with a child under six is twice as many as the number of the ones without. On the contrary, the number of women with no child under six is slightly higher than that of the ones with a child in non-agricultural occupations.
 
-```{r occupationchildcare, echo=FALSE, fig.cap="Distribution of child's caretaker by Occupation", fig.width=6, fig.height=4}
+```{r occupationchildcare, echo=FALSE, fig.cap="Distribution of child's caretaker by occupation", fig.width=6, fig.height=4}
 # caretaker aspect
 occup_caretaker <-
   occup_long %>%
@@ -656,7 +662,7 @@ occup_caretaker <-
 occup_caretaker %>%
   ggplot(aes(x=caretaker, y=percentage, fill=background)) +
   geom_bar(stat = "identity", position="dodge") + 
-  labs(x='Caretaker while at work', y="Percentage (in %)", fill="Occupation") +
+  labs(x='Caretaker while at work', y="Percent", fill="Occupation") +
   theme_minimal() +
   theme(legend.position='bottom') +
   coord_flip() +
@@ -779,7 +785,7 @@ We can see from Figure \@ref(fig:employmentstatuschildcare) that the percentage 
 
 \newpage
 
-# Discussions
+# Discussion
 
 ## Employed Women
 
@@ -789,7 +795,7 @@ Next, Figure \@ref(fig:region) illustrates that women residing in the Upper West
 
 Additionally, it is surprising to see from Figure \@ref(fig:motheredu) that the number of employed women whose education level is a secondary school or higher is remarkably lower than that of the other education levels. Meanwhile, Figure \@ref(fig:occupation) shows that women are approximately twice as likely to be employed in the non-agricultural sector than in the agricultural sector. Lastly, when women are working, then Figure \@ref(fig:workstatus) tells that they are most likely to be self-employed and Figure \@ref(fig:employmentstatus) shows that they are most likely to work full-time. 
 
-## Presence of Child Under Six
+## Presence of Child Under Six Years Old
 
 Table \@ref(tab:data) shows that more than a half of the employed women have a child under six years. Figure \@ref(fig:childstatus) demonstrates that working women in rural areas are more likely to have at least one child under six years whereas working women in urban areas tend to have no child under six years. Figure \@ref(fig:motheredu) shows that as the level of working mother’s education gets higher, it is more likely to not have any child under six.
 
