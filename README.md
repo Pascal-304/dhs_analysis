@@ -13,7 +13,7 @@ This repository examines the childcare situation of working mothers in Ghana usi
 - 'scripts' includes all the code necessary to simulate data, gather the data and cleaning the data.
 - 'inputs' contains the datasheet pdf which gives some information on how the dataset was created, the rmd file used to produce the pdf and the bib file for the references used.
 - 'outputs' contains the data folder which includes both the raw and clean dataset obtained.
-- 'outputs' also contains the files necessary to produce the paper. We have the pdf copy of the paper on 'Childcare situation of working mothers in Ghana' as well as the rmd file needed to produce it and a reference bib file containing the references used for the paper.
+- 'outputs' also contains the files necessary to reproduce the paper. We have the pdf copy of the paper on 'Childcare situation of working mothers in Ghana' as well as the rmd file in order to reproduce it and a reference bib file containing the references used for the paper.
 
 
 ## Obtaining data
