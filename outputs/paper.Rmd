@@ -812,22 +812,6 @@ We can see from Figure \@ref(fig:employmentstatuschildcare) that the percentage 
 
 \newpage
 
-```{r}
-library(pointblank)
-
-agent <-
-  create_agent(tbl = column_names_as_contracts) %>%
-  col_is_character(columns = vars(chr_area, chr_group_gender)) %>%
-  col_is_factor(columns = vars(fctr_group_age)) %>%
-  col_is_integer(columns = vars(int_group_count)) %>%
-  col_vals_in_set(columns = chr_group_gender,
-                  set = c("male", "female", "total")) %>%
-  interrogate()
-
-agent
-
-```
-
 # Discussion
 
 ## Employed Women
