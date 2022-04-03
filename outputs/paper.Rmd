@@ -5,7 +5,7 @@ author:
   - Yunkyung Park
 thanks: "Code and data are available at: https://github.com/Pascal-304/dhs_analysis."
 date: "`r format(Sys.time(), '%d %B %Y')`"
-abstract: "Working mothers are often faced with the conflict of responsibility towards their children and the role they play at work. The Ghana Demographic and Health Survey (GDHS) forms a part of a global initiative to collect data on family, fertility, and child health. In this paper, we used the 1998 GDHS and focused on the child care and working mothers aspect. Geographics and other aspects such as education are used to predict child care preference. We found that families living in Greater Accra are more likely to send their children to school and the majority of working mothers look after their children by themselves. The analysis of the child care and working mothers data provides insight into current trends and has significant implications for public policy and program decisions."
+abstract: "Working mothers are often faced with the conflict of responsibility towards their children and the role they play at work. The Ghana Demographic and Health Survey (GDHS) forms part of a global initiative to collect data on family, fertility, and child health. In this paper, we used the 1998 GDHS and focused on the child care and working mothers aspect. Geographics and other aspects such as education are used to predict child care preference. We found that families living in Greater Accra are more likely to send their children to school and the majority of working mothers look after their children by themselves. The analysis of the child care and working mothers data provides insight into current trends and has significant implications for public policy and program decisions."
 output:
   bookdown::pdf_document2
 toc: FALSE
@@ -47,7 +47,7 @@ The rest of the paper is divided into 4 sections. Section \@ref(data) explains t
 
 ## Data Source
 
-This paper uses the Childcare While Working Data [@ghana1998] obtained from the 1998 Ghana Demographic and Health Survey (GDHS). The dataset was collected by downloading the final report of the 1998 GDHS published in the Demographic and Health Surveys (DHS) programme. The package 'pdftools' [@citepdftools] is used to download and read the content into R by parsing the pdf. The package 'stringi' [@citestringi] and 'tidyverse' [@citetidyverse] are then used to gather the data.
+This paper uses the Childcare While Working Data [@ghana1998] obtained from the 1998 Ghana Demographic and Health Survey (GDHS). The dataset was collected by downloading the final report of the 1998 GDHS published in the Demographic and Health Surveys (DHS) program. The package 'pdftools' [@citepdftools] is used to download and read the content into R by parsing the pdf. The package 'stringi' [@citestringi] and 'tidyverse' [@citetidyverse] are then used to gather the data.
 
 ## Methodology
 
@@ -63,11 +63,11 @@ The survey was conducted in person. The interview staff were first trained for a
 
 ## Strengths
 
-The questionnaires were made available in the five major local languages (Akan, Ga, Ewe, Hausa, and Dagbani), making the survey accessible to a larger population. After the household listing, sports checks were conducted to make sure the work has been done correctly. Before the actual survey, a test was conducted and adjustments were made to the questionnaires based on the feedback obtained from the test. The questions were comprehensive and detailed to collect information on the socio-economic status of the household.
+The questionnaires were made available in the five major local languages (Akan, Ga, Ewe, Hausa, and Dagbani), making the survey accessible to a larger population. After the household listing, spots checks were conducted to make sure the work has been done correctly. Before the actual survey, a test was conducted and adjustments were made to the questionnaires based on the feedback obtained from the test. The questions were comprehensive and detailed to collect information on the socio-economic status of the household. They were also adapted to the laws and norms of the nation.
 
 ## Weaknesses
 
-Since the questionnaires were only available in the five major local languages, if the selected household was from a minor ethnic group and know only their own language, then it would be difficult for the interviewee to understand and answer the survey. Visitors who stayed a night before in the selected household were eligible for the interview. The visitor may be from a different region, so the targeted sample size for each region may be skewed.
+Since the questionnaires were only available in the five major local languages, if the selected household was from a minor ethnic group and know only their own language, then it would be difficult for the interviewee to understand and answer the survey. Visitors who stayed a night before in the selected household were eligible for the interview. The visitor may be from a different region, so the targeted sample size for each region may be skewed. There is also the possibility of sampling error.
 
 ## Key features
 
@@ -93,7 +93,7 @@ The dataset is processed and analyzed using 'R' [@citeR] mainly with the 'tidyve
 
 ## General Overview
 
-```{r generalchildcare, echo=FALSE, fig.cap="Distribution of the caretaker of the child while mother is working", fig.width=6, fig.height=4}
+```{r generalchildcare, echo=FALSE, fig.cap="Distribution of the child caretaker for working mothers", fig.width=6, fig.height=4}
 totl <-
   ghana %>%
   filter(character=="Total") %>%
@@ -137,7 +137,7 @@ totl_caretaker %>%
             size = 3,
             position = position_dodge(width=0.5)) +
   theme_minimal() +
-  labs(x='Percentage', y='Caretaker while at work') +
+  labs(x='Caretaker', y='Percent') +
   theme(legend.position='none') +
   coord_flip() + 
   scale_x_discrete(
@@ -163,7 +163,7 @@ It should be noted that 1.9% have not worked since their last birth, and this in
 
 ## Region
 
-```{r map, message=FALSE, echo = FALSE, warning=FALSE, fig.cap="Ghana administrative regions"}
+```{r map, message=FALSE, echo = FALSE, warning=FALSE, fig.cap="Ghana administrative regions map"}
 # install.packages('rnaturalearth')
 # install.packages('sf')
 library(rnaturalearth)
@@ -288,8 +288,8 @@ resid_long %>%
   geom_bar(stat = 'identity',
            position = 'dodge') +
   labs(x = "Area",
-       y = "Percentage",
-       fill = "Child under six") +
+       y = "Percent",
+       fill = "Child status") +
   theme_minimal() +
   scale_fill_brewer() +
   theme(legend.position = "bottom")
@@ -337,8 +337,8 @@ caretaker %>%
              fill = background)) +
   geom_bar(stat = 'identity',
            position = "dodge") +
-  labs(x = "Caretaker while at work",
-       y = "Percentage",
+  labs(x = "Caretaker",
+       y = "Percent",
        fill = "Area") +
   theme_minimal() +
   coord_flip() +
@@ -392,8 +392,8 @@ child %>%
              y = percentage,
              fill = background)) +
   geom_bar(stat = 'identity') + 
-  labs(x = "Caretaker while at work",
-       y = "Percentage") +
+  labs(x = "Caretaker",
+       y = "Percent") +
   theme_minimal() +
   coord_flip() +
   facet_wrap(~background) +
@@ -402,7 +402,7 @@ child %>%
 
 Figure \@ref(fig:caretakingregions) shows the caretaking preference of Ghanese families in the different administrative regions. Working mothers tend to look after their children themselves the most in all regions. In Greater Accra, families choose to put their child in school the most compared to other administrative regions. Another observation is that the proportions of families opting to put their child in school in Northern, Upper East, and Upper West are the lowest, namely 1.3%, 2.7%, and 2.0% respectively. The other popular caretaking options after the mother herself are by a relative or by another older female child. 
 
-```{r chstatus, echo = FALSE, fig.cap = "Comparing the child status in different administrative regions"}
+```{r chstatus, echo = FALSE, fig.cap = "Comparing child status in different administrative regions"}
 # looking at the number of employed women selected in the different administrative regions
 # with the child under six
 child %>%
@@ -412,8 +412,8 @@ child %>%
              fill = variable)) +
   geom_bar(stat = 'identity', position = "dodge", width = 0.8) +
   labs(x = "Administrative regions",
-       y = "Percentage",
-       fill = "Child under six") +
+       y = "Percent",
+       fill = "Child status") +
   theme_minimal() +
   theme(legend.position = "bottom") +
   coord_flip() 
@@ -423,7 +423,7 @@ Figure \@ref(fig:chstatus) shows the child status of Ghanese families in the dif
 
 ## Mother's education
 
-```{r motheredu, echo=FALSE, fig.cap="Mother's Education level", fig.width=6, fig.height=4}
+```{r motheredu, echo=FALSE, fig.cap="Comparing the child status of working mothers based on their education level", fig.width=6, fig.height=4}
 # select mother edu
 mother_edu <-
   ghana %>%
@@ -451,7 +451,7 @@ edu_long %>%
   filter(variable == 'no_child_under_six' | variable == 'one_more_child_under_six') %>%
   ggplot(aes(x = background, y = count, fill = variable)) +
   geom_bar(stat = "identity", position = "dodge") +
-  labs(x = "Mother's education", y = "Number of employed women", fill = "Child under six") +
+  labs(x = "Mother's education level", y = "Number of employed women", fill = "Child status") +
   theme_minimal() +
   scale_fill_discrete(labels = c("No child under six", 
                                  "One or more child under six")) +
@@ -489,7 +489,7 @@ edu_caretaker %>%
   ggplot(mapping=aes(x=caretaker, y=percentage, fill=caretaker)) +
   geom_bar(stat = "identity", position="dodge") + 
   theme_minimal() +
-  labs(x='Caretaker while at work', y="Percentage") +
+  labs(x='Caretaker', y="Percent") +
   theme(legend.position='none') +
   coord_flip() + 
   scale_x_discrete(
@@ -521,7 +521,7 @@ Figure \@ref(fig:mothereduchildcare) demonstrates that no matter what their educ
 
 ## Work status
 
-```{r workstatus, echo=FALSE, message=FALSE, fig.cap="Work status", fig.width=6, fig.height=4}
+```{r workstatus, echo=FALSE, message=FALSE, fig.cap="Comparing the child status of working mothers based on work status", fig.width=6, fig.height=4}
 # select work status
 work_status <-
   ghana %>%
@@ -548,7 +548,7 @@ work_long %>%
   filter(variable == 'no_child_under_six' | variable == 'one_more_child_under_six') %>%
   ggplot(aes(x = background, y = count, fill = variable)) +
   geom_bar(stat = "identity", position = "dodge") +
-  labs(x = "Work status", y = "Number of employed women", fill = "Child under six") +
+  labs(x = "Work status", y = "Number of employed women", fill = "Child status") +
   theme_minimal() +
   scale_x_discrete(labels = c("For_family_member" = "For family member",
                               "For_someone_else" = "For someone else")) + 
@@ -587,7 +587,7 @@ work_caretaker %>%
   ggplot(mapping=aes(x=caretaker, y=percentage, fill=caretaker)) +
   geom_bar(stat = "identity", position="dodge") + 
   theme_minimal() +
-  labs(x='Caretaker while at work', y="Percentage") +
+  labs(x='Caretaker', y="Percent") +
   theme(legend.position='none') +
   coord_flip() + 
   scale_x_discrete(
@@ -621,7 +621,7 @@ It can be observed from Figure \@ref(fig:workstatuschildcare) that most employed
 
 ## Occupation
 
-```{r occupation, echo=FALSE, message=FALSE, fig.cap="Occupation", fig.width=6, fig.height=4}
+```{r occupation, echo=FALSE, message=FALSE, fig.cap="Comapring child status based on occupation", fig.width=6, fig.height=4}
 # select occupation
 occupation <-
   ghana %>%
@@ -652,7 +652,7 @@ occup_long %>%
            position = "dodge") +
   labs(x = "Sector",
        y = "Number of employed women",
-       fill = "Child under six") +
+       fill = "Child status") +
   theme_minimal() +
   scale_fill_discrete(labels = c("No child under six", 
                                  "One or more child under six")) +
@@ -688,7 +688,7 @@ occup_caretaker <-
 occup_caretaker %>%
   ggplot(aes(x=caretaker, y=percentage, fill=background)) +
   geom_bar(stat = "identity", position="dodge") + 
-  labs(x='Caretaker while at work', y="Percentage", fill="Occupation") +
+  labs(x='Caretaker', y="Percent", fill="Occupation") +
   theme_minimal() +
   theme(legend.position='bottom') +
   coord_flip() +
@@ -711,7 +711,7 @@ Figure \@ref(fig:occupationchildcare) illustrates that the percentage of the chi
 
 ## Employment status
 
-```{r employmentstatus, echo=FALSE, message=FALSE, fig.cap="Employment status", fig.width=6, fig.height=4}
+```{r employmentstatus, echo=FALSE, message=FALSE, fig.cap="Comparing child status based on employment status", fig.width=6, fig.height=4}
 # select employment status
 employment_status <-
   ghana %>%
@@ -738,7 +738,7 @@ emply_long %>%
   filter(variable == 'no_child_under_six' | variable == 'one_more_child_under_six') %>%
   ggplot(aes(x = background, y = count, fill = variable)) +
   geom_bar(stat = "identity", position = "dodge") +
-  labs(x = "Employment status", y = "Number of employed women", fill = "Child under six") +
+  labs(x = "Employment status", y = "Number of employed women", fill = "Child status") +
   theme_minimal() +
   scale_fill_discrete(labels = c("No child under six", 
                                  "One or more child under six")) +
@@ -777,7 +777,7 @@ emply_caretaker %>%
   ggplot(mapping=aes(x=caretaker, y=percentage, fill=caretaker)) +
   geom_bar(stat = "identity", position="dodge") + 
   theme_minimal() +
-  labs(x='Caretaker while at work', y="Percentage") +
+  labs(x='Caretaker', y="Percent") +
   theme(legend.position='none') +
   coord_flip() + 
   scale_x_discrete(
