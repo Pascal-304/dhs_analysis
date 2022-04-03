@@ -11,6 +11,7 @@
 
 #### Workspace set-up ####
 library(tidyverse)
+library(pointblank)
 
 raw_data <- read_csv("outputs/data/raw_data.csv")
 
@@ -41,44 +42,26 @@ rm(col_len,
    i,
    j)
 
-# check the numbers add up to a hundred
-clean$sum_child <- (clean$no_child_under_six + clean$one_more_child_under_six) == 100
-clean_caretaker <- 
-  clean %>%
-  select(starts_with("caretaker_")) %>%
-  mutate(sum_caretaker = rowSums(.))
+agent <-
+  create_agent(tbl = clean) %>%
+  col_is_character(columns = vars(background, character)) %>%
+  col_is_integer(columns = vars(no_child_under_six,
+                                one_more_child_under_six,
+                                caretaker_respondent,
+                                caretaker_partner,
+                                caretaker_other_relative,
+                                caretaker_neighbor,
+                                caretaker_hired,
+                                caretaker_child_in_school,
+                                caretaker_other_female_child,
+                                caretaker_other_male_child,
+                                caretaker_not_worked_since_birth,
+                                caretaker_other,
+                                caretaker_missing,
+                                total,
+                                number_of_employed_women)) %>%
+  interrogate()
 
-clean_caretaker <-
-  bind_cols(clean$background, clean_caretaker, clean$character)
-
-clean<-
-  clean %>%
-  select(-sum_child)
-
-clean2<-
-  clean %>%
-  mutate(
-    no_child_under_six = round(no_child_under_six/100 * number_of_employed_women, 0),
-    one_more_child_under_six = round(one_more_child_under_six/100 * number_of_employed_women, 0)
-  ) %>%
-  mutate(
-    caretaker_respondent = round(caretaker_respondent/100 * one_more_child_under_six, 0),
-    caretaker_partner = round(caretaker_partner/100 * one_more_child_under_six, 0),
-    caretaker_other_relative = round(caretaker_other_relative/100 * one_more_child_under_six, 0),
-    caretaker_neighbor = round(caretaker_neighbor/100 * one_more_child_under_six, 0),
-    caretaker_hired = round(caretaker_hired/100 * one_more_child_under_six, 0),
-    caretaker_child_in_school = round(caretaker_child_in_school/100 * one_more_child_under_six, 0),
-    caretaker_other_female_child = round(caretaker_other_female_child/100 * one_more_child_under_six, 0),
-    caretaker_other_male_child = round(caretaker_other_male_child/100 * one_more_child_under_six, 0),
-    caretaker_not_worked_since_birth = round(caretaker_not_worked_since_birth/100 * one_more_child_under_six, 0),
-    caretaker_other = round(caretaker_other/100 * one_more_child_under_six, 0),
-    caretaker_missing = round(caretaker_missing/100 * one_more_child_under_six, 0)
-  )
- 
-
-clean21<-
-  clean2 %>%
-  select(starts_with("caretaker_")) %>%
-  mutate(sum_caretaker = (rowSums(.) - clean2$one_more_child_under_six))
+agent
 
 write_csv(clean, "outputs/data/cleaned_data.csv")
