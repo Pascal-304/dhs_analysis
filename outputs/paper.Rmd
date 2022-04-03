@@ -61,12 +61,6 @@ The GDHS was composed of 3 parts: the Household's questionnaire, the Woman's que
 
 The survey was conducted in person. The interview staff were first trained for a period of three weeks. It was conducted by a total of 14 teams, comprising a team supervisor, a field editor, three interviewers and a driver. The response rate was 97% for individual men and women selected. Non-response was mainly due to inability to find the selected interviewee at home. Repeated callbacks were made to try to reach the selected respondents. The results of the survey did not disclose any confidential information that might identify the respondents. The survey was a voluntary one and participants were informed first.
 
-The target sample size for the 1998 GDHS was 6,000 consisted of 4,500 women of age 15-49 and men of age 15-59. A total of 4,843 women age 15-49 and 1,546 men age 15-59 completed the survey. To account for non-response, 6375 households were selected for interview.
-
-This was a part of the worldwide Demographic and Health Surveys (DHS) programme, and the GDHS was composed of 3 parts: the Household's questionnaire, the Woman's questionnaire and the Man's questionnaire. All the questionnaires were modified to account for the situation in Ghana. 
-
-The survey was conducted in person. The interview staff were first trained for a period of three weeks. It was conducted by a total of 14 teams, comprising a team supervisor, a field editor, three interviewers and a driver. The response rate was 97% for individual men and women selected. Non-response was mainly due to inability to find the selected interviewee at home. Repeated callbacks were made to try to reach the selected respondents. The results of the survey did not disclose any confidential information that might identify the respondents. The survey was a voluntary one but it is unclear if the purpose of the survey explained to the respondents for them to make an informed decision.
-
 ## Strengths
 
 The questionnaires were made available in the five major local languages (Akan, Ga, Ewe, Hausa, and Dagbani), making the survey accessible to a larger population. After the household listing, sports checks were conducted to make sure the work has been done correctly. Before the actual survey, a test was conducted and adjustments were made to the questionnaires based on the feedback obtained from the test. The questions were comprehensive and detailed to collect information on the socio-economic status of the household.
@@ -371,7 +365,9 @@ child <- region %>%
                                  'caretaker_other_female_child',
                                  'caretaker_other_male_child',
                                  'caretaker_not_worked_since_birth',
-                                 'caretaker_other')
+                                 'caretaker_other',
+                                 'no_child_under_six',
+                                 'one_more_child_under_six')
     )
   ) %>%
   mutate(variable = recode(variable,
@@ -409,8 +405,8 @@ Figure \@ref(fig:caretakingregions) shows the caretaking preference of Ghanese f
 ```{r chstatus, echo = FALSE, fig.cap = "Comparing the child status in different administrative regions"}
 # looking at the number of employed women selected in the different administrative regions
 # with the child under six
-child %>% 
-  filter(variable == "no child under six" | variable == "one or more child under six") %>% 
+child %>%
+  filter(variable=='no child under six'|variable=='one or more child under six') %>% 
   ggplot(aes(x = background,
              y = percentage,
              fill = variable)) +
