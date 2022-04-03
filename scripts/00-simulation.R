@@ -18,14 +18,14 @@ set.seed(304)
 simulated_dhs <-
   tibble(
     # Unique identifier
-    'caseID' = 1:3565,
-    # Randomly choose one of the two options, with replacement, 3565 times
+    'caseID' = 1:3564,
+    # Randomly choose one of the two options, with replacement, 3564 times
     'Residence' = sample(
       x = c(
         'Urban',
         'Rural'
       ),
-      size = 3565,
+      size = 3564,
       replace = TRUE
     ),
     'Region' = sample(
@@ -41,7 +41,7 @@ simulated_dhs <-
         'Upper_West',
         'Upper_East'
       ),
-      size = 3565,
+      size = 3564,
       replace = TRUE
     ),
     "Mother's_education" = sample(
@@ -51,7 +51,7 @@ simulated_dhs <-
         'Middle',
         'Secondary+'
       ),
-      size = 3565,
+      size = 3564,
       replace = TRUE
     ),
     'Work_status' = sample(
@@ -60,7 +60,7 @@ simulated_dhs <-
         'For_someone_else',
         'Self-employed'
       ),
-      size = 3565,
+      size = 3564,
       replace = TRUE
     ),
     'Occupation' = sample(
@@ -68,7 +68,7 @@ simulated_dhs <-
         'Agricultural',
         'Nonagricultural'
       ),
-      size = 3565,
+      size = 3564,
       replace = TRUE
     ),
     'Employment_status' = sample(
@@ -78,7 +78,7 @@ simulated_dhs <-
         'Seasonal',
         'Occasional'
       ),
-      size = 3565,
+      size = 3564,
       replace = TRUE
     ),
     'Child_under_six' = sample(
@@ -86,7 +86,7 @@ simulated_dhs <-
         'No',
         'Yes'
       ),
-      size = 3565,
+      size = 3564,
       replace = TRUE
     ),
     'Caretaker' = sample(
@@ -103,7 +103,7 @@ simulated_dhs <-
         'Other',
         'Missing'
         ),
-      size = 3565,
+      size = 3564,
       replace = TRUE
     ),
     )
