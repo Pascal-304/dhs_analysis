@@ -16,20 +16,17 @@ library(tidyverse)
 library(stringi)
 
 download.file("https://dhsprogram.com/pubs/pdf/FR106/FR106.pdf",
-              "outputs/literature/1998_Ghana_DHS.pdf",
+              "outputs/literature/1988_Ghana_DHS.pdf",
               mode="wb")
 
-report <- pdf_text("outputs/literature/1998_Ghana_DHS.pdf")
+report <- pdf_text("outputs/literature/1988_Ghana_DHS.pdf")
 
 page_45<-stri_split_lines(report[[45]])[[1]]
 page_45<-page_45[page_45 != ""]
 
-# Grab the title of the table
-title_of_table <- page_45[1] %>% str_squish()
-
 # Get rid of the header and footer
 page_45_only_content <- page_45[12:43]
-  
+
 # Convert into a tibble
 data <- tibble(all = page_45_only_content)
 

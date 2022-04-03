@@ -14,7 +14,6 @@ library(tidyverse)
 #### Simulate data ####
 set.seed(304)
 
-<<<<<<< HEAD
 simulated_dhs <-
   tibble(
     # Unique identifier
