@@ -59,7 +59,7 @@ The target sample size for the 1998 GDHS was 6,000 consisted of 4,500 women of a
 
 The GDHS was composed of 3 parts: the Household's questionnaire, the Woman's questionnaire and the Man's questionnaire. All the questionnaires were modified to account for the situation in Ghana. 
 
-The survey was conducted in person. The interview staff were first trained for a period of three weeks. It was conducted by a total of 14 teams, comprising a team supervisor, a field editor, three interviewers and a driver. The response rate was 97% for individual men and women selected. Non-response was mainly due to inability to find the selected interviewee at home. Repeated callbacks were made to try to reach the selected respondents. The results of the survey did not disclose any confidential information that might identify the respondents. The survey was a voluntary one but it is unclear if the purpose of the survey explained to the respondents for them to make an informed decision.
+The survey was conducted in person. The interview staff were first trained for a period of three weeks. It was conducted by a total of 14 teams, comprising a team supervisor, a field editor, three interviewers and a driver. The response rate was 97% for individual men and women selected. Non-response was mainly due to inability to find the selected interviewee at home. Repeated callbacks were made to try to reach the selected respondents. The results of the survey did not disclose any confidential information that might identify the respondents. The survey was a voluntary one and participants were informed first.
 
 ## Strengths
 
@@ -820,5 +820,9 @@ Lastly, only the employed women who have a child under six were further asked to
 On top of that, the survey asked for the employment situation during the 12-month reference period preceding the survey. However, the respondents were allowed to answer using their previous experiences. In particular, this applies to the respondents who had a job before having a birth but stopped working since the birth. Since we do not know the age of the youngest child in their household, they might have answered the questionnaire based on their employment situation prior to the 12-month reference period. Therefore, the time period does not match among the questions. 
 
 \newpage
+
+# Appendix
+
+
 
 # References
