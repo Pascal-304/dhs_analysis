@@ -20,8 +20,8 @@ This repository examines the childcare situation of working mothers in Ghana usi
 
 The 1998 GDHS is publicly available at https://dhsprogram.com/publications/publication-FR106-DHS-Final-Reports.cfm
   - We gathered data from a table on page 45 in the pdf.
-  - The r script "01-gather_data.R" located under the "scripts" folder contains the code necessary to obtain the data used.
+  - The r script '01-gather_data.R' located under the 'scripts' folder contains the code necessary to obtain the data used.
   
 ## Preprocessing and Cleaning
 
-After obtaining the "raw data", some cleaning was done. The code used to obtain the clean dataset is located at "scripts/02-clean_and_prepare_data.R"
+After obtaining the 'raw data', some cleaning was done. The code used to obtain the clean dataset is located at 'scripts/02-clean_and_prepare_data.R'
