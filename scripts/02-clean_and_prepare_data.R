@@ -45,7 +45,7 @@ rm(col_len,
 agent <-
   create_agent(tbl = clean) %>%
   col_is_character(columns = vars(background, character)) %>%
-  col_is_integer(columns = vars(no_child_under_six,
+  col_is_numeric(columns = vars(no_child_under_six,
                                 one_more_child_under_six,
                                 caretaker_respondent,
                                 caretaker_partner,
